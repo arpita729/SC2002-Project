@@ -1,5 +1,5 @@
 @startuml EntityClassDiagram
-class Item {
+abstract Item {
     -id:int
     -name:String
     -deleted:bool
@@ -20,25 +20,21 @@ class Project extends Item {
     -units:String
     -openingDate
     -closingDate
-    -manager:Manager (automatically tied)
     -officerSlots:int
-    -officers:Officer[]
     -visibility:bool
-    -enquiries:Enquiry[]
-    -applications:Application[]
-    -officerApplications:OfficerApplication[]
 }
-Project "1" .. "*" Officer
-Project "1" .. "1" Manager
-Project "1" .. "*" Enquiry
 
 class Application extends Item {
     -applicant:Applicant
     -project:Project
     -status:enum (pending, successful, unsuccessful, booked, withdrawing, withdrawn)
 }
+Application "1" -- "1" Applicant
+Project "1" -- "*" Application
 
 class OfficerApplication extends Application
+Officer "1" -- "0..1" OfficerApplication
+Project "1" -- "*" OfficerApplication
 
 class Enquiry extends Item {
     -project:Project
@@ -54,16 +50,14 @@ class User extends Item{
     -maritalStatus:enum
 }
 
-class Applicant extends User{
-    -application:Application (only 1)
-}
+class Applicant extends User
 
 class Officer extends Applicant {
     -handledProject:Project (only 1)
 }
 
 class Manager extends User {
-    -createProject
+    +createProject():Project
 }
 
 'GUI Interfaces 
@@ -85,7 +79,8 @@ LoginMenu ..> ManagerMenu
 'Arrays
 class Users <<static>> implements ItemArray {
     -userArray:User[]
-    +filter()
+    +filter(p:Project,type:officer):Officer[]
+    +filter(p:Project,type:manager):Manager[]
 }
 Users "1" -- "*" User
 
@@ -97,17 +92,17 @@ Projects "1" -- "*" Project
 
 class Applications <<static>> implements ItemArray {
     -ApplicationArray:Application[]
-    +filter()
+    +filter(p:Project):Application[]
+    +filter(a:Applicant):Application[]
 }
 Applications "1" -- "*" Application
 
-class OfficerApplications <<static>> implements ItemArray {
-    -ApplicationArray:OfficerApplication[]
-}
+class OfficerApplications <<static>> extends Applications implements ItemArray 
+OfficerApplications "1" -- "*" OfficerApplication
 
-Applications "1" -- "*" Application
 class Enquiries <<static>> implements ItemArray {
     -EnquiryArray: Enquiry[]
+    +filter(p:Project):Enquiry[]
 }
 Enquiries "1" -- "*" Enquiry
 
