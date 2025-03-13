@@ -1,0 +1,147 @@
+@startuml EntityClassDiagram
+class Item {
+    -id:int
+    -name:String
+    -deleted:bool
+    +toString():String
+}
+
+interface ItemArray{
+    +getItem(id:int):item
+    +newItem(item:Item)
+    +deleteItem(item:Item)
+    +getAll():Item[]
+}
+
+'Project Items
+class Project extends Item {
+    -neighborhood:String
+    -flatType:enum (2-Room, 3-Room)
+    -units:String
+    -openingDate
+    -closingDate
+    -manager:Manager (automatically tied)
+    -officerSlots:int
+    -officers:Officer[]
+    -visibility:bool
+    -enquiries:Enquiry[]
+    -applications:Application[]
+    -officerApplications:OfficerApplication[]
+}
+Project "1" .. "*" Officer
+Project "1" .. "1" Manager
+Project "1" .. "*" Enquiry
+
+class Application extends Item {
+    -applicant:Applicant
+    -project:Project
+    -status:enum (pending, successful, unsuccessful, booked, withdrawing, withdrawn)
+}
+
+class OfficerApplication extends Application
+
+class Enquiry extends Item {
+    -project:Project
+    -enquiry:String
+    -reply:String
+}
+
+'Users
+class User extends Item{
+    -type:enum
+    -password:String
+    -age:int
+    -maritalStatus:enum
+}
+
+class Applicant extends User{
+    -application:Application (only 1)
+}
+
+class Officer extends Applicant {
+    -handledProject:Project (only 1)
+}
+
+class Manager extends User {
+    -createProject
+}
+
+'GUI Interfaces 
+interface Menu {
+    +displayMenu()
+}
+class ApplicantMenu extends Menu
+class ManagerMenu extends Menu
+class OfficerMenu extends Menu
+class LoginMenu extends Menu {
+    +displayMenu()
+    'after login, we call one of the 3 menus based on the  enum 
+}
+LoginMenu ..> AppUserManager
+LoginMenu ..> ApplicantMenu
+LoginMenu ..> OfficerMenu
+LoginMenu ..> ManagerMenu
+
+'Arrays
+class Users <<static>> implements ItemArray {
+    -userArray:User[]
+    +filter()
+}
+Users "1" -- "*" User
+
+class Projects <<static>> implements ItemArray {
+    -projectArray:Project[]
+    +filter()
+}
+Projects "1" -- "*" Project
+
+class Applications <<static>> implements ItemArray {
+    -ApplicationArray:Application[]
+    +filter()
+}
+Applications "1" -- "*" Application
+
+class OfficerApplications <<static>> implements ItemArray {
+    -ApplicationArray:OfficerApplication[]
+}
+
+Applications "1" -- "*" Application
+class Enquiries <<static>> implements ItemArray {
+    -EnquiryArray: Enquiry[]
+}
+Enquiries "1" -- "*" Enquiry
+
+'Managers
+class ApplicationManager <<static>> {
+    +WithdrawApplication(a:Application)
+    +ApproveApplication(a:Application)
+    +BookApplication(a:Application)
+    +ApproveWithdrawal(a:Application)
+}
+ApplicationManager ..> Application
+
+class ProjectManager <<static>> {
+    +newProject():Project
+    +toggleVisibility(p:Project,vis:bool)
+    +viewDetails(p:Project)
+}
+ProjectManager ..> Project
+
+class EnquiryManager <<static>> {
+    +reply(r:string) only used by managers
+}
+EnquiryManager ..> Enquiry
+
+class AppUserManager <<static>> {
+    -currentUser:User
+    +login()
+    +logout()
+}
+AppUserManager ..> User
+
+
+' not sure about this one
+class OfficerMenu extends ApplicantMenu 
+
+
+@enduml
