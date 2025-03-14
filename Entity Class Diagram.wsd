@@ -22,6 +22,11 @@ class Project extends Item {
     -closingDate
     -officerSlots:int
     -visibility:bool
+    +getApplicantions():Application[]
+    +getOfficerApplications():OfficerApplication[]
+    +getEnquiries():Enquiry[]
+    +getOfficers():Officer[]
+    +getManager():Manager
 }
 
 class Application extends Item {
@@ -29,18 +34,20 @@ class Application extends Item {
     -project:Project
     -status:enum (pending, successful, unsuccessful, booked, withdrawing, withdrawn)
 }
-Application "1" -- "1" Applicant
-Project "1" -- "*" Application
+
+Application --> Applicant : Applicant
+Application --> Project : Project
 
 class OfficerApplication extends Application
-Officer "1" -- "0..1" OfficerApplication
-Project "1" -- "*" OfficerApplication
+OfficerApplication --> Officer : Officer
+OfficerApplication --> Project : Project
 
 class Enquiry extends Item {
     -project:Project
     -enquiry:String
     -reply:String
 }
+Enquiry --> Project : Project
 
 'Users
 class User extends Item{
@@ -50,13 +57,17 @@ class User extends Item{
     -maritalStatus:enum
 }
 
-class Applicant extends User
+class Applicant extends User {
+    +getApplication():Application
+}
 
 class Officer extends Applicant {
     -handledProject:Project (only 1)
+    +getOfficerApplication():OfficerApplication
 }
 
 class Manager extends User {
+    +getProject():Project
     +createProject():Project
 }
 
