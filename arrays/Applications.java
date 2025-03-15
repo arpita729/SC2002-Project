@@ -35,30 +35,35 @@ public class Applications {
     }
 
     // Static method to get an application by its ID
-    static Application getApplication(int id) {
+    public static Application getApplication(int id) {
         return applicationList.get(id);  
     }
 
     // Static method to add a new application
-    static void newApplication(Application application) {
+    public static void newApplication(Application application) {
         application.setId(applicationList.size()); 
         applicationList.add(application);  // Add the application to the list
         size++; 
     }
 
     // Static method to delete an application
-    static void deleteApplication(Application application) {
+    public static void deleteApplication(Application application) {
         application.delete(); 
         size--;
     }
 
     // Static method to get all applications in the list
-    static ArrayList<Application> getAllApplications() {
+    public static ArrayList<Application> getAllApplications() {
         return new ArrayList<>(applicationList);  
     }
 
     // Static method to get the size of the application list
-    static int getSize() {
+    public static int getSize() {
         return size;  
+    }
+
+    public static void setApplications(ArrayList<Application> a) {
+        applicationList = a;
+        size = a.size(); // assume no deleteds
     }
 }

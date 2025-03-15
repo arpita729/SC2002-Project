@@ -8,27 +8,32 @@ public class User extends Item {
     }
     
     public enum MaritalStatus {
-        SINGLE, MARRIED, DIVORCED, WIDOWED
+        SINGLE, MARRIED
     }
     
-    private String name;
+    private String ic;
     private UserType type;
-    private String password;
+    private String password="password";
     private int age;
     private MaritalStatus maritalStatus;
 
     // Constructor
-    public User(String name, UserType type, String password, int age, MaritalStatus maritalStatus) {
-        this.name = name;
+    public User(String ic, UserType type, String password, int age, MaritalStatus maritalStatus) {
+        this.ic = ic;
         this.type = type;
         this.password = password;
         this.age = age;
         this.maritalStatus = maritalStatus;
     }
 
+    public String toString() {
+        // implementation here
+        return "";
+    }    
+
     // Getters
-    public String getName() {
-        return name;
+    public String getIc() {
+        return ic;
     }
 
     public UserType getType() {
@@ -47,9 +52,10 @@ public class User extends Item {
         return maritalStatus;
     }
 
-    public String toString() {
-        // implementation here
-        return "";
+    //Setters
+    public void setPassword(String p) {
+        password = p;
     }
+
 }
 

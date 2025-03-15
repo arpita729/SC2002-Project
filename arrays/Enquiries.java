@@ -10,6 +10,7 @@ import items.users.Officer;
 
 public class Enquiries {
     private static ArrayList<Enquiry> enquiryList = new ArrayList<>();
+    private static int size = 0;
 
     // Filter enquiries by project (for Applicant role)
     public static ArrayList<Enquiry> filter(Project p) {
@@ -65,5 +66,29 @@ public class Enquiries {
         }
         
         return enquiriesForOfficer;
+    }
+
+
+    public static Enquiry getEnquiry(int id) {
+        return enquiryList.get(id);
+    }
+
+    public static void newEnquiry(Enquiry enquiry) {
+        enquiry.setId(enquiryList.size());
+        enquiryList.add(enquiry);
+        size++;
+    }
+
+    public static void deleteEnquiry(Enquiry enquiry) {
+        enquiry.delete();
+        size--;
+    }
+
+    public static ArrayList<Enquiry> getAllEnquiries() {
+        return new ArrayList<>(enquiryList);
+    }
+
+    public static int getSize() {
+        return size;
     }
 }

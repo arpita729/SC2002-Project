@@ -8,8 +8,8 @@ import arrays.Enquiries;
 
 public class Manager extends User {
     private Project projectInCharge = null;
-    public Manager(String name, UserType type, String password, int age, MaritalStatus maritalStatus) {
-        super(name, UserType.MANAGER, password, age, maritalStatus);
+    public Manager(String ic, String password, int age, MaritalStatus maritalStatus) {
+        super(ic, UserType.MANAGER, password, age, maritalStatus);
     }
 
     public Project getProjectInCharge() {
@@ -18,11 +18,6 @@ public class Manager extends User {
 
     public void setProjectInCharge(Project p) {
         projectInCharge = p;
-    }
-
-    public Project createProject() {
-        // Implementation here
-        return new Project();
     }
 
     public ArrayList<Enquiry> getReplies() {
