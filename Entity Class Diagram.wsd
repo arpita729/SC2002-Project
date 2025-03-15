@@ -4,6 +4,7 @@ abstract Item {
     -name:String
     -deleted:bool
     +toString():String
+    +delete():void
 }
 
 interface ItemArray{
@@ -37,6 +38,8 @@ Officer "1" -- "0..1" OfficerApplication
 Project "1" -- "*" OfficerApplication
 
 class Enquiry extends Item {
+    -applicant:Applicant
+    -replier:User
     -project:Project
     -enquiry:String
     -reply:String
@@ -50,13 +53,18 @@ class User extends Item{
     -maritalStatus:enum
 }
 
-class Applicant extends User
+class Applicant extends User {
+    +applyProject(p:Project)
+    +withdrawApplication()
+}
 
 class Officer extends Applicant {
     -handledProject:Project (only 1)
+    +registerProject(p:Project)
 }
 
 class Manager extends User {
+    -handledProject:Project (only 1)
     +createProject():Project
 }
 
