@@ -23,6 +23,11 @@ class Project extends Item {
     -closingDate
     -officerSlots:int
     -visibility:bool
+    +getApplicantions():Application[]
+    +getOfficerApplications():OfficerApplication[]
+    +getEnquiries():Enquiry[]
+    +getOfficers():Officer[]
+    +getManager():Manager
 }
 
 class Application extends Item {
@@ -30,12 +35,13 @@ class Application extends Item {
     -project:Project
     -status:enum (pending, successful, unsuccessful, booked, withdrawing, withdrawn)
 }
-Application "1" -- "1" Applicant
-Project "1" -- "*" Application
+
+Application --> Applicant : Applicant
+Application --> Project : Project
 
 class OfficerApplication extends Application
-Officer "1" -- "0..1" OfficerApplication
-Project "1" -- "*" OfficerApplication
+OfficerApplication --> Officer : Officer
+OfficerApplication --> Project : Project
 
 class Enquiry extends Item {
     -applicant:Applicant
@@ -44,6 +50,7 @@ class Enquiry extends Item {
     -enquiry:String
     -reply:String
 }
+Enquiry --> Project : Project
 
 'Users
 class User extends Item{
@@ -56,16 +63,20 @@ class User extends Item{
 class Applicant extends User {
     +applyProject(p:Project)
     +withdrawApplication()
+    +getApplication():Application
+    +getEnquiries():Enquiry[]
 }
 
 class Officer extends Applicant {
-    -handledProject:Project (only 1)
-    +registerProject(p:Project)
+    +getProject():Project
+    +getOfficerApplication():OfficerApplication
+    +getReplies():Enquiry[]
 }
 
 class Manager extends User {
-    -handledProject:Project (only 1)
+    +getProject():Project
     +createProject():Project
+    +getReplies():Enquiry[]
 }
 
 'GUI Interfaces 
@@ -111,6 +122,8 @@ OfficerApplications "1" -- "*" OfficerApplication
 class Enquiries <<static>> implements ItemArray {
     -EnquiryArray: Enquiry[]
     +filter(p:Project):Enquiry[]
+    +filterApplicant(a:Applicant):Enquiry[]
+    +filterReplier(u:User):Enquiry[]
 }
 Enquiries "1" -- "*" Enquiry
 
