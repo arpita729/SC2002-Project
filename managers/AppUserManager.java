@@ -6,7 +6,8 @@ import arrays.Users;
 public class AppUserManager {
     private static User currentUser;
 
-    public static void login(String ic, String password) throws IllegalArgumentException {
+    public static void login(String ic, String password) throws IllegalArgumentException, IllegalAccessException {
+        if (currentUser != null) throw new IllegalAccessException("already logged in!");
         User u = Users.filterIc(ic);
         if (!u.getPassword().equals(password)) throw new IllegalArgumentException("wrong password!");
         currentUser = u;

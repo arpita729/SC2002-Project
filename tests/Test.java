@@ -23,11 +23,17 @@ public class Test {
             u.add(a);
             u.add(b);
             Users.setUsers(u);
-            
-            // TEST CREATE
+
+            // TEST WRONG PW
+            //AppUserManager.login("M","paswd"); // wrong pwd
             //ApplicationManager.apply(p,null);//null
+
+            // TEST CREATE
             AppUserManager.login("M", "password");
+            //AppUserManager.login("M", "password"); //alr logged in
             Project p = ProjectManager.create("a", "a", 1, 3, null, null, 1);
+            AppUserManager.changePassword("password", "testtest");
+            //AppUserManager.changePassword("password", "testtest"); // wrong pwd
             AppUserManager.logout();
 
             // TEST OFFICER APPLY
@@ -45,9 +51,11 @@ public class Test {
             Enquiry e2 = EnquiryManager.create(p, "who says im gae");
             AppUserManager.logout();
             AppUserManager.login("B","password");
+            //p.setVisibility(false); // not visible
             Application bp = ApplicationManager.apply(p, FlatType.THREE_ROOM);
             //EnquiryManager.reply(e1, "i am error"); // wrong usertype
             AppUserManager.logout();
+            p.setVisibility(false);
 
             // TEST NOT YET OFFICER
             AppUserManager.login("O","password");
@@ -58,7 +66,8 @@ public class Test {
             AppUserManager.logout();
 
             // TEST APPROVALS
-            AppUserManager.login("M", "password");
+            AppUserManager.login("M", "testtest");
+            AppUserManager.changePassword("testtest", "password");
             //System.out.println(o.getProjectInCharge().getId()); // is null
             OfficerApplicationManager.approve(op, true);
             ApplicationManager.approve(ap,true);
@@ -79,6 +88,8 @@ public class Test {
             System.out.println(a.getProject().getId());
             //ApplicationManager.book(bp);
             AppUserManager.logout();
+
+            p.setVisibility(true);
 
             // TEST WITHDRAWAL
             AppUserManager.login("A","password");

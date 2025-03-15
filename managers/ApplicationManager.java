@@ -28,6 +28,9 @@ public class ApplicationManager {
             if (a.getAge() < 35) throw new IllegalArgumentException("not of age!");
             if (f != FlatType.TWO_ROOM) throw new IllegalArgumentException("inapplicable flattype!");
         }
+
+        // check visibility
+        if (!p.isVisible()) throw new IllegalArgumentException("project not visible!");
         
         Application ap = new Application(a,p,f);
         Applications.newApplication(ap);
