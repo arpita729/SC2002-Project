@@ -1,21 +1,14 @@
 @startuml EntityClassDiagram
 abstract Item {
     -id:int
-    -name:String
     -deleted:bool
     +toString():String
     +delete():void
 }
 
-interface ItemArray{
-    +getItem(id:int):item
-    +newItem(item:Item)
-    +deleteItem(item:Item)
-    +getAll():Item[]
-}
-
 'Project Items
 class Project extends Item {
+    -name:String
     -neighborhood:String
     -flatType:enum (2-Room, 3-Room)
     -units:String
@@ -54,6 +47,7 @@ Enquiry --> Project : Project
 
 'Users
 class User extends Item{
+    -name:String
     -type:enum
     -password:String
     -age:int
@@ -61,6 +55,7 @@ class User extends Item{
 }
 
 class Applicant extends User {
+    -project:Project
     +applyProject(p:Project)
     +withdrawApplication()
     +getApplication():Application
@@ -68,12 +63,14 @@ class Applicant extends User {
 }
 
 class Officer extends Applicant {
+    -projectInCharge:Project
     +getProject():Project
     +getOfficerApplication():OfficerApplication
     +getReplies():Enquiry[]
 }
 
 class Manager extends User {
+    -projectInCharge:Project
     +getProject():Project
     +createProject():Project
     +getReplies():Enquiry[]
@@ -96,34 +93,38 @@ LoginMenu ..> OfficerMenu
 LoginMenu ..> ManagerMenu
 
 'Arrays
-class Users <<static>> implements ItemArray {
+class Users <<static>> {
     -userArray:User[]
-    +filter(p:Project,type:officer):Officer[]
-    +filter(p:Project,type:manager):Manager[]
+    +filterApplicants(p:Project):Applicant[]
+    +filterOfficers(p:Project):Officer[]
+    +filterManager(p:Project):Manager
 }
 Users "1" -- "*" User
 
-class Projects <<static>> implements ItemArray {
+class Projects <<static>> {
     -projectArray:Project[]
     +filter()
 }
 Projects "1" -- "*" Project
 
-class Applications <<static>> implements ItemArray {
+class Applications <<static>>{
     -ApplicationArray:Application[]
     +filter(p:Project):Application[]
-    +filter(a:Applicant):Application[]
+    +filter(a:Applicant):Application
 }
 Applications "1" -- "*" Application
 
-class OfficerApplications <<static>> extends Applications implements ItemArray 
+class OfficerApplications <<static>> extends Applications 
 OfficerApplications "1" -- "*" OfficerApplication
 
-class Enquiries <<static>> implements ItemArray {
+class Enquiries <<static>> {
     -EnquiryArray: Enquiry[]
     +filter(p:Project):Enquiry[]
-    +filterApplicant(a:Applicant):Enquiry[]
-    +filterReplier(u:User):Enquiry[]
+    'filtering as an applicant gets enquiries
+    +filter(a:Applicant):Enquiry[] 
+    'filtering as a manager or officer gets replies
+    +filter(m:Manager):Enquiry[]
+    +filter(o:Officer):Enquiry[]
 }
 Enquiries "1" -- "*" Enquiry
 
