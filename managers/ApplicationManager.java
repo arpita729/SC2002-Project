@@ -16,10 +16,8 @@ public class ApplicationManager {
         if (a.getApplication() != null) throw new IllegalArgumentException("already have an application!");
         if (a.getType() == UserType.OFFICER) {
             Officer o = (Officer) a;
-            if (o.getProjectInCharge() == p) throw new IllegalArgumentException("is project in charge!");
-            if (o.getOfficerApplication() != null && o.getOfficerApplication().getProject() == p) {
-                throw new IllegalArgumentException("has applied to be officer for project!");
-            }
+            if (o.inCharge(p)) throw new IllegalArgumentException("is project in charge!");
+            if (o.hasApplication(p)) throw new IllegalArgumentException("has applied to be officer for project!");
         }
         // check user statuses
         if (a.getMaritalStatus() == MaritalStatus.MARRIED) {
@@ -63,7 +61,7 @@ public class ApplicationManager {
     public static void book(Application ap) throws IllegalAccessException, IllegalArgumentException {
         Officer o = (Officer) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (o.getProjectInCharge() != p) throw new IllegalAccessException("not in charge!");
+        if (!o.inCharge(p)) throw new IllegalAccessException("not in charge!");
         if (ap.getStatus() != Status.SUCCESSFUL) throw new IllegalArgumentException("application not successful!");
         
         FlatType f = ap.getFlatType();
@@ -75,7 +73,7 @@ public class ApplicationManager {
     public static void approve(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (m.getProjectInCharge() != p) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
         if (ap.getStatus() != Status.PENDING) throw new IllegalArgumentException("application not pending!");
         if (!approval) {
             ap.setStatus(Status.UNSUCCESSFUL);
@@ -93,7 +91,7 @@ public class ApplicationManager {
     public static void approveWithdraw(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (m.getProjectInCharge() != p) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
         if (ap.getWithdrawing() != WithdrawStatus.PENDING) throw new IllegalArgumentException("application not withdrawing!");
         
         if (!approval) {
@@ -110,5 +108,8 @@ public class ApplicationManager {
             if (f == FlatType.TWO_ROOM) p.setNum2Room(p.getNum2Room()+1);
             if (f == FlatType.THREE_ROOM) p.setNum3Room(p.getNum3Room()+1);
         }
+
+        ap.setStatus(Status.WITHDRAWN);
+        ap.setWithdrawing(WithdrawStatus.SUCCESSFUL);
     }
 }

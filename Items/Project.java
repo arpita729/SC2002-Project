@@ -1,7 +1,7 @@
 package items;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
 import items.users.*;
 import arrays.*;
@@ -11,12 +11,13 @@ public class Project extends Item {
     private String neighborhood;
     private int num2Room;
     private int num3Room;
-    private Date openingDate;
-    private Date closingDate;
+    private LocalDate openingDate;
+    private LocalDate closingDate;
     private int officerSlots;
     private boolean visibility = true;
+    private Manager manager;
 
-    public Project(String name, String neigh, int room2, int room3, Date od, Date cd, int oSlots) {
+    public Project(String name, String neigh, int room2, int room3, LocalDate od, LocalDate cd, int oSlots, Manager m) {
         this.name = name;
         neighborhood = neigh;
         num2Room = room2;
@@ -24,6 +25,7 @@ public class Project extends Item {
         openingDate = od;
         closingDate = cd;
         officerSlots = oSlots;
+        manager = m;
     }
     
     public String getName() {
@@ -42,11 +44,11 @@ public class Project extends Item {
         return num3Room;
     }
     
-    public Date getOpeningDate() {
+    public LocalDate getOpeningDate() {
         return openingDate;
     }
     
-    public Date getClosingDate() {
+    public LocalDate getClosingDate() {
         return closingDate;
     }
     
@@ -62,7 +64,7 @@ public class Project extends Item {
         return Applications.filter(this);
     }
     
-    public ArrayList<Application> getOfficerApplications() {
+    public ArrayList<OfficerApplication> getOfficerApplications() {
         return OfficerApplications.filter(this);
     }
     
@@ -75,11 +77,11 @@ public class Project extends Item {
     }
 
     public ArrayList<Officer> getOfficers() {
-        return Users.filterOfficers(this);
+        return OfficerApplications.getOfficers(this);
     }
     
     public Manager getManager() {
-        return Users.filterManager(this);
+        return manager;
     }
 
     // setters
@@ -99,11 +101,11 @@ public class Project extends Item {
         this.num3Room = num3Room;
     }
     
-    public void setOpeningDate(Date openingDate) {
+    public void setOpeningDate(LocalDate openingDate) {
         this.openingDate = openingDate;
     }
     
-    public void setClosingDate(Date closingDate) {
+    public void setClosingDate(LocalDate closingDate) {
         this.closingDate = closingDate;
     }
     

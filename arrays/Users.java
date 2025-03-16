@@ -39,38 +39,6 @@ public class Users {
         return applicants;
     }
 
-    /**
-     * Filter officers for a specific project
-     * @param p project
-     * @return only officers who are already accepted.
-     */
-    public static ArrayList<Officer> filterOfficers(Project p) {
-        ArrayList<Officer> officers = new ArrayList<>();
-        
-        for (User user : userList) {
-            if (user.getDeleted()) continue;
-            if (user.getType() != UserType.OFFICER) continue;
-            if (((Officer)user).getProjectInCharge() == p) {
-                officers.add((Officer) user);
-            }
-        }
-        
-        return officers;
-    }
-
-    // Find the manager in charge of a specific project
-    public static Manager filterManager(Project p) {
-        for (User user : userList) {
-            if (user.getDeleted()) continue;
-            if (user.getType() != UserType.MANAGER) continue;
-            if (((Manager)user).getProjectInCharge() == p) {
-                return (Manager) user;
-            }
-        }
-        
-        return null;
-    }
-
     public static User getUser(int id) {
         return userList.get(id);
     }

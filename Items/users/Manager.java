@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import items.Enquiry;
 import items.Project;
 import arrays.Enquiries;
+import arrays.Projects;
 
 public class Manager extends User {
-    private Project projectInCharge = null;
     public Manager(String ic, String password, int age, MaritalStatus maritalStatus) {
         super(ic, UserType.MANAGER, password, age, maritalStatus);
     }
 
-    public Project getProjectInCharge() {
-        return projectInCharge;
+    public ArrayList<Project> getProjectsInCharge() {
+        return Projects.filter(this);
     }
 
-    public void setProjectInCharge(Project p) {
-        projectInCharge = p;
+    public boolean inCharge(Project p) {
+        return getProjectsInCharge().contains(p);
     }
 
     public ArrayList<Enquiry> getReplies() {

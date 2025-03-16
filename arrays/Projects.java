@@ -3,10 +3,23 @@ package arrays;
 import java.util.ArrayList;
 
 import items.Project;
+import items.users.*;
 
 public class Projects {
     private static ArrayList<Project> projectList = new ArrayList<>();
     private static int size=0;
+
+    public static ArrayList<Project> filter(Manager m) {
+        ArrayList<Project> al = new ArrayList<>();
+        
+        for (Project item : projectList) {
+            if (item.getDeleted()) continue;
+            if (item.getManager() == m) {
+                al.add(item);
+            }
+        }
+        return al;
+    }
 
     // Static method to get a project by its ID
     public static Project getProject(int id) {

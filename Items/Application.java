@@ -4,13 +4,13 @@ import items.users.Applicant;
 
 public class Application extends Item {
     public enum Status {
-        PENDING, SUCCESSFUL, UNSUCCESSFUL, BOOKED
+        PENDING, SUCCESSFUL, UNSUCCESSFUL, BOOKED, WITHDRAWN
     }
     public enum FlatType {
         TWO_ROOM, THREE_ROOM
     }
     public enum WithdrawStatus {
-        NONE, PENDING, UNSUCCESSFUL
+        NONE, PENDING, UNSUCCESSFUL, SUCCESSFUL
     }
 
     private Applicant applicant;

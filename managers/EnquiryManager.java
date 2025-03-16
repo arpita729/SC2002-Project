@@ -16,14 +16,15 @@ public class EnquiryManager {
 
     public static void reply(Enquiry e, String reply) throws IllegalAccessException {
         User user = AppUserManager.getCurrentUser();
+        Project p = e.getProject();
         if (user.getType() != UserType.MANAGER && user.getType() != UserType.OFFICER) {
             throw new IllegalAccessException("wrong usertype!");
         }
         if (user.getType() == UserType.OFFICER) {
-            if (e.getProject() != ((Officer)user).getProjectInCharge()) throw new IllegalAccessError("not in charge!");
+            if (!((Officer)user).inCharge(p)) throw new IllegalAccessException("not in charge!");
         }
         if (user.getType() == UserType.MANAGER) {
-            if (e.getProject() != ((Manager)user).getProjectInCharge()) throw new IllegalAccessError("not in charge!");
+            if (!((Manager)user).inCharge(p)) throw new IllegalAccessException("not in charge!");
         }
         e.reply(AppUserManager.getCurrentUser(), reply);
     }
