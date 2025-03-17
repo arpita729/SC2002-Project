@@ -67,6 +67,7 @@ public class Test {
             testCase18_WrongApplicationPeriod();
             testCase10_OfficerApply();
             testCase6_ApplicantApply();
+            testCase8_MultipleProjects();
             p.setVisibility(false);
             testCase9_EnquiryManagement();
             testCase24_NotYetOfficer();
@@ -201,14 +202,8 @@ public class Test {
             AppUserManager.login("T7654321A", "password");
             ap = ApplicationManager.apply(p, FlatType.TWO_ROOM);
             if (ap.getStatus() != Status.PENDING) throw new AssertionError("expected pending state");
-        
-            try {
-                ApplicationManager.apply(p, FlatType.TWO_ROOM); // already have
-                throw new AssertionError("Expected error: Applicant should not be able to apply twice.");
-            } catch (Exception e) {
-                // Expected error, do nothing
-            }
             AppUserManager.logout();
+
             AppUserManager.login("T7654321B","password");
             bp = ApplicationManager.apply(p, FlatType.THREE_ROOM);
             AppUserManager.logout();
@@ -258,7 +253,32 @@ public class Test {
             System.out.println(e.toString());
             throw new RuntimeException("Test Case 6 Falied");
         }
-        
+    }
+
+    public static void testCase8_MultipleProjects() {
+        try {
+            AppUserManager.login("T7654321A", "password");
+            try {
+                ApplicationManager.apply(p4, FlatType.TWO_ROOM); // already have
+                throw new AssertionError("Expected error: Applicant should not be able to apply twice.");
+            } catch (Exception e) {
+                // Expected error, do nothing
+            }
+            AppUserManager.logout();
+
+            AppUserManager.login("T7654321B","password");
+            try {
+                ApplicationManager.apply(p2, FlatType.TWO_ROOM); // already have
+                throw new AssertionError("Expected error: Applicant should not be able to apply twice.");
+            } catch (Exception e) {
+                // Expected error, do nothing
+            }
+            AppUserManager.logout();
+            
+        } catch (Exception e) { 
+            System.out.println(e.toString());
+            throw new RuntimeException("Test Case 9 Failed");
+        }
     }
     
     public static void testCase9_EnquiryManagement() {

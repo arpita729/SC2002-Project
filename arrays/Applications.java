@@ -6,10 +6,22 @@ import items.Application;
 import items.Project;
 import items.users.Applicant;
 
+/**
+ * The Applications class manages the list of applications in the system.
+ * It provides methods to filter applications by project or applicant,
+ * add new applications, delete applications, and retrieve the list of all applications.
+ */
 public class Applications {
+    
     private static ArrayList<Application> applicationList = new ArrayList<>();
     private static int size = 0;
 
+    /**
+     * Filters the applications for a given project.
+     * 
+     * @param p The project to filter applications for.
+     * @return A list of applications associated with the given project.
+     */
     public static ArrayList<Application> filter(Project p) {
         ArrayList<Application> applicationsForProject = new ArrayList<>();
         
@@ -22,7 +34,12 @@ public class Applications {
         return applicationsForProject;
     }
 
-    // Filter application by applicant
+    /**
+     * Filters the application for a given applicant.
+     * 
+     * @param a The applicant whose application is to be retrieved.
+     * @return The application associated with the given applicant, or null if not found.
+     */
     public static Application filter(Applicant a) {
         for (Application item : applicationList) {
             if (item.getDeleted()) continue;
@@ -34,36 +51,62 @@ public class Applications {
         return null; // If no application for the given applicant is found
     }
 
-    // Static method to get an application by its ID
+    /**
+     * Retrieves an application by its ID.
+     * 
+     * @param id The ID of the application to retrieve.
+     * @return The application with the given ID.
+     */
     public static Application getApplication(int id) {
         return applicationList.get(id);  
     }
 
-    // Static method to add a new application
+    /**
+     * Adds a new application to the list.
+     * 
+     * @param application The application to be added to the list.
+     */
     public static void newApplication(Application application) {
         application.setId(applicationList.size()); 
         applicationList.add(application);  // Add the application to the list
         size++; 
     }
 
-    // Static method to delete an application
+    /**
+     * Deletes an application from the list.
+     * 
+     * @param application The application to be deleted.
+     */
     public static void deleteApplication(Application application) {
         application.delete(); 
         size--;
     }
 
-    // Static method to get all applications in the list
+    /**
+     * Retrieves all applications in the list.
+     * 
+     * @return A list of all applications.
+     */
     public static ArrayList<Application> getAllApplications() {
         return new ArrayList<>(applicationList);  
     }
 
-    // Static method to get the size of the application list
+    /**
+     * Retrieves the size of the application list.
+     * 
+     * @return The number of applications in the list.
+     */
     public static int getSize() {
         return size;  
     }
 
+    /**
+     * Sets the application list directly.
+     * 
+     * @param a The list of applications to be set.
+     */
     public static void setApplications(ArrayList<Application> a) {
         applicationList = a;
-        size = a.size(); // assume no deleteds
+        size = a.size(); // assume no deletions
     }
 }

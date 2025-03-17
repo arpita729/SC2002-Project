@@ -1,80 +1,187 @@
 @startuml EntityClassDiagram
-abstract Item {
-    -id:int
-    -deleted:bool
-    +toString():String
-    +delete():void
+abstract class Item {
+    - id: int
+    - deleted: bool = false
+    + getId(): int
+    + setId(id: int): void
+    + getDeleted(): bool
+    + delete(): void
+    + toString(): String
 }
 
 'Project Items
 class Project extends Item {
-    -name:String
-    -neighborhood:String
-    -flatType:enum (2-Room, 3-Room)
-    -units:String
-    -openingDate
-    -closingDate
-    -officerSlots:int
-    -visibility:bool
-    +getApplicantions():Application[]
-    +getOfficerApplications():OfficerApplication[]
-    +getEnquiries():Enquiry[]
-    +getOfficers():Officer[]
-    +getManager():Manager
+    - name: String
+    - neighborhood: String
+    - num2Room: int
+    - num3Room: int
+    - openingDate: LocalDate
+    - closingDate: LocalDate
+    - officerSlots: int
+    - visibility: bool = true
+    - manager: Manager
+    
+    + getName(): String
+    + setName(name: String): void
+    + getNeighborhood(): String
+    + setNeighborhood(neighborhood: String): void
+    + getNum2Room(): int
+    + setNum2Room(num2Room: int): void
+    + getNum3Room(): int
+    + setNum3Room(num3Room: int): void
+    + getOpeningDate(): LocalDate
+    + setOpeningDate(openingDate: LocalDate): void
+    + getClosingDate(): LocalDate
+    + setClosingDate(closingDate: LocalDate): void
+    + getOfficerSlots(): int
+    + setOfficerSlots(officerSlots: int): void
+    + isVisible(): bool
+    + setVisibility(visibility: bool): void
+    + getApplications(): ArrayList<Application>
+    + getOfficerApplications(): ArrayList<OfficerApplication>
+    + getEnquiries(): ArrayList<Enquiry>
+    + getApplicants(): ArrayList<Applicant>
+    + getOfficers(): ArrayList<Officer>
+    + getManager(): Manager
+    + toString(): String
 }
 
 class Application extends Item {
-    -applicant:Applicant
-    -project:Project
-    -status:enum (pending, successful, unsuccessful, booked, withdrawing, withdrawn)
+    - applicant: Applicant
+    - project: Project
+    - status: Status = PENDING
+    - withdrawing: WithdrawStatus = NONE
+    - flatType: FlatType
+
+    + Application(a: Applicant, p: Project, f: FlatType)
+    + getApplicant(): Applicant
+    + getProject(): Project
+    + getStatus(): Status
+    + setStatus(status: Status): void
+    + getFlatType(): FlatType
+    + getWithdrawing(): WithdrawStatus
+    + setWithdrawing(w: WithdrawStatus): void
+    + toString(): String
 }
 
-Application --> Applicant : Applicant
-Application --> Project : Project
+enum Status {
+    PENDING, SUCCESSFUL, UNSUCCESSFUL, BOOKED, WITHDRAWN
+}
 
-class OfficerApplication extends Application
-OfficerApplication --> Officer : Officer
-OfficerApplication --> Project : Project
+enum FlatType {
+    TWO_ROOM, THREE_ROOM
+}
+
+enum WithdrawStatus {
+    NONE, PENDING, UNSUCCESSFUL, SUCCESSFUL
+}
+
+Application "1" --> "1" Applicant
+Application "1" --> "1" Project
+Application "1" --> "1" Status
+Application "1" --> "1" FlatType
+Application "1" --> "1" WithdrawStatus
+
+class OfficerApplication extends Application {
+    + OfficerApplication(o: Officer, p: Project)
+}
+
+OfficerApplication --> Officer : "Applicant"
+
 
 class Enquiry extends Item {
-    -applicant:Applicant
-    -replier:User
-    -project:Project
-    -enquiry:String
-    -reply:String
+    - enquiry: String
+    - reply: String
+    - applicant: Applicant
+    - replier: User
+    - project: Project
+
+    + Enquiry(a: Applicant, p: Project, e: String)
+    + getEnquiry(): String
+    + setEnquiry(enquiry: String): void
+    + getReply(): String
+    + setReply(reply: String): void
+    + getApplicant(): Applicant
+    + getReplier(): User
+    + getProject(): Project
+    + reply(replier: User, reply: String) throws IllegalAccessException
+    + toString(): String
 }
-Enquiry --> Project : Project
+
+Enquiry "1" --> "1" Applicant
+Enquiry "1" --> "1" User : Replier
+Enquiry "1" --> "1" Project
 
 'Users
-class User extends Item{
-    -name:String
-    -type:enum
-    -password:String
-    -age:int
-    -maritalStatus:enum
+class User extends Item {
+    - ic: String
+    - type: UserType
+    - password: String = "password"
+    - age: int
+    - maritalStatus: MaritalStatus
+
+    + User(ic: String, type: UserType, password: String, age: int, maritalStatus: MaritalStatus)
+    + toString(): String
+    + getIc(): String
+    + getType(): UserType
+    + getPassword(): String
+    + getAge(): int
+    + getMaritalStatus(): MaritalStatus
+    + setPassword(password: String): void
 }
+
+enum UserType {
+    APPLICANT, OFFICER, MANAGER
+}
+
+enum MaritalStatus {
+    SINGLE, MARRIED
+}
+
+User "1" --> "1" UserType
+User "1" --> "1" MaritalStatus
 
 class Applicant extends User {
-    -project:Project
-    +applyProject(p:Project)
-    +withdrawApplication()
-    +getApplication():Application
-    +getEnquiries():Enquiry[]
+    - application: Application
+
+    + Applicant(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+    + Applicant(ic: String, u: UserType, password: String, age: int, maritalStatus: MaritalStatus)
+    + getProject(): Project
+    + getApplication(): Application
+    + getEnquiries(): ArrayList<Enquiry>
+    + setApplication(application: Application): void
 }
+
+Applicant "1" --> "1" Application
+Applicant "1" --> "1" Project
+Applicant "1" --> "*" Enquiry
 
 class Officer extends Applicant {
-    -projectInCharge:Project
-    +getProject():Project
-    +getOfficerApplication():OfficerApplication
-    +getReplies():Enquiry[]
+    + Officer(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+    + getProjectsInCharge(): ArrayList<Project>
+    + inCharge(p: Project): boolean
+    + hasApplication(p: Project): boolean
+    + getReplies(): ArrayList<Enquiry>
 }
 
+' Relationships with multiplicity (no relationship names)
+Officer --> "*" Project
+Officer --> "*" Enquiry
+Officer --> "*" OfficerApplications
+
 class Manager extends User {
-    -projectInCharge:Project
-    +getProject():Project
-    +createProject():Project
-    +getReplies():Enquiry[]
+    + Manager(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+    + getProjectsInCharge(): ArrayList<Project>
+    + inCharge(p: Project): boolean
+    + getReplies(): ArrayList<Enquiry>
 }
+
+' Relationships with multiplicity
+Manager "1" --> "*" Project
+Manager "1" --> "*" Enquiry
+Manager "1" --> "1" UserType
+Manager "1" --> "*" Project
+Manager "1" --> "*" Enquiry
 
 'GUI Interfaces 
 interface Menu {
@@ -93,69 +200,172 @@ LoginMenu ..> OfficerMenu
 LoginMenu ..> ManagerMenu
 
 'Arrays
-class Users <<static>> {
-    -userArray:User[]
-    +filterApplicants(p:Project):Applicant[]
-    +filterOfficers(p:Project):Officer[]
-    +filterManager(p:Project):Manager
+
+class Users <<static>>{
+    - userList: ArrayList<User>
+    - size: int
+    + filterIc(ic: String): User
+    + filterApplicants(p: Project): ArrayList<Applicant>
+    + getUser(id: int): User
+    + newUser(user: User): void
+    + deleteUser(user: User): void
+    + getAllUsers(): ArrayList<User>
+    + getSize(): int
+    + setUsers(u: ArrayList<User>): void
 }
+
 Users "1" -- "*" User
+Users ..> Project : filter by
 
 class Projects <<static>> {
-    -projectArray:Project[]
-    +filter()
+    - projectList: ArrayList<Project>
+    - size: int
+    + filter(m: Manager): ArrayList<Project>
+    + getProject(id: int): Project
+    + newProject(project: Project): void
+    + deleteProject(project: Project): void
+    + getAllProjects(): ArrayList<Project>
+    + getSize(): int
+    + setProjects(p: ArrayList<Project>): void
 }
-Projects "1" -- "*" Project
 
-class Applications <<static>>{
-    -ApplicationArray:Application[]
-    +filter(p:Project):Application[]
-    +filter(a:Applicant):Application
+Projects --> "*" Project
+Projects ..> Manager : "filter by"
+
+class Applications <<static>> {
+    - applicationList: ArrayList<Application>
+    - size: int
+    + filter(p: Project): ArrayList<Application>
+    + filter(a: Applicant): Application
+    + getApplication(id: int): Application
+    + newApplication(application: Application): void
+    + deleteApplication(application: Application): void
+    + getAllApplications(): ArrayList<Application>
+    + getSize(): int
+    + setApplications(a: ArrayList<Application>): void
 }
-Applications "1" -- "*" Application
+Applications "1" --> "*" Application
+Applications ..> Project : "filter by"
+Applications ..> Applicant : "filter by"
 
-class OfficerApplications <<static>> extends Applications 
-OfficerApplications "1" -- "*" OfficerApplication
 
-class Enquiries <<static>> {
-    -EnquiryArray: Enquiry[]
-    +filter(p:Project):Enquiry[]
-    'filtering as an applicant gets enquiries
-    +filter(a:Applicant):Enquiry[] 
-    'filtering as a manager or officer gets replies
-    +filter(m:Manager):Enquiry[]
-    +filter(o:Officer):Enquiry[]
+class OfficerApplications <<static>> {
+    - officerApplicationList: ArrayList<OfficerApplication>
+    - size: int
+    + getProjects(o: Officer): ArrayList<Project>
+    + getAllProjects(o: Officer): ArrayList<Project>
+    + getOfficers(p: Project): ArrayList<Officer>
+    + filter(p: Project): ArrayList<OfficerApplication>
+    + filter(a: Applicant): OfficerApplication
+    + getOfficerApplication(id: int): OfficerApplication
+    + newOfficerApplication(officerApplication: OfficerApplication): void
+    + deleteOfficerApplication(officerApplication: OfficerApplication): void
+    + getAllOfficerApplications(): ArrayList<OfficerApplication>
+    + getSize(): int
 }
-Enquiries "1" -- "*" Enquiry
+
+OfficerApplications --> "*" OfficerApplication
+OfficerApplications ..> Project : "filter by"
+OfficerApplications ..> Officer : "filter by" 
+
+class Enquiries <<static>>{
+    - enquiryList: ArrayList<Enquiry>
+    - size: int
+    + filter(p: Project): ArrayList<Enquiry>
+    + filter(a: Applicant): ArrayList<Enquiry>
+    + filter(m: Manager): ArrayList<Enquiry>
+    + filter(o: Officer): ArrayList<Enquiry>
+    + getEnquiry(id: int): Enquiry
+    + newEnquiry(e: Enquiry): void
+    + deleteEnquiry(e: Enquiry): void
+    + getAllEnquiries(): ArrayList<Enquiry>
+    + getSize(): int
+}
+
+Enquiries --> "*" Enquiry 
+Enquiries ..> Project : "filter by"
+Enquiries ..> Applicant : "filter by"
+Enquiries ..> Manager : "filter by"
+Enquiries ..> Officer : "filter by"
 
 'Managers
 class ApplicationManager <<static>> {
-    +WithdrawApplication(a:Application)
-    +ApproveApplication(a:Application)
-    +BookApplication(a:Application)
-    +ApproveWithdrawal(a:Application)
+    +apply(p: Project, f: FlatType): Application
+    +withdraw(): void
+    +checkUnits(p: Project, f: FlatType, minus: boolean): void
+    +book(ap: Application): void
+    +approve(ap: Application, approval: boolean): void
+    +approveWithdraw(ap: Application, approval: boolean): void
 }
-ApplicationManager ..> Application
+
+ApplicationManager ..> Project : "apply for"
+ApplicationManager ..> Application : "manages"
+ApplicationManager ..> Officer : "operates with"
+ApplicationManager ..> Manager : "operates with"
+ApplicationManager ..> Applicant : "operates with"
+ApplicationManager ..> FlatType : "uses"
+ApplicationManager ..> Status : "uses"
+ApplicationManager ..> WithdrawStatus : "uses"
+ApplicationManager ..> AppUserManager
 
 class ProjectManager <<static>> {
-    +newProject():Project
-    +toggleVisibility(p:Project,vis:bool)
-    +viewDetails(p:Project)
+    + create(name: String, neigh: String, room2: int, room3: int, od: LocalDate, cd: LocalDate, oSlots: int): Project
 }
-ProjectManager ..> Project
+
+ProjectManager --> "*" Project : "creates"
+ProjectManager ..> Manager : "accesses current manager"
+ProjectManager ..> Validator
+ApplicationManager ..> AppUserManager
 
 class EnquiryManager <<static>> {
-    +reply(r:string) only used by managers
+    + create(p: Project, enquiry: String): Enquiry
+    + reply(e: Enquiry, reply: String): void
+    + edit(e: Enquiry, enquiry: String): void
+    + editReply(e: Enquiry, reply: String): void
 }
-EnquiryManager ..> Enquiry
+
+EnquiryManager ..> Enquiry : "creates"
+EnquiryManager ..> Project : "works with"
+EnquiryManager ..> User : "authorizes"
+EnquiryManager ..> Officer : "checks role"
+EnquiryManager ..> Manager : "checks role"
+ApplicationManager ..> AppUserManager
 
 class AppUserManager <<static>> {
-    -currentUser:User
-    +login()
-    +logout()
+    - currentUser: User
+    + login(ic: String, password: String): void
+    + logout(): void
+    + changePassword(password: String, newPassword: String): void
+    + getCurrentUser(): User
 }
-AppUserManager ..> User
 
+AppUserManager ..> User
+AppUserManager ..> Validator
+
+class OfficerApplicationManager <<static>> {
+    +apply(p: Project): OfficerApplication
+    +withdraw(ap: OfficerApplication): void
+    +approve(ap: OfficerApplication, approval: boolean): void
+    +approveWithdraw(ap: OfficerApplication, approval: boolean): void
+}
+
+OfficerApplicationManager ..> Project : "apply for"
+OfficerApplicationManager ..> OfficerApplication : "manages"
+OfficerApplicationManager ..> Officer : "operates with"
+OfficerApplicationManager ..> Manager : "operates with"
+OfficerApplicationManager ..> Status : "uses"
+OfficerApplicationManager ..> WithdrawStatus : "uses"
+OfficerApplicationManager ..> Validator
+OfficerApplicationManager ..> AppUserManager
+
+class Validator {
+    - static String regex
+    - static Pattern pattern
+    + static boolean validateNRIC(String ic)
+    + static boolean validateDates(LocalDate start, LocalDate end)
+    + static boolean validateProjectOverlap(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2)
+    + static void validateNewProject(LocalDate start, LocalDate end, ArrayList<Project> pa)
+}
 
 ' not sure about this one
 class OfficerMenu extends ApplicantMenu 

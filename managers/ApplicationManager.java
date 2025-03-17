@@ -9,7 +9,21 @@ import items.users.User.UserType;
 
 import arrays.Applications;
 
+
+/**
+ * This class manages the application process for the users (Applicants, Officers, and Managers).
+ * It handles actions such as applying, withdrawing, booking, and approving applications.
+ */
 public class ApplicationManager {
+    /**
+     * Allows an applicant to apply for a project with a specified flat type.
+     * This method checks various conditions like marital status, age, project visibility, etc.
+     * 
+     * @param p the project the applicant is applying for
+     * @param f the flat type the applicant wants to apply for
+     * @return the created Application
+     * @throws IllegalArgumentException if any of the validation checks fail
+     */
     public static Application apply(Project p, FlatType f) throws IllegalArgumentException {
         Applicant a = (Applicant) AppUserManager.getCurrentUser();
         // Implementation here
@@ -36,6 +50,12 @@ public class ApplicationManager {
         return ap;
     }
 
+    /**
+     * Allows an applicant to withdraw their application.
+     * The application status is set to pending withdrawal.
+     * 
+     * @throws IllegalArgumentException if the applicant doesn't have an application
+     */
     public static void withdraw() throws IllegalArgumentException {
         Applicant a = (Applicant) AppUserManager.getCurrentUser();
         // Implementation here
@@ -44,6 +64,14 @@ public class ApplicationManager {
         ap.setWithdrawing(WithdrawStatus.PENDING);
     }
 
+    /**
+     * Checks the number of available units for a specified flat type.
+     * 
+     * @param p the project in which the applicant is applying
+     * @param f the flat type being applied for
+     * @param minus boolean indicating whether the unit count should be decreased (true) or not (false)
+     * @throws IllegalArgumentException if there are not enough available units
+     */
     private static void checkUnits(Project p, FlatType f, boolean minus) {
         
         int units=-1;
@@ -58,6 +86,14 @@ public class ApplicationManager {
         if (f == FlatType.THREE_ROOM) p.setNum3Room(units);
     }
 
+    /**
+     * Allows an officer to book an application that has been successful.
+     * The number of available units for the specified flat type is decremented.
+     * 
+     * @param ap the application being booked
+     * @throws IllegalAccessException if the officer is not in charge of the project
+     * @throws IllegalArgumentException if the application is not successful
+     */
     public static void book(Application ap) throws IllegalAccessException, IllegalArgumentException {
         Officer o = (Officer) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
@@ -70,6 +106,16 @@ public class ApplicationManager {
         ap.setStatus(Status.BOOKED);
     }
 
+    /**
+     * Allows a manager to approve or reject an application.
+     * If approved, the application is marked as successful and the number of available units is decremented.
+     * If rejected, the application is marked as unsuccessful.
+     * 
+     * @param ap the application to approve/reject
+     * @param approval boolean indicating whether the approval is granted or not
+     * @throws IllegalAccessException if the manager is not in charge of the project
+     * @throws IllegalArgumentException if the application is not in a pending state
+     */
     public static void approve(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
@@ -88,6 +134,15 @@ public class ApplicationManager {
         ap.setStatus(Status.SUCCESSFUL);
     }
 
+    /**
+     * Allows a manager to approve or reject a withdrawal request for an application.
+     * If approved, the application is marked as withdrawn, and the flat units are incremented back.
+     * 
+     * @param ap the application to approve/reject for withdrawal
+     * @param approval boolean indicating whether the withdrawal approval is granted or not
+     * @throws IllegalAccessException if the manager is not in charge of the project
+     * @throws IllegalArgumentException if the application is not in a withdrawing state
+     */
     public static void approveWithdraw(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();

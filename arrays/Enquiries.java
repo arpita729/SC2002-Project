@@ -8,11 +8,23 @@ import items.users.Applicant;
 import items.users.Manager;
 import items.users.Officer;
 
+/**
+ * This class manages a collection of enquiries and provides methods to filter them
+ * based on different roles (Applicant, Manager, Officer) and project.
+ */
 public class Enquiries {
+    
+    // List of all enquiries
     private static ArrayList<Enquiry> enquiryList = new ArrayList<>();
+    
+    // Size of the enquiry list
     private static int size = 0;
 
-    // Filter enquiries by project (for Applicant role)
+    /**
+     * Filters enquiries related to a specific project.
+     * @param p The project to filter enquiries by.
+     * @return A list of enquiries related to the given project.
+     */
     public static ArrayList<Enquiry> filter(Project p) {
         ArrayList<Enquiry> enquiriesForProject = new ArrayList<>();
         
@@ -26,7 +38,11 @@ public class Enquiries {
         return enquiriesForProject;
     }
 
-    // Filter enquiries by applicant (for Applicant role)
+    /**
+     * Filters enquiries related to a specific applicant.
+     * @param a The applicant to filter enquiries by.
+     * @return A list of enquiries related to the given applicant.
+     */
     public static ArrayList<Enquiry> filter(Applicant a) {
         ArrayList<Enquiry> enquiriesForApplicant = new ArrayList<>();
         
@@ -40,7 +56,11 @@ public class Enquiries {
         return enquiriesForApplicant;
     }
 
-    // Filter enquiries by manager (for Manager role)
+    /**
+     * Filters enquiries related to a specific manager.
+     * @param m The manager to filter enquiries by.
+     * @return A list of enquiries related to the given manager.
+     */
     public static ArrayList<Enquiry> filter(Manager m) {
         ArrayList<Enquiry> enquiriesForManager = new ArrayList<>();
         
@@ -54,7 +74,11 @@ public class Enquiries {
         return enquiriesForManager;
     }
 
-    // Filter enquiries by officer (for Officer role)
+    /**
+     * Filters enquiries related to a specific officer.
+     * @param o The officer to filter enquiries by.
+     * @return A list of enquiries related to the given officer.
+     */
     public static ArrayList<Enquiry> filter(Officer o) {
         ArrayList<Enquiry> enquiriesForOfficer = new ArrayList<>();
         
@@ -68,26 +92,46 @@ public class Enquiries {
         return enquiriesForOfficer;
     }
 
-
+    /**
+     * Retrieves an enquiry by its ID.
+     * @param id The ID of the enquiry to retrieve.
+     * @return The enquiry with the given ID.
+     */
     public static Enquiry getEnquiry(int id) {
         return enquiryList.get(id);
     }
 
+    /**
+     * Adds a new enquiry to the list.
+     * @param enquiry The enquiry to be added.
+     */
     public static void newEnquiry(Enquiry enquiry) {
         enquiry.setId(enquiryList.size());
         enquiryList.add(enquiry);
         size++;
     }
 
+    /**
+     * Deletes a specific enquiry from the list.
+     * @param enquiry The enquiry to be deleted.
+     */
     public static void deleteEnquiry(Enquiry enquiry) {
         enquiry.delete();
         size--;
     }
 
+    /**
+     * Retrieves all enquiries in the list.
+     * @return A list of all enquiries.
+     */
     public static ArrayList<Enquiry> getAllEnquiries() {
         return new ArrayList<>(enquiryList);
     }
 
+    /**
+     * Gets the size of the enquiry list.
+     * @return The size of the enquiry list.
+     */
     public static int getSize() {
         return size;
     }
