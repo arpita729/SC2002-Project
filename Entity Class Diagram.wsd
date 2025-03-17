@@ -9,7 +9,7 @@ abstract class Item {
     + toString(): String
 }
 
-'Project Items
+'---ITEMS---
 class Project extends Item {
     - name: String
     - neighborhood: String
@@ -112,7 +112,7 @@ Enquiry "1" --> "1" Applicant
 Enquiry "1" --> "1" User : Replier
 Enquiry "1" --> "1" Project
 
-'Users
+'---USERS---
 class User extends Item {
     - ic: String
     - type: UserType
@@ -164,7 +164,6 @@ class Officer extends Applicant {
     + getReplies(): ArrayList<Enquiry>
 }
 
-' Relationships with multiplicity (no relationship names)
 Officer --> "*" Project
 Officer --> "*" Enquiry
 Officer --> "*" OfficerApplications
@@ -176,14 +175,13 @@ class Manager extends User {
     + getReplies(): ArrayList<Enquiry>
 }
 
-' Relationships with multiplicity
 Manager "1" --> "*" Project
 Manager "1" --> "*" Enquiry
 Manager "1" --> "1" UserType
 Manager "1" --> "*" Project
 Manager "1" --> "*" Enquiry
 
-'GUI Interfaces 
+'---GUI--- 
 interface Menu {
     +displayMenu()
 }
@@ -199,7 +197,7 @@ LoginMenu ..> ApplicantMenu
 LoginMenu ..> OfficerMenu
 LoginMenu ..> ManagerMenu
 
-'Arrays
+'---ARRAYS---
 
 class Users <<static>>{
     - userList: ArrayList<User>
@@ -215,7 +213,7 @@ class Users <<static>>{
 }
 
 Users "1" -- "*" User
-Users ..> Project : filter by
+'Users ..> Project : filter by
 
 class Projects <<static>> {
     - projectList: ArrayList<Project>
@@ -230,7 +228,7 @@ class Projects <<static>> {
 }
 
 Projects --> "*" Project
-Projects ..> Manager : "filter by"
+'Projects ..> Manager : "filter by"
 
 class Applications <<static>> {
     - applicationList: ArrayList<Application>
@@ -245,8 +243,8 @@ class Applications <<static>> {
     + setApplications(a: ArrayList<Application>): void
 }
 Applications "1" --> "*" Application
-Applications ..> Project : "filter by"
-Applications ..> Applicant : "filter by"
+'Applications ..> Project : "filter by"
+'Applications ..> Applicant : "filter by"
 
 
 class OfficerApplications <<static>> {
@@ -265,8 +263,8 @@ class OfficerApplications <<static>> {
 }
 
 OfficerApplications --> "*" OfficerApplication
-OfficerApplications ..> Project : "filter by"
-OfficerApplications ..> Officer : "filter by" 
+'OfficerApplications ..> Project : "filter by"
+'OfficerApplications ..> Officer : "filter by" 
 
 class Enquiries <<static>>{
     - enquiryList: ArrayList<Enquiry>
@@ -283,12 +281,10 @@ class Enquiries <<static>>{
 }
 
 Enquiries --> "*" Enquiry 
-Enquiries ..> Project : "filter by"
-Enquiries ..> Applicant : "filter by"
-Enquiries ..> Manager : "filter by"
-Enquiries ..> Officer : "filter by"
+'Enquiries ..> Project : "filter by"
+'Enquiries ..> User : "filter by"
 
-'Managers
+'---MANAGERS---
 class ApplicationManager <<static>> {
     +apply(p: Project, f: FlatType): Application
     +withdraw(): void
@@ -300,12 +296,13 @@ class ApplicationManager <<static>> {
 
 ApplicationManager ..> Project : "apply for"
 ApplicationManager ..> Application : "manages"
-ApplicationManager ..> Officer : "operates with"
-ApplicationManager ..> Manager : "operates with"
-ApplicationManager ..> Applicant : "operates with"
-ApplicationManager ..> FlatType : "uses"
-ApplicationManager ..> Status : "uses"
-ApplicationManager ..> WithdrawStatus : "uses"
+'ApplicationManager ..> Officer : "operates with"
+'ApplicationManager ..> Manager : "operates with"
+'ApplicationManager ..> Applicant : "operates with"
+ApplicationManager ..> User : "operates with"
+'ApplicationManager ..> FlatType : "uses"
+'ApplicationManager ..> Status : "uses"
+'ApplicationManager ..> WithdrawStatus : "uses"
 ApplicationManager ..> AppUserManager
 
 class ProjectManager <<static>> {
@@ -315,7 +312,7 @@ class ProjectManager <<static>> {
 ProjectManager --> "*" Project : "creates"
 ProjectManager ..> Manager : "accesses current manager"
 ProjectManager ..> Validator
-ApplicationManager ..> AppUserManager
+ProjectManager ..> AppUserManager
 
 class EnquiryManager <<static>> {
     + create(p: Project, enquiry: String): Enquiry
@@ -324,12 +321,12 @@ class EnquiryManager <<static>> {
     + editReply(e: Enquiry, reply: String): void
 }
 
-EnquiryManager ..> Enquiry : "creates"
-EnquiryManager ..> Project : "works with"
+EnquiryManager ..> Enquiry : "manages"
+'EnquiryManager ..> Project : "works with"
 EnquiryManager ..> User : "authorizes"
-EnquiryManager ..> Officer : "checks role"
-EnquiryManager ..> Manager : "checks role"
-ApplicationManager ..> AppUserManager
+'EnquiryManager ..> Officer : "checks role"
+'EnquiryManager ..> Manager : "checks role"
+EnquiryManager ..> AppUserManager
 
 class AppUserManager <<static>> {
     - currentUser: User
@@ -351,10 +348,10 @@ class OfficerApplicationManager <<static>> {
 
 OfficerApplicationManager ..> Project : "apply for"
 OfficerApplicationManager ..> OfficerApplication : "manages"
-OfficerApplicationManager ..> Officer : "operates with"
-OfficerApplicationManager ..> Manager : "operates with"
-OfficerApplicationManager ..> Status : "uses"
-OfficerApplicationManager ..> WithdrawStatus : "uses"
+'OfficerApplicationManager ..> Officer : "operates with"
+'OfficerApplicationManager ..> Manager : "operates with"
+'OfficerApplicationManager ..> Status : "uses"
+'OfficerApplicationManager ..> WithdrawStatus : "uses"
 OfficerApplicationManager ..> Validator
 OfficerApplicationManager ..> AppUserManager
 
