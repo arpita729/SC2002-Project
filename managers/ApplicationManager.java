@@ -4,7 +4,6 @@ import items.Application;
 import items.Project;
 import items.Application.*;
 import items.users.*;
-import items.users.User.MaritalStatus;
 import items.users.User.UserType;
 
 import arrays.Applications;
@@ -34,12 +33,7 @@ public class ApplicationManager {
             if (o.hasApplication(p)) throw new IllegalArgumentException("has applied to be officer for project!");
         }
         // check user statuses
-        if (a.getMaritalStatus() == MaritalStatus.MARRIED) {
-            if (a.getAge() < 21) throw new IllegalArgumentException("not of age!");
-        } else { // not married
-            if (a.getAge() < 35) throw new IllegalArgumentException("not of age!");
-            if (f != FlatType.TWO_ROOM) throw new IllegalArgumentException("inapplicable flattype!");
-        }
+        Validator.validateApplication(a, f);
 
         // check visibility
         if (!p.isVisible()) throw new IllegalArgumentException("project not visible!");

@@ -5,17 +5,24 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import items.Project;
+import items.Application.FlatType;
+import items.users.Applicant;
+import items.users.User.*;
 
 /**
  * The Validator class provides utility methods for validating various user inputs and project details.
- * It includes validation for NRIC format, date ranges, and project overlaps.
+ * It includes validation for NRIC format, date ranges, and project overlaps and applications.
  */
 public class Validator {
 
     /**
-     * A regular expression to validate the NRIC format.
+     * A regular expression String to validate the NRIC format.
      */
     static String regex = "^[ST]\\d{7}[A-Z]$";
+
+    /**
+     * A regular expression pattern to validate the NRIC format.
+     */
     static Pattern pattern = Pattern.compile(regex);
 
     /**
@@ -35,7 +42,7 @@ public class Validator {
      * @param end The end date of the range.
      * @return true if the end date is equal to or after the start date, false otherwise.
      */
-    public static boolean validateDates(LocalDate start, LocalDate end) {
+    private static boolean validateDates(LocalDate start, LocalDate end) {
         return !end.isBefore(start);
     }
 
@@ -48,7 +55,7 @@ public class Validator {
      * @param end2 The end date of the second project.
      * @return true if the projects do not overlap, false otherwise.
      */
-    public static boolean validateProjectOverlap(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2) {
+    private static boolean validateProjectOverlap(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2) {
         // Check if the projects overlap
         return end1.isBefore(start2) || end2.isBefore(start1);  // No overlap if one ends before the other starts
     }
@@ -68,4 +75,20 @@ public class Validator {
                 throw new IllegalArgumentException("overlapping dates!");
         }
     }
+
+    /**
+     * Validates if an applicant is allowed to apply for a flat type
+     * @param a the Applicant applying
+     * @param f the FlatType the applicant is applying for 
+     * @throws IllegalArgumentException if the application is invalid
+     */
+    public static void validateApplication(Applicant a, FlatType f) throws IllegalArgumentException {
+        if (a.getMaritalStatus() == MaritalStatus.MARRIED) {
+            if (a.getAge() < 21) throw new IllegalArgumentException("not of age!");
+        } else { // not married
+            if (a.getAge() < 35) throw new IllegalArgumentException("not of age!");
+            if (f != FlatType.TWO_ROOM) throw new IllegalArgumentException("inapplicable flattype!");
+        }
+    }
+    
 }

@@ -78,10 +78,10 @@ public class Test {
             testCase15_Booking();
             testCase22_Withdrawal();
 
-            System.err.println("Passed!");
+            System.out.println("Passed!");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.toString());
         }
         
     }
