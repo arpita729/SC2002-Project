@@ -45,10 +45,6 @@ public abstract class Menu {
         int n = navigationOptions.size();
         if (n == 0) return;
         if (n == 1) {
-            println(
-                "Redirecting to " +
-                navigationOptions.get(0).getDescription()
-            );
             navigationOptions.get(0).display();
             return;
         }
@@ -139,6 +135,15 @@ public abstract class Menu {
      */
     public boolean isInsantiated() {
         return navigationOptions == null;
+    }
+    
+    /**
+     * Gets the navigationOptions of the menu.
+     * 
+     * @return navigationOptions
+     */
+    public List<Menu> getOptions() {
+        return navigationOptions;
     }
 
     /**
