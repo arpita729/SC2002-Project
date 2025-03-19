@@ -5,7 +5,7 @@ import items.users.Applicant;
 /**
  * Represents an application for a housing project.
  */
-public class Application extends Item {
+public class Application extends Item implements Stringifiable {
     /**
      * Enumeration of possible application statuses.
      */

@@ -96,8 +96,10 @@ public class Enquiries {
      * Retrieves an enquiry by its ID.
      * @param id The ID of the enquiry to retrieve.
      * @return The enquiry with the given ID.
+     * @throws IllegalArgumentException if item is deleted
      */
-    public static Enquiry getEnquiry(int id) {
+    public static Enquiry getEnquiry(int id) throws IllegalArgumentException {
+        if (enquiryList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
         return enquiryList.get(id);
     }
 

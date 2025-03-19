@@ -116,8 +116,10 @@ public class OfficerApplications {
      *
      * @param id The ID of the officer application.
      * @return The officer application corresponding to the given ID.
+     * @throws IllegalArgumentException if item is deleted
      */
-    public static OfficerApplication getOfficerApplication(int id) {
+    public static OfficerApplication getOfficerApplication(int id) throws IllegalArgumentException {
+        if (officerApplicationList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
         return officerApplicationList.get(id);
     }
 

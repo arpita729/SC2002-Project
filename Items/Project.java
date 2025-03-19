@@ -9,7 +9,7 @@ import arrays.*;
 /**
  * Represents a housing project with different types of flats, managed by a manager.
  */
-public class Project extends Item {    
+public class Project extends Item implements Stringifiable {    
     private String name;
     private String neighborhood;
     private int num2Room;

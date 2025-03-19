@@ -56,9 +56,11 @@ public class Applications {
      * 
      * @param id The ID of the application to retrieve.
      * @return The application with the given ID.
+     * @throws IllegalArgumentException if item is deleted
      */
-    public static Application getApplication(int id) {
-        return applicationList.get(id);  
+    public static Application getApplication(int id) throws IllegalArgumentException {
+        if (applicationList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
+        return applicationList.get(id); 
     }
 
     /**

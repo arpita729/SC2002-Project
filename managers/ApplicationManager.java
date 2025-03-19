@@ -85,13 +85,13 @@ public class ApplicationManager {
      * The number of available units for the specified flat type is decremented.
      * 
      * @param ap the application being booked
-     * @throws IllegalAccessException if the officer is not in charge of the project
+     * @throws IllegalArgumentException if the officer is not in charge of the project
      * @throws IllegalArgumentException if the application is not successful
      */
-    public static void book(Application ap) throws IllegalAccessException, IllegalArgumentException {
+    public static void book(Application ap) throws IllegalArgumentException {
         Officer o = (Officer) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (!o.inCharge(p)) throw new IllegalAccessException("not in charge!");
+        if (!o.inCharge(p)) throw new IllegalArgumentException("not in charge!");
         if (ap.getStatus() != Status.SUCCESSFUL) throw new IllegalArgumentException("application not successful!");
         
         FlatType f = ap.getFlatType();
@@ -107,13 +107,13 @@ public class ApplicationManager {
      * 
      * @param ap the application to approve/reject
      * @param approval boolean indicating whether the approval is granted or not
-     * @throws IllegalAccessException if the manager is not in charge of the project
+     * @throws IllegalArgumentException if the manager is not in charge of the project
      * @throws IllegalArgumentException if the application is not in a pending state
      */
-    public static void approve(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
+    public static void approve(Application ap, boolean approval) throws IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalArgumentException("not in charge!");
         if (ap.getStatus() != Status.PENDING) throw new IllegalArgumentException("application not pending!");
         if (!approval) {
             ap.setStatus(Status.UNSUCCESSFUL);
@@ -134,13 +134,13 @@ public class ApplicationManager {
      * 
      * @param ap the application to approve/reject for withdrawal
      * @param approval boolean indicating whether the withdrawal approval is granted or not
-     * @throws IllegalAccessException if the manager is not in charge of the project
+     * @throws IllegalArgumentException if the manager is not in charge of the project
      * @throws IllegalArgumentException if the application is not in a withdrawing state
      */
-    public static void approveWithdraw(Application ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
+    public static void approveWithdraw(Application ap, boolean approval) throws IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalArgumentException("not in charge!");
         if (ap.getWithdrawing() != WithdrawStatus.PENDING) throw new IllegalArgumentException("application not withdrawing!");
         
         if (!approval) {

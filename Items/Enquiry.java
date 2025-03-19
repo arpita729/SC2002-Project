@@ -6,7 +6,7 @@ import items.users.User;
 /**
  * Represents an enquiry made by an applicant regarding a project.
  */
-public class Enquiry extends Item {
+public class Enquiry extends Item implements Stringifiable {
     private String enquiry;
     private String reply;
     private Applicant applicant;
@@ -95,10 +95,10 @@ public class Enquiry extends Item {
      * 
      * @param replier the user replying to the enquiry
      * @param reply the reply text
-     * @throws IllegalAccessException if the enquiry has already been replied to
+     * @throws IllegalArgumentException if the enquiry has already been replied to
      */
-    public void reply(User replier, String reply) throws IllegalAccessException {
-        if (this.replier != null) throw new IllegalAccessException("already replied!");
+    public void reply(User replier, String reply) throws IllegalArgumentException {
+        if (this.replier != null) throw new IllegalArgumentException("already replied!");
         this.replier = replier;
         this.reply = reply;
     }

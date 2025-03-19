@@ -18,12 +18,13 @@ public class AppUserManager {
      * @param ic the NRIC of the user
      * @param password the password of the user
      * @throws IllegalArgumentException if the NRIC is invalid or the password is incorrect
-     * @throws IllegalAccessException if the user is already logged in
+     * @throws IllegalArgumentException if the user is already logged in
      */
-    public static void login(String ic, String password) throws IllegalArgumentException, IllegalAccessException {
-        if (currentUser != null) throw new IllegalAccessException("already logged in!");
+    public static void login(String ic, String password) throws IllegalArgumentException {
+        if (currentUser != null) throw new IllegalArgumentException("already logged in!");
         if (!Validator.validateNRIC(ic)) throw new IllegalArgumentException("not valid IC!");
         User u = Users.filterIc(ic);
+    if (u == null) throw new IllegalArgumentException("user not found!");
         if (!u.getPassword().equals(password)) throw new IllegalArgumentException("wrong password!");
         currentUser = u;
     }

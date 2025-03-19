@@ -29,21 +29,21 @@ public class EnquiryManager {
      * Allows a Manager or Officer to reply to an enquiry.
      * @param e the enquiry to reply to
      * @param reply the text content of the reply
-     * @throws IllegalAccessException if the user doesn't have permission to reply to the enquiry
+     * @throws IllegalArgumentException if the user doesn't have permission to reply to the enquiry
      */
-    public static void reply(Enquiry e, String reply) throws IllegalAccessException {
+    public static void reply(Enquiry e, String reply) throws IllegalArgumentException {
         User user = AppUserManager.getCurrentUser();
         Project p = e.getProject();
         
         // Check if user is authorized to reply
         if (user.getType() != UserType.MANAGER && user.getType() != UserType.OFFICER) {
-            throw new IllegalAccessException("wrong usertype!");
+            throw new IllegalArgumentException("wrong usertype!");
         }
         if (user.getType() == UserType.OFFICER) {
-            if (!((Officer)user).inCharge(p)) throw new IllegalAccessException("not in charge!");
+            if (!((Officer)user).inCharge(p)) throw new IllegalArgumentException("not in charge!");
         }
         if (user.getType() == UserType.MANAGER) {
-            if (!((Manager)user).inCharge(p)) throw new IllegalAccessException("not in charge!");
+            if (!((Manager)user).inCharge(p)) throw new IllegalArgumentException("not in charge!");
         }
         
         // Proceed with replying
@@ -54,11 +54,11 @@ public class EnquiryManager {
      * Allows the applicant to edit their enquiry text.
      * @param e the enquiry to edit
      * @param enquiry the new enquiry text
-     * @throws IllegalAccessException if the current user is not the applicant for the enquiry
+     * @throws IllegalArgumentException if the current user is not the applicant for the enquiry
      */
-    public static void edit(Enquiry e, String enquiry) throws IllegalAccessException {
+    public static void edit(Enquiry e, String enquiry) throws IllegalArgumentException {
         if (e.getApplicant() != AppUserManager.getCurrentUser()) {
-            throw new IllegalAccessException("not valid applicant!");
+            throw new IllegalArgumentException("not valid applicant!");
         }
         e.setEnquiry(enquiry);
     }
@@ -67,11 +67,11 @@ public class EnquiryManager {
      * Allows the replier (Manager/Officer) to edit the reply to the enquiry.
      * @param e the enquiry whose reply is to be edited
      * @param reply the new reply text
-     * @throws IllegalAccessException if the current user is not authorized to edit the reply
+     * @throws IllegalArgumentException if the current user is not authorized to edit the reply
      */
-    public static void editReply(Enquiry e, String reply) throws IllegalAccessException {
+    public static void editReply(Enquiry e, String reply) throws IllegalArgumentException {
         if (e.getReplier() != AppUserManager.getCurrentUser()) {
-            throw new IllegalAccessException("not valid applicant!");
+            throw new IllegalArgumentException("not valid applicant!");
         }
         e.setReply(reply);
     }

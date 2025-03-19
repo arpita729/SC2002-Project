@@ -1,9 +1,10 @@
 package items;
 
 /**
- * Abstract class representing a general item with an ID and a deleted status.
+ * Base class for all entities.
+ * Class representing a general item with an ID and a deleted status.
  */
-public abstract class Item {
+public class Item {
     /**
      * Unique identifier for the item.
      */
@@ -28,13 +29,6 @@ public abstract class Item {
      * @return true if the item is deleted, false otherwise
      */
     public boolean getDeleted() { return deleted; }
-
-    /**
-     * Returns a string representation of the item.
-     * 
-     * @return a string describing the item
-     */
-    public abstract String toString();
 
     /**
      * Marks the item as deleted by setting the deleted flag to true.

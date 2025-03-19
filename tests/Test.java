@@ -80,6 +80,8 @@ public class Test {
 
             System.out.println("Passed!");
 
+            AppManager.startApp();
+
         } catch (Exception e) {
             System.out.println(e.toString());
         }

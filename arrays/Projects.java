@@ -41,8 +41,10 @@ public class Projects {
      * 
      * @param id The ID of the project to retrieve.
      * @return The project with the specified ID.
+     * @throws IllegalArgumentException if item is deleted
      */
-    public static Project getProject(int id) {
+    public static Project getProject(int id) throws IllegalArgumentException {
+        if (projectList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
         return projectList.get(id);
     }
 

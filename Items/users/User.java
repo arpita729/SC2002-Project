@@ -1,12 +1,13 @@
 package items.users;
 
 import items.Item;
+import items.Stringifiable;
 
 /**
  * The User class represents a user in the system. It is an abstract class that 
  * defines the basic properties and behaviors of a user such as ID, password, age, and marital status.
  */
-public class User extends Item {
+public class User extends Item implements Stringifiable {
 
     /**
      * Enum representing the different types of users.

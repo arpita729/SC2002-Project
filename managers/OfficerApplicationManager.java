@@ -43,11 +43,11 @@ public class OfficerApplicationManager {
      * Withdraws an officer application.
      *
      * @param ap The OfficerApplication object to be withdrawn.
-     * @throws IllegalAccessException if the current user is not the applicant.
+     * @throws IllegalArgumentException if the current user is not the applicant.
      */
-    public static void withdraw(OfficerApplication ap) throws IllegalAccessException {
+    public static void withdraw(OfficerApplication ap) throws IllegalArgumentException {
         Officer o = (Officer) AppUserManager.getCurrentUser();
-        if (ap.getApplicant() != o) throw new IllegalAccessException("not applicant!");
+        if (ap.getApplicant() != o) throw new IllegalArgumentException("not applicant!");
         ap.setWithdrawing(WithdrawStatus.PENDING);
     }
 
@@ -56,13 +56,13 @@ public class OfficerApplicationManager {
      *
      * @param ap The OfficerApplication object to approve or reject.
      * @param approval True to approve the application, false to reject it.
-     * @throws IllegalAccessException if the current user is not a manager and not in charge of the project.
+     * @throws IllegalArgumentException if the current user is not a manager and not in charge of the project.
      * @throws IllegalArgumentException if the application status is not pending or there are not enough officer slots.
      */
-    public static void approve(OfficerApplication ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
+    public static void approve(OfficerApplication ap, boolean approval) throws IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalArgumentException("not in charge!");
         if (ap.getStatus() != Status.PENDING) throw new IllegalArgumentException("officer application not pending!");
         if (!approval) {
             ap.setStatus(Status.UNSUCCESSFUL);
@@ -80,13 +80,13 @@ public class OfficerApplicationManager {
      *
      * @param ap The OfficerApplication object to approve or reject the withdrawal for.
      * @param approval True to approve the withdrawal, false to reject it.
-     * @throws IllegalAccessException if the current user is not a manager and not in charge of the project.
+     * @throws IllegalArgumentException if the current user is not a manager and not in charge of the project.
      * @throws IllegalArgumentException if the application is not in withdrawal status.
      */
-    public static void approveWithdraw(OfficerApplication ap, boolean approval) throws IllegalAccessException, IllegalArgumentException {
+    public static void approveWithdraw(OfficerApplication ap, boolean approval) throws IllegalArgumentException {
         Manager m = (Manager) AppUserManager.getCurrentUser();
         Project p = ap.getProject();
-        if (!m.inCharge(p)) throw new IllegalAccessException("not in charge!");
+        if (!m.inCharge(p)) throw new IllegalArgumentException("not in charge!");
         if (ap.getWithdrawing() != WithdrawStatus.PENDING) throw new IllegalArgumentException("application not withdrawing!");
         if (!approval) {
             ap.setWithdrawing(WithdrawStatus.UNSUCCESSFUL);

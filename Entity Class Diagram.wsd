@@ -1,16 +1,19 @@
 @startuml EntityClassDiagram
-abstract class Item {
+class Item {
     - id: int
     - deleted: bool = false
     + getId(): int
     + setId(id: int): void
     + getDeleted(): bool
     + delete(): void
+}
+
+interface Stringifiable {
     + toString(): String
 }
 
 '---ITEMS---
-class Project extends Item {
+class Project extends Item implements Stringifiable {
     - name: String
     - neighborhood: String
     - num2Room: int
@@ -46,7 +49,7 @@ class Project extends Item {
     + toString(): String
 }
 
-class Application extends Item {
+class Application extends Item implements Stringifiable {
     - applicant: Applicant
     - project: Project
     - status: Status = PENDING
@@ -89,7 +92,7 @@ class OfficerApplication extends Application {
 OfficerApplication --> Officer : "Applicant"
 
 
-class Enquiry extends Item {
+class Enquiry extends Item implements Stringifiable {
     - enquiry: String
     - reply: String
     - applicant: Applicant
@@ -104,7 +107,7 @@ class Enquiry extends Item {
     + getApplicant(): Applicant
     + getReplier(): User
     + getProject(): Project
-    + reply(replier: User, reply: String) throws IllegalAccessException
+    + reply(replier: User, reply: String) throws IllegalArgumentException
     + toString(): String
 }
 
@@ -113,7 +116,7 @@ Enquiry "1" --> "1" User : Replier
 Enquiry "1" --> "1" Project
 
 '---USERS---
-class User extends Item {
+class User extends Item implements Stringifiable {
     - ic: String
     - type: UserType
     - password: String = "password"
@@ -180,22 +183,6 @@ Manager "1" --> "*" Enquiry
 Manager "1" --> "1" UserType
 Manager "1" --> "*" Project
 Manager "1" --> "*" Enquiry
-
-'---GUI--- 
-interface Menu {
-    +displayMenu()
-}
-class ApplicantMenu extends Menu
-class ManagerMenu extends Menu
-class OfficerMenu extends Menu
-class LoginMenu extends Menu {
-    +displayMenu()
-    'after login, we call one of the 3 menus based on the  enum 
-}
-LoginMenu ..> AppUserManager
-LoginMenu ..> ApplicantMenu
-LoginMenu ..> OfficerMenu
-LoginMenu ..> ManagerMenu
 
 '---ARRAYS---
 
@@ -363,6 +350,40 @@ class Validator {
     + static boolean validateProjectOverlap(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2)
     + static void validateNewProject(LocalDate start, LocalDate end, ArrayList<Project> pa)
 }
+
+
+'---GUI--- 
+abstract class Menu {
+    - String description
+    - String info
+    - List<Menu> navigationOptions
+    - Scanner sc
+    + Menu(String d, String i)
+    + void displayInfo()
+    + abstract void menu()
+    + void options()
+    + void display()
+    + int getInt(String prompt)
+    + String getString(String prompt)
+    + void println(String s)
+    + String getDescription()
+    + boolean isInsantiated()
+    + void setOptions(List<Menu> o)
+}
+
+Menu "1"-- "*" Menu : "navigationOptions"
+
+class ApplicantMenu extends Menu
+class ManagerMenu extends Menu
+class OfficerMenu extends Menu
+class LoginMenu extends Menu {
+    +menu()
+    'after login, we call one of the 3 menus based on the  enum 
+}
+LoginMenu ..> AppUserManager
+LoginMenu ..> ApplicantMenu
+LoginMenu ..> OfficerMenu
+LoginMenu ..> ManagerMenu
 
 ' not sure about this one
 class OfficerMenu extends ApplicantMenu 

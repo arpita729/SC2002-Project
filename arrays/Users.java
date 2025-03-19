@@ -55,8 +55,10 @@ public class Users {
      * 
      * @param id The ID of the user.
      * @return The user at the specified ID.
+     * @throws IllegalArgumentException if item is deleted
      */
-    public static User getUser(int id) {
+    public static User getUser(int id) throws IllegalArgumentException {
+        if (userList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
         return userList.get(id);
     }
 
