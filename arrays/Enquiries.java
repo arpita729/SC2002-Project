@@ -14,11 +14,8 @@ import items.users.Officer;
  */
 public class Enquiries {
     
-    // List of all enquiries
-    private static ArrayList<Enquiry> enquiryList = new ArrayList<>();
-    
-    // Size of the enquiry list
-    private static int size = 0;
+    // Using ItemArray to manage enquiries
+    private static ItemArray<Enquiry> enquiries = new ItemArray<>();
 
     /**
      * Filters enquiries related to a specific project.
@@ -28,7 +25,7 @@ public class Enquiries {
     public static ArrayList<Enquiry> filter(Project p) {
         ArrayList<Enquiry> enquiriesForProject = new ArrayList<>();
         
-        for (Enquiry item : enquiryList) {
+        for (Enquiry item : enquiries.get()) {
             if (item.getDeleted()) continue; // Skip deleted items
             if (item.getProject() == p) {
                 enquiriesForProject.add(item);
@@ -46,7 +43,7 @@ public class Enquiries {
     public static ArrayList<Enquiry> filter(Applicant a) {
         ArrayList<Enquiry> enquiriesForApplicant = new ArrayList<>();
         
-        for (Enquiry item : enquiryList) {
+        for (Enquiry item : enquiries.get()) {
             if (item.getDeleted()) continue; // Skip deleted items
             if (item.getApplicant() == a) {
                 enquiriesForApplicant.add(item);
@@ -64,7 +61,7 @@ public class Enquiries {
     public static ArrayList<Enquiry> filter(Manager m) {
         ArrayList<Enquiry> enquiriesForManager = new ArrayList<>();
         
-        for (Enquiry item : enquiryList) {
+        for (Enquiry item : enquiries.get()) {
             if (item.getDeleted()) continue; // Skip deleted items
             if (item.getReplier() == m) {
                 enquiriesForManager.add(item);
@@ -82,7 +79,7 @@ public class Enquiries {
     public static ArrayList<Enquiry> filter(Officer o) {
         ArrayList<Enquiry> enquiriesForOfficer = new ArrayList<>();
         
-        for (Enquiry item : enquiryList) {
+        for (Enquiry item : enquiries.get()) {
             if (item.getDeleted()) continue; // Skip deleted items
             if (item.getReplier() == o) {
                 enquiriesForOfficer.add(item);
@@ -99,8 +96,7 @@ public class Enquiries {
      * @throws IllegalArgumentException if item is deleted
      */
     public static Enquiry getEnquiry(int id) throws IllegalArgumentException {
-        if (enquiryList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
-        return enquiryList.get(id);
+        return enquiries.getItem(id);
     }
 
     /**
@@ -108,9 +104,7 @@ public class Enquiries {
      * @param enquiry The enquiry to be added.
      */
     public static void newEnquiry(Enquiry enquiry) {
-        enquiry.setId(enquiryList.size());
-        enquiryList.add(enquiry);
-        size++;
+        enquiries.newItem(enquiry);
     }
 
     /**
@@ -118,8 +112,7 @@ public class Enquiries {
      * @param enquiry The enquiry to be deleted.
      */
     public static void deleteEnquiry(Enquiry enquiry) {
-        enquiry.delete();
-        size--;
+        enquiries.deleteItem(enquiry);
     }
 
     /**
@@ -127,7 +120,7 @@ public class Enquiries {
      * @return A list of all enquiries.
      */
     public static ArrayList<Enquiry> getAllEnquiries() {
-        return new ArrayList<>(enquiryList);
+        return enquiries.get();
     }
 
     /**
@@ -135,6 +128,14 @@ public class Enquiries {
      * @return The size of the enquiry list.
      */
     public static int getSize() {
-        return size;
+        return enquiries.getSize();
+    }
+
+    /**
+     * Sets the enquiry list directly.
+     * @param e The list of enquiries to be set.
+     */
+    public static void setEnquiries(ArrayList<Enquiry> e) {
+        enquiries.setItems(e);
     }
 }

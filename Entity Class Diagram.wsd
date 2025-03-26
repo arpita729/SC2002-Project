@@ -160,9 +160,19 @@ class Manager extends User {
 
 '---ARRAYS---
 
-class Users <<static>>{
-    - userList: ArrayList<User>
+class ItemArray {
+    - list: ArrayList<T>
     - size: int
+    + getItem(id: int): T
+    + newItem(item: T): void
+    + deleteItem(item: T): void
+    + get(): ArrayList<T>
+    + getSize(): int
+    + setItems(a: ArrayList<T>): void
+}
+
+class Users <<static>>{
+    - users: ItemArray<User>
     + filterIc(ic: String): User
     + filterApplicants(p: Project): ArrayList<Applicant>
     + getUser(id: int): User
@@ -175,8 +185,7 @@ class Users <<static>>{
 
 
 class Projects <<static>> {
-    - projectList: ArrayList<Project>
-    - size: int
+    - projects: ItemArray<Project>
     + filter(m: Manager): ArrayList<Project>
     + getProject(id: int): Project
     + newProject(project: Project): void
@@ -188,8 +197,7 @@ class Projects <<static>> {
 
 
 class Applications <<static>> {
-    - applicationList: ArrayList<Application>
-    - size: int
+    - applications: ItemArray<Application>
     + filter(p: Project): ArrayList<Application>
     + filter(a: Applicant): Application
     + getApplication(id: int): Application
@@ -202,8 +210,7 @@ class Applications <<static>> {
 
 
 class OfficerApplications <<static>> {
-    - officerApplicationList: ArrayList<OfficerApplication>
-    - size: int
+    - officerApplications: ItemArray<OfficerApplication>
     + getProjects(o: Officer): ArrayList<Project>
     + getAllProjects(o: Officer): ArrayList<Project>
     + getOfficers(p: Project): ArrayList<Officer>
@@ -218,8 +225,7 @@ class OfficerApplications <<static>> {
 
 
 class Enquiries <<static>>{
-    - enquiryList: ArrayList<Enquiry>
-    - size: int
+    - enquiries: ItemArray<Enquiries>
     + filter(p: Project): ArrayList<Enquiry>
     + filter(a: Applicant): ArrayList<Enquiry>
     + filter(m: Manager): ArrayList<Enquiry>
@@ -333,14 +339,20 @@ User "1" --> "1" UserType
 User "1" --> "1" MaritalStatus
 
 'Array relations
-Users "1" -- "*" User
+Users --o ItemArray
+Projects --o ItemArray
+Applications --o ItemArray
+OfficerApplications --o ItemArray
+Enquiries --o ItemArray
+
+Users "1" -u-> "*" User
 'Users ..> Project : filter by
 Projects -u-> "*" Project
 'Projects ..> Manager : "filter by"
-Applications "1" --> "*" Application
+Applications "1" -u-> "*" Application
 'Applications ..> Project : "filter by"
 'Applications ..> Applicant : "filter by"
-OfficerApplications --> "*" OfficerApplication
+OfficerApplications -u-> "*" OfficerApplication
 'OfficerApplications ..> Project : "filter by"
 'OfficerApplications ..> Officer : "filter by" 
 Enquiries -u-> "*" Enquiry 
@@ -370,11 +382,11 @@ OfficerApplicationManager .u.> OfficerApplication : "manages"
 'OfficerApplicationManager ..> Manager : "operates with"
 'OfficerApplicationManager ..> Status : "uses"
 'OfficerApplicationManager ..> WithdrawStatus : "uses"
-OfficerApplicationManager ..> Validator
+OfficerApplicationManager .u.> Validator
 'OfficerApplicationManager ..> AppUserManager
-ProjectManager -u-> Project : "creates"
+ProjectManager --> Project : "creates"
 'ProjectManager ..> Manager : "accesses current manager"
-ProjectManager ..> Validator
+ProjectManager .u.> Validator
 'ProjectManager ..> AppUserManager
 AppUserManager .u.> User
 AppUserManager ..> Validator
@@ -387,35 +399,5 @@ LoginMenu ..> OfficerMenu
 LoginMenu ..> ManagerMenu
 
 
-together {
-    class Project
-    class Projects
-    class ProjectManager
-}
-together {
-    class OfficerApplication
-    class OfficerApplications
-    class OfficerApplicationManager
-}
-together {
-    class Application
-    class Applications
-    class ApplicationManager
-}
-together {
-    class Enquiry
-    class Enquiries
-    class EnquiryManager
-}
-together {
-    class User
-    class Applicant
-    class Officer
-    class Manager
-}
-together {
-    class Item
-    interface Stringifiable
-}
 
 @enduml

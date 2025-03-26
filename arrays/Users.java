@@ -13,8 +13,7 @@ import items.users.User.UserType;
 public class Users {
 
     // Private static list to store users of type User
-    private static ArrayList<User> userList = new ArrayList<>();
-    private static int size = 0;
+    private static ItemArray<User> users = new ItemArray<>();
 
     /**
      * Filters the list of users by their IC (Identity Card) number.
@@ -23,7 +22,7 @@ public class Users {
      * @return The user with the specified IC, or null if no user is found.
      */
     public static User filterIc(String ic) {
-        for (User user : userList) {
+        for (User user : users.get()) {
             if (user.getDeleted()) continue;
             if (user.getIc().equals(ic)) return user;
         }
@@ -39,7 +38,7 @@ public class Users {
     public static ArrayList<Applicant> filterApplicants(Project p) {
         ArrayList<Applicant> applicants = new ArrayList<>();
         
-        for (User user : userList) {
+        for (User user : users.get()) {
             if (user.getDeleted()) continue;
             if (user.getType() != UserType.APPLICANT) continue;
             if (((Applicant)user).getProject() == p) {
@@ -58,8 +57,7 @@ public class Users {
      * @throws IllegalArgumentException if item is deleted
      */
     public static User getUser(int id) throws IllegalArgumentException {
-        if (userList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
-        return userList.get(id);
+        return users.getItem(id);
     }
 
     /**
@@ -68,9 +66,7 @@ public class Users {
      * @param user The user to add.
      */
     public static void newUser(User user) {
-        user.setId(userList.size());
-        userList.add(user);
-        size++;
+        users.newItem(user);
     }
 
     /**
@@ -79,8 +75,7 @@ public class Users {
      * @param user The user to delete.
      */
     public static void deleteUser(User user) {
-        user.delete();
-        size--;
+        users.deleteItem(user);
     }
 
     /**
@@ -89,7 +84,7 @@ public class Users {
      * @return A list containing all users in the system.
      */
     public static ArrayList<User> getAllUsers() {
-        return new ArrayList<>(userList);
+        return users.get();
     }
 
     /**
@@ -98,7 +93,7 @@ public class Users {
      * @return The total number of users.
      */
     public static int getSize() {
-        return size;
+        return users.getSize();
     }
 
     /**
@@ -107,7 +102,6 @@ public class Users {
      * @param u The new list of users.
      */
     public static void setUsers(ArrayList<User> u) {
-        userList = u;
-        size = u.size(); // assume no deleted users
+        users.setItems(u);
     }
 }

@@ -13,8 +13,7 @@ import items.users.Applicant;
  */
 public class Applications {
     
-    private static ArrayList<Application> applicationList = new ArrayList<>();
-    private static int size = 0;
+    private static ItemArray<Application> applications = new ItemArray<>();
 
     /**
      * Filters the applications for a given project.
@@ -25,7 +24,7 @@ public class Applications {
     public static ArrayList<Application> filter(Project p) {
         ArrayList<Application> applicationsForProject = new ArrayList<>();
         
-        for (Application item : applicationList) {
+        for (Application item : applications.get()) {
             if (item.getDeleted()) continue;
             if (item.getProject() == p) {
                 applicationsForProject.add(item);
@@ -41,7 +40,7 @@ public class Applications {
      * @return The application associated with the given applicant, or null if not found.
      */
     public static Application filter(Applicant a) {
-        for (Application item : applicationList) {
+        for (Application item : applications.get()) {
             if (item.getDeleted()) continue;
             if (item.getApplicant() == a) {
                 return item;
@@ -59,8 +58,7 @@ public class Applications {
      * @throws IllegalArgumentException if item is deleted
      */
     public static Application getApplication(int id) throws IllegalArgumentException {
-        if (applicationList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
-        return applicationList.get(id); 
+        return applications.getItem(id);
     }
 
     /**
@@ -69,9 +67,7 @@ public class Applications {
      * @param application The application to be added to the list.
      */
     public static void newApplication(Application application) {
-        application.setId(applicationList.size()); 
-        applicationList.add(application);  // Add the application to the list
-        size++; 
+        applications.newItem(application);
     }
 
     /**
@@ -80,8 +76,7 @@ public class Applications {
      * @param application The application to be deleted.
      */
     public static void deleteApplication(Application application) {
-        application.delete(); 
-        size--;
+        applications.deleteItem(application);
     }
 
     /**
@@ -90,7 +85,7 @@ public class Applications {
      * @return A list of all applications.
      */
     public static ArrayList<Application> getAllApplications() {
-        return new ArrayList<>(applicationList);  
+        return applications.get();
     }
 
     /**
@@ -99,7 +94,7 @@ public class Applications {
      * @return The number of applications in the list.
      */
     public static int getSize() {
-        return size;  
+        return applications.getSize();  
     }
 
     /**
@@ -108,7 +103,6 @@ public class Applications {
      * @param a The list of applications to be set.
      */
     public static void setApplications(ArrayList<Application> a) {
-        applicationList = a;
-        size = a.size(); // assume no deletions
+        applications.setItems(a);
     }
 }

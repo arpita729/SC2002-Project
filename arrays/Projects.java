@@ -13,10 +13,7 @@ import items.users.*;
 public class Projects {
     
     /** List holding all projects. */
-    private static ArrayList<Project> projectList = new ArrayList<>();
-    
-    /** The total number of projects (excluding deleted projects). */
-    private static int size = 0;
+    private static ItemArray<Project> projects = new ItemArray<>();
 
     /**
      * Filters and retrieves all projects managed by a specific manager.
@@ -27,7 +24,7 @@ public class Projects {
     public static ArrayList<Project> filter(Manager m) {
         ArrayList<Project> al = new ArrayList<>();
         
-        for (Project item : projectList) {
+        for (Project item : projects.get()) {
             if (item.getDeleted()) continue; // Skip deleted items
             if (item.getManager() == m) {
                 al.add(item);
@@ -44,8 +41,7 @@ public class Projects {
      * @throws IllegalArgumentException if item is deleted
      */
     public static Project getProject(int id) throws IllegalArgumentException {
-        if (projectList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
-        return projectList.get(id);
+        return projects.getItem(id);
     }
 
     /**
@@ -54,9 +50,7 @@ public class Projects {
      * @param project The project to be added.
      */
     public static void newProject(Project project) {
-        project.setId(projectList.size());
-        projectList.add(project);
-        size++;
+        projects.newItem(project);
     }
 
     /**
@@ -65,8 +59,7 @@ public class Projects {
      * @param project The project to be deleted.
      */
     public static void deleteProject(Project project) {
-        project.delete();
-        size--;
+        projects.deleteItem(project);
     }
 
     /**
@@ -75,7 +68,7 @@ public class Projects {
      * @return A list of all projects.
      */
     public static ArrayList<Project> getAllProjects() {
-        return new ArrayList<>(projectList);
+        return projects.get();
     }
 
     /**
@@ -84,7 +77,7 @@ public class Projects {
      * @return The number of active projects.
      */
     public static int getSize() {
-        return size;
+        return projects.getSize();
     }
 
     /**
@@ -93,8 +86,7 @@ public class Projects {
      * @param p The new list of projects.
      */
     public static void setProjects(ArrayList<Project> p) {
-        projectList = p;
-        size = p.size(); // assume no deleted projects
+        projects.setItems(p);
     }
     
     // TODO: Additional filters for flat type, location, etc.

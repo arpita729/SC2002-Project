@@ -16,8 +16,7 @@ import items.users.Officer;
  */
 public class OfficerApplications {
 
-    private static ArrayList<OfficerApplication> officerApplicationList = new ArrayList<>();
-    private static int size = 0;
+    private static ItemArray<OfficerApplication> officerApplications = new ItemArray<>();
 
     /**
      * Filters officer applications for a specific officer based on a successful status.
@@ -28,7 +27,7 @@ public class OfficerApplications {
     public static ArrayList<Project> getProjects(Officer o) {
         ArrayList<Project> al = new ArrayList<>();
         
-        for (Application item : officerApplicationList) {
+        for (Application item : officerApplications.get()) {
             if (item.getDeleted()) continue;
             if (item.getStatus() != Status.SUCCESSFUL) continue;
             if (item.getApplicant() == o) {
@@ -47,9 +46,8 @@ public class OfficerApplications {
     public static ArrayList<Project> getAllProjects(Officer o) {
         ArrayList<Project> al = new ArrayList<>();
         
-        for (Application item : officerApplicationList) {
+        for (Application item : officerApplications.get()) {
             if (item.getDeleted()) continue;
-            // Check for 'no longer active' states
             if (item.getStatus() == Status.WITHDRAWN || item.getStatus() == Status.UNSUCCESSFUL) continue;
             if (item.getApplicant() == o) {
                 al.add(item.getProject());
@@ -67,7 +65,7 @@ public class OfficerApplications {
     public static ArrayList<Officer> getOfficers(Project p) {
         ArrayList<Officer> al = new ArrayList<>();
         
-        for (Application item : officerApplicationList) {
+        for (Application item : officerApplications.get()) {
             if (item.getDeleted()) continue;
             if (item.getStatus() != Status.SUCCESSFUL) continue;
             if (item.getProject() == p) {
@@ -86,7 +84,7 @@ public class OfficerApplications {
     public static ArrayList<OfficerApplication> filter(Project p) {
         ArrayList<OfficerApplication> applicationsForProject = new ArrayList<>();
         
-        for (OfficerApplication item : officerApplicationList) {
+        for (OfficerApplication item : officerApplications.get()) {
             if (item.getDeleted()) continue;
             if (item.getProject() == p) {
                 applicationsForProject.add(item);
@@ -102,7 +100,7 @@ public class OfficerApplications {
      * @return The officer application associated with the given applicant.
      */
     public static OfficerApplication filter(Applicant a) {
-        for (OfficerApplication item : officerApplicationList) {
+        for (OfficerApplication item : officerApplications.get()) {
             if (item.getDeleted()) continue;
             if (item.getApplicant() == a) {
                 return item;
@@ -119,8 +117,7 @@ public class OfficerApplications {
      * @throws IllegalArgumentException if item is deleted
      */
     public static OfficerApplication getOfficerApplication(int id) throws IllegalArgumentException {
-        if (officerApplicationList.get(id).getDeleted()) throw new IllegalArgumentException("item is deleted!");
-        return officerApplicationList.get(id);
+        return officerApplications.getItem(id);
     }
 
     /**
@@ -129,9 +126,7 @@ public class OfficerApplications {
      * @param officerApplication The officer application to be added.
      */
     public static void newOfficerApplication(OfficerApplication officerApplication) {
-        officerApplication.setId(officerApplicationList.size());
-        officerApplicationList.add(officerApplication);
-        size++;
+        officerApplications.newItem(officerApplication);
     }
 
     /**
@@ -140,8 +135,7 @@ public class OfficerApplications {
      * @param officerApplication The officer application to be deleted.
      */
     public static void deleteOfficerApplication(OfficerApplication officerApplication) {
-        officerApplication.delete();
-        size--;
+        officerApplications.deleteItem(officerApplication);
     }
 
     /**
@@ -150,7 +144,7 @@ public class OfficerApplications {
      * @return A list of all officer applications.
      */
     public static ArrayList<OfficerApplication> getAllOfficerApplications() {
-        return new ArrayList<>(officerApplicationList);
+        return officerApplications.get();
     }
 
     /**
@@ -159,6 +153,6 @@ public class OfficerApplications {
      * @return The number of officer applications in the list.
      */
     public static int getSize() {
-        return size;
+        return officerApplications.getSize();
     }
 }
