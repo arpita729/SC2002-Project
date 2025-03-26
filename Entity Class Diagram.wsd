@@ -315,20 +315,20 @@ class LoginMenu extends Menu {
 ' Item relations
 Application "1" --> "1" Applicant
 Application "1" --> "1" Project
-Application "1" --> "1" Status
-Application "1" --> "1" FlatType
-Application "1" --> "1" WithdrawStatus
+Application "1" -u-> "1" Status
+Application "1" -u-> "1" FlatType
+Application "1" -u-> "1" WithdrawStatus
 Enquiry "1" --> "1" User : Replier
-Enquiry "1" --> "1" Project
+Enquiry "1" -> "1" Project
 Applicant "1" --> "1" Project
 Applicant "1" --> "*" Enquiry
 Officer --> "*" Project
 Officer --> "*" Enquiry
-Officer --> "*" OfficerApplications
+Officer -> "*" OfficerApplications
 OfficerApplication --> Officer : "Applicant"
 Manager "1" --> "*" Project
 Manager "1" --> "*" Enquiry
-Manager "1" --> "1" UserType
+Manager "1" -u-> "1" UserType
 User "1" --> "1" UserType
 User "1" --> "1" MaritalStatus
 
@@ -349,35 +349,35 @@ Enquiries --> "*" Enquiry
 
 'Manager relations
 'ApplicationManager ..> Project : "apply for"
-ApplicationManager ..> Application : "manages"
+ApplicationManager .u.> Application : "manages"
 'ApplicationManager ..> Officer : "operates with"
 'ApplicationManager ..> Manager : "operates with"
 'ApplicationManager ..> Applicant : "operates with"
-ApplicationManager ..> User : "operates with"
+ApplicationManager .u.> User : "operates with"
 'ApplicationManager ..> FlatType : "uses"
 'ApplicationManager ..> Status : "uses"
 'ApplicationManager ..> WithdrawStatus : "uses"
 'ApplicationManager ..> AppUserManager
-EnquiryManager ..> Enquiry : "manages"
+EnquiryManager .u.> Enquiry : "manages"
 'EnquiryManager ..> Project : "works with"
 'EnquiryManager ..> User : "authorizes"
 'EnquiryManager ..> Officer : "checks role"
 'EnquiryManager ..> Manager : "checks role"
 'EnquiryManager ..> AppUserManager
 'OfficerApplicationManager ..> Project : "apply for"
-OfficerApplicationManager ..> OfficerApplication : "manages"
+OfficerApplicationManager .u.> OfficerApplication : "manages"
 'OfficerApplicationManager ..> Officer : "operates with"
 'OfficerApplicationManager ..> Manager : "operates with"
 'OfficerApplicationManager ..> Status : "uses"
 'OfficerApplicationManager ..> WithdrawStatus : "uses"
-OfficerApplicationManager ...> Validator
+OfficerApplicationManager ..> Validator
 'OfficerApplicationManager ..> AppUserManager
-ProjectManager --> Project : "creates"
+ProjectManager -u-> Project : "creates"
 'ProjectManager ..> Manager : "accesses current manager"
-ProjectManager ...> Validator
+ProjectManager ..> Validator
 'ProjectManager ..> AppUserManager
-AppUserManager ..> User
-AppUserManager ...> Validator
+AppUserManager .u.> User
+AppUserManager ..> Validator
 
 ' Menu relations
 Menu "1"-- "*" Menu : "navigationOptions"
