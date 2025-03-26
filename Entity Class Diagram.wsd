@@ -324,8 +324,8 @@ Applicant "1" --> "1" Project
 Applicant "1" --> "*" Enquiry
 Officer --> "*" Project
 Officer --> "*" Enquiry
-Officer -> "*" OfficerApplications
-OfficerApplication --> Officer : "Applicant"
+OfficerApplication -u-> Officer : "Applicant"
+Officer -l-> "*" OfficerApplications
 Manager "1" --> "*" Project
 Manager "1" --> "*" Enquiry
 Manager "1" -u-> "1" UserType
@@ -335,7 +335,7 @@ User "1" --> "1" MaritalStatus
 'Array relations
 Users "1" -- "*" User
 'Users ..> Project : filter by
-Projects --> "*" Project
+Projects -u-> "*" Project
 'Projects ..> Manager : "filter by"
 Applications "1" --> "*" Application
 'Applications ..> Project : "filter by"
@@ -343,7 +343,7 @@ Applications "1" --> "*" Application
 OfficerApplications --> "*" OfficerApplication
 'OfficerApplications ..> Project : "filter by"
 'OfficerApplications ..> Officer : "filter by" 
-Enquiries --> "*" Enquiry 
+Enquiries -u-> "*" Enquiry 
 'Enquiries ..> Project : "filter by"
 'Enquiries ..> User : "filter by"
 
@@ -358,7 +358,7 @@ ApplicationManager .u.> User : "operates with"
 'ApplicationManager ..> Status : "uses"
 'ApplicationManager ..> WithdrawStatus : "uses"
 'ApplicationManager ..> AppUserManager
-EnquiryManager .u.> Enquiry : "manages"
+EnquiryManager .r.> Enquiry : "manages"
 'EnquiryManager ..> Project : "works with"
 'EnquiryManager ..> User : "authorizes"
 'EnquiryManager ..> Officer : "checks role"
