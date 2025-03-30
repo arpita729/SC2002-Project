@@ -214,6 +214,7 @@ public class Project extends Item implements Stringifiable {
      */
     public String toString() {
         // Implementation here
-        return "";
+        return name + " in " + neighborhood + ". Open from " + 
+            openingDate.toString() + " to " + closingDate.toString() + ".";
     }
 }

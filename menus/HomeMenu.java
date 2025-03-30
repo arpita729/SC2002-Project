@@ -6,6 +6,9 @@ import items.users.User.UserType;
 import menus.users.*;
 import managers.AppUserManager;
 
+/**
+ * Redirects to the usertype's menu.
+ */
 public class HomeMenu {
     private static class BaseClass extends Menu {
         public BaseClass(String d, String i) {
@@ -31,6 +34,10 @@ public class HomeMenu {
             OfficerMenu.get(),
             ManagerMenu.get()
         ));
+        // set here to reduce clutter
+        ApplicantMenu.setOptions();
+        OfficerMenu.setOptions();
+        ManagerMenu.setOptions();
     }
 
     public static Menu get() {

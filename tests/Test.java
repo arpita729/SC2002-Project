@@ -78,6 +78,8 @@ public class Test {
             testCase15_Booking();
             testCase22_Withdrawal();
 
+            System.out.println(p.toString());
+
             System.out.println("Passed!");
 
             AppManager.startApp();
@@ -163,13 +165,15 @@ public class Test {
     public static void testCase17_CreateBTOProject() {
         try {
             AppUserManager.login("S1234567M", "password");
-            p = ProjectManager.create("a", "a", 1, 3, LocalDate.of(2025,3,2), LocalDate.of(2025,3,10), 1);
-            p2 = ProjectManager.create("a", "a", 1, 3, LocalDate.of(2025,3,11), LocalDate.of(2025,3,13), 1);
-            p3 = ProjectManager.create("a", "a", 1, 3, LocalDate.of(2025,3,1), LocalDate.of(2025,3,1), 1);
+            p = ProjectManager.create("Amazing Apricots", "A-hood", 1, 3, LocalDate.of(2025,3,2), LocalDate.of(2025,3,10), 1);
+            p2 = ProjectManager.create("Bubbling Brooks", "B-ville", 1, 3, LocalDate.of(2025,3,11), LocalDate.of(2025,3,13), 1);
+            p3 = ProjectManager.create("Cowering Canvases", "C-ity", 1, 3, LocalDate.of(2025,3,1), LocalDate.of(2025,3,1), 1);
             AppUserManager.logout();
 
             AppUserManager.login("S1234569M", "password");
-            p4 = ProjectManager.create("a", "a", 1, 3, LocalDate.of(2025,2,1), LocalDate.of(2025,3,2), 1);
+            p4 = ProjectManager.create("Dancing Dames", "D-street", 1, 3, LocalDate.of(2025,2,1), LocalDate.of(2025,3,2), 1);
+            ProjectManager.create("2 ROOM ONLY", "D-street", 3, 0, LocalDate.of(2024,2,1), LocalDate.of(2024,3,2), 1);
+            ProjectManager.create("3 ROOM ONLY", "D-street", 0, 3, LocalDate.of(2023,2,1), LocalDate.of(2023,3,2), 1);
             AppUserManager.logout();
         } catch (Exception e) {
             System.out.println(e.toString());

@@ -24,6 +24,8 @@ public class OfficerMenu {
         // add navigation options here
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
+            ProjectListMenu.get(),
+            ProjectFilterMenu.get(),
             ExitMenu.get()
         ));
     }

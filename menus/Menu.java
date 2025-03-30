@@ -12,7 +12,7 @@ public abstract class Menu {
     private String description;
     private String info;
     private List<Menu> navigationOptions = null;
-    private Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
 
     /**
      * Constructs a Menu object with the specified description and information.
@@ -74,7 +74,6 @@ public abstract class Menu {
      */
     public void display() {
         println(""); // Create some empty space
-        println("");
         displayInfo();
         while (true) {
             try {
