@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import arrays.Projects;
 import items.Project;
+import items.users.Officer;
 import items.users.User.UserType;
 import managers.AppUserManager;
 import menus.*;
@@ -17,7 +18,14 @@ public class ProjectViewMenu {
         public void menu() {
             // TODO prevent unauthed viewing 
             Project p = Projects.getProject(getId());
+
+            if (p.getDeleted()) throw new IllegalArgumentException("Deleted Entry!");
+
             println(p.toLongString());
+            println("STAFF DETAILS");
+            println("Manager: " + p.getManager().getName());
+            println("Officers:");
+            for (Officer o : p.getOfficers()) println(o.getName());
         };
         public Menu options() {
             UserType ut = AppUserManager.getCurrentUser().getType();
@@ -31,7 +39,7 @@ public class ProjectViewMenu {
 
     private static BaseClass baseClass = new BaseClass(
         "Project Detail", 
-        "Project Details:"
+        "PROJECT DETAILS"
     );
 
     public static void setOptions() {

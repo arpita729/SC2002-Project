@@ -24,8 +24,8 @@ public class Applicant extends User {
      * @param age           The age of the applicant.
      * @param maritalStatus The marital status of the applicant.
      */
-    public Applicant(String ic, String password, int age, MaritalStatus maritalStatus) {
-        super(ic, UserType.APPLICANT, password, age, maritalStatus);
+    public Applicant(String ic, String name, String password, int age, MaritalStatus maritalStatus) {
+        super(ic, name, UserType.APPLICANT, password, age, maritalStatus);
     }
 
     /**
@@ -37,8 +37,8 @@ public class Applicant extends User {
      * @param age           The age of the applicant.
      * @param maritalStatus The marital status of the applicant.
      */
-    public Applicant(String ic, UserType u, String password, int age, MaritalStatus maritalStatus) {
-        super(ic, u, password, age, maritalStatus);
+    public Applicant(String ic, String name, UserType u, String password, int age, MaritalStatus maritalStatus) {
+        super(ic, name, u, password, age, maritalStatus);
     }
 
     /**

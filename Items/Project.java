@@ -230,7 +230,6 @@ public class Project extends Item implements Stringifiable, LongStringifiable {
             "2 Room Units Available: " + num2Room + "\n" +
             "3 Room Units Available: " + num3Room + "\n" +
             "Application Period: " + openingDate.toString() + " to " + 
-                closingDate.toString() + "\n" +
-            "Manager: " + manager.toString();
+                closingDate.toString() + "\n";
     }
 }

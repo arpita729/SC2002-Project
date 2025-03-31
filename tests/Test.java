@@ -36,17 +36,17 @@ public class Test {
         // TODO read in from CSV file
         try {
             ArrayList<User> u = new ArrayList<>();
-            m = new Manager("S1234567M",  "password", 99, MaritalStatus.SINGLE);
-            o = new Officer("S7654321O",  "password", 90, MaritalStatus.MARRIED);
-            m2 = new Manager("S1234569M",  "password", 99, MaritalStatus.SINGLE);
-            o2 = new Officer("S7654329O",  "password", 90, MaritalStatus.MARRIED);
-            a = new Applicant("T7654321A",  "password", 35, MaritalStatus.SINGLE);
-            b = new Applicant("T7654321B",  "password", 21, MaritalStatus.MARRIED);
-            c = new Applicant("T7654321C", "password", 35, MaritalStatus.SINGLE); // Single, 35 years old
-            d = new Applicant("T7654321D", "password", 25, MaritalStatus.MARRIED); // Married, 25 years old
-            e = new Applicant("T7654321E", "password", 40, MaritalStatus.MARRIED); // Married, 40 years old
-            f = new Applicant("T7654321F", "password", 34, MaritalStatus.SINGLE); // Single, under 21
-            g = new Applicant("T7654321G", "password", 20, MaritalStatus.MARRIED); // Married, under 21
+            m = new Manager("S1234567M", "M", "password", 99, MaritalStatus.SINGLE);
+            o = new Officer("S7654321O", "O", "password", 90, MaritalStatus.MARRIED);
+            m2 = new Manager("S1234569M", "M2", "password", 99, MaritalStatus.SINGLE);
+            o2 = new Officer("S7654329O", "O2", "password", 90, MaritalStatus.MARRIED);
+            a = new Applicant("T7654321A", "A", "password", 35, MaritalStatus.SINGLE);
+            b = new Applicant("T7654321B", "B", "password", 21, MaritalStatus.MARRIED);
+            c = new Applicant("T7654321C", "C", "password", 35, MaritalStatus.SINGLE); // Single, 35 years old
+            d = new Applicant("T7654321D", "D", "password", 25, MaritalStatus.MARRIED); // Married, 25 years old
+            e = new Applicant("T7654321E", "E", "password", 40, MaritalStatus.MARRIED); // Married, 40 years old
+            f = new Applicant("T7654321F", "F", "password", 34, MaritalStatus.SINGLE); // Single, under 21
+            g = new Applicant("T7654321G", "G", "password", 20, MaritalStatus.MARRIED); // Married, under 21
             u.add(m);
             u.add(o);
             u.add(m2);

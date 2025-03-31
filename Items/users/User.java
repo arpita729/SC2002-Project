@@ -24,6 +24,7 @@ public class User extends Item implements Stringifiable {
     }
 
     private String ic; // Identification card number for the user.
+    private String name;
     private UserType type; // Type of the user (Applicant, Officer, or Manager).
     private String password = "password"; // Default password for the user.
     private int age; // Age of the user.
@@ -38,8 +39,9 @@ public class User extends Item implements Stringifiable {
      * @param age          The age of the user.
      * @param maritalStatus The marital status of the user.
      */
-    public User(String ic, UserType type, String password, int age, MaritalStatus maritalStatus) {
+    public User(String ic, String name, UserType type, String password, int age, MaritalStatus maritalStatus) {
         this.ic = ic;
+        this.name = name;
         this.type = type;
         this.password = password;
         this.age = age;
@@ -65,6 +67,14 @@ public class User extends Item implements Stringifiable {
         return ic;
     }
 
+    /**
+     * Gets the name of the user.
+     * 
+     * @return The name of the user.
+     */
+    public String getName() {
+        return name;
+    }
     /**
      * Gets the type of the user (Applicant, Officer, or Manager).
      * 

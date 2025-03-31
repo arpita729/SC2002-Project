@@ -22,8 +22,8 @@ public class Manager extends User {
      * @param age           The age of the manager.
      * @param maritalStatus The marital status of the manager.
      */
-    public Manager(String ic, String password, int age, MaritalStatus maritalStatus) {
-        super(ic, UserType.MANAGER, password, age, maritalStatus);
+    public Manager(String ic, String name, String password, int age, MaritalStatus maritalStatus) {
+        super(ic, name, UserType.MANAGER, password, age, maritalStatus);
     }
 
     /**

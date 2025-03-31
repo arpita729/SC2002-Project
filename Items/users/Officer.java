@@ -23,8 +23,8 @@ public class Officer extends Applicant {
      * @param age           The age of the officer.
      * @param maritalStatus The marital status of the officer.
      */
-    public Officer(String ic, String password, int age, MaritalStatus maritalStatus) {
-        super(ic, UserType.OFFICER, password, age, maritalStatus);
+    public Officer(String ic, String name, String password, int age, MaritalStatus maritalStatus) {
+        super(ic, name, UserType.OFFICER, password, age, maritalStatus);
     }
 
     /**
