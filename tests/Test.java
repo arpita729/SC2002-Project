@@ -33,6 +33,7 @@ public class Test {
     static Applicant g;
 
     public static void main(String[] args) {
+        // TODO read in from CSV file
         try {
             ArrayList<User> u = new ArrayList<>();
             m = new Manager("S1234567M",  "password", 99, MaritalStatus.SINGLE);

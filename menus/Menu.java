@@ -41,12 +41,11 @@ public abstract class Menu {
     /**
      * Displays navigation options and redirects to the selected menu.
      */
-    public void options() {
+    public Menu options() {
         int n = navigationOptions.size();
-        if (n == 0) return;
+        if (n == 0) System.exit(0);
         if (n == 1) {
-            navigationOptions.get(0).display();
-            return;
+            return navigationOptions.get(0);
         }
         // More than one option available
         println("Select an option:");
@@ -63,16 +62,18 @@ public abstract class Menu {
         
         try {
             int selected = getInt("Option: ");
-            navigationOptions.get(selected).display();
+            return navigationOptions.get(selected);
         } catch (Exception e) {
-            navigationOptions.get(0).display();
+            return navigationOptions.get(0);
         }
     }
 
     /**
      * Displays the menu, handles exceptions, and presents options to navigate.
+     * 
+     * @return next menu to display
      */
-    public void display() {
+    public Menu display() {
         println(""); // Create some empty space
         displayInfo();
         while (true) {
@@ -83,7 +84,7 @@ public abstract class Menu {
                 println("Error: " + e.getMessage());
             }    
         }
-        options();
+        return options();
     }
 
     /**

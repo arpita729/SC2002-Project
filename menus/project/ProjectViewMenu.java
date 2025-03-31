@@ -16,15 +16,17 @@ public class ProjectViewMenu {
         };
         public void menu() {
             // TODO prevent unauthed viewing 
-            UserType ut = AppUserManager.getCurrentUser().getType();
-
             Project p = Projects.getProject(getId());
             println(p.toLongString());
-
-            if (ut == UserType.APPLICANT) getOptions().get(0).display();
-            if (ut == UserType.OFFICER) getOptions().get(1).display();
-            if (ut == UserType.MANAGER) getOptions().get(2).display();
         };
+        public Menu options() {
+            UserType ut = AppUserManager.getCurrentUser().getType();
+            return switch (ut) {
+                case UserType.APPLICANT -> getOptions().get(0);
+                case UserType.OFFICER -> getOptions().get(1);
+                case UserType.MANAGER -> getOptions().get(2);
+            };
+        }
     }
 
     private static BaseClass baseClass = new BaseClass(

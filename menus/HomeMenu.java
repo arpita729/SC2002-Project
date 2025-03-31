@@ -16,11 +16,13 @@ public class HomeMenu {
             super(d,i);
         };
         public void menu() {};
-        public void options() {
+        public Menu options() {
             UserType ut = AppUserManager.getCurrentUser().getType();
-            if (ut == UserType.APPLICANT) getOptions().get(0).display();
-            if (ut == UserType.OFFICER) getOptions().get(1).display();
-            if (ut == UserType.MANAGER) getOptions().get(2).display();
+            return switch (ut) {
+                case UserType.APPLICANT -> getOptions().get(0);
+                case UserType.OFFICER -> getOptions().get(1);
+                case UserType.MANAGER -> getOptions().get(2);
+            };
         }
     }
 

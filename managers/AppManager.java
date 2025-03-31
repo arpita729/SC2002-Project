@@ -18,7 +18,10 @@ public class AppManager {
         ProjectListMenu.setOptions();
         ProjectFilterMenu.setOptions();
 
+        Menu menu = LoginMenu.get();
         // display login
-        LoginMenu.get().display();
+        while (true) {
+            menu = menu.display();
+        }
     }
 }
