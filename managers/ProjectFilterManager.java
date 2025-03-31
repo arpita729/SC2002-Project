@@ -41,6 +41,9 @@ public class ProjectFilterManager {
         for (Project p : list) {
             if (p.getDeleted()) continue;
 
+            // visibility
+            if (!p.isVisible()) continue;
+
             // flat types
             if ((hasFlatType == FlatType.TWO_ROOM || !allowThreeRoom) && p.getNum2Room()<=0) continue;
             if (hasFlatType == FlatType.THREE_ROOM && p.getNum3Room()<=0) continue;
@@ -52,8 +55,6 @@ public class ProjectFilterManager {
             // dates
             if (!betweenDates(p.getOpeningDate(), startOD, endOD)) continue;
             if (!betweenDates(p.getClosingDate(), startCD, endCD)) continue;
-
-            
 
             newList.add(p);
         }

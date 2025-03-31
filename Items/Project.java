@@ -9,7 +9,7 @@ import arrays.*;
 /**
  * Represents a housing project with different types of flats, managed by a manager.
  */
-public class Project extends Item implements Stringifiable {    
+public class Project extends Item implements Stringifiable, LongStringifiable {    
     private String name;
     private String neighborhood;
     private int num2Room;
@@ -214,7 +214,23 @@ public class Project extends Item implements Stringifiable {
      */
     public String toString() {
         // Implementation here
-        return name + " in " + neighborhood + ". Open from " + 
+        return "ID "+ getId() + ": " + name + " in " + neighborhood + ". Open from " + 
             openingDate.toString() + " to " + closingDate.toString() + ".";
+    }
+
+    /**
+     * Returns a longer string representation of the project.
+     * 
+     * @return a string fully describing the project
+     */
+    public String toLongString() {
+        return "Project ID " + getId() + ":\n" +
+            "Name: " + name + "\n" +
+            "Neighbourhood: " + neighborhood + "\n" +
+            "2 Room Units Available: " + num2Room + "\n" +
+            "3 Room Units Available: " + num3Room + "\n" +
+            "Application Period: " + openingDate.toString() + " to " + 
+                closingDate.toString() + "\n" +
+            "Manager: " + manager.toString();
     }
 }
