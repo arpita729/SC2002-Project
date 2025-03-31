@@ -1,6 +1,8 @@
 package managers;
 
 import menus.*;
+import menus.project.ProjectListMenu;
+import menus.projectFilter.ProjectFilterMenu;
 
 public class AppManager {
     public static void main(String[] args) {

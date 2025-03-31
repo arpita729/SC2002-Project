@@ -24,7 +24,7 @@ public class FlatTypeFilterMenu {
 
     private static BaseClass baseClass = new BaseClass(
         "Available Flat Types", 
-        "Please choose between:\n2: Two Room\n3: Three Room\n0: Clear filter"
+        "Please choose between:\n2: Two Room\n3: Three Room\nDefault: Clear filter"
     );
 
     public static void setOptions() {

@@ -3,6 +3,8 @@ package menus.users;
 import java.util.Arrays;
 
 import menus.*;
+import menus.project.*;
+import menus.projectFilter.ProjectFilterMenu;
 import managers.AppUserManager;
 
 public class ManagerMenu {
@@ -21,11 +23,12 @@ public class ManagerMenu {
     );
 
     public static void setOptions() {
-        // add navigation options here
+        // TODO add more options (create new, etc.)
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
             ProjectListMenu.get(),
             ProjectFilterMenu.get(),
+            ProjectSelectMenu.get(),
             ExitMenu.get()
         ));
     }

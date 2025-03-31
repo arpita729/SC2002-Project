@@ -1,9 +1,10 @@
-package menus;
+package menus.projectFilter;
 
 import java.util.Arrays;
 
 import managers.ProjectFilterManager;
-import menus.projectFilter.*;
+import menus.HomeMenu;
+import menus.Menu;
 
 public class ProjectFilterMenu {
     private static class BaseClass extends Menu {

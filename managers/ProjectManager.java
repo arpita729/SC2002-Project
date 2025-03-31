@@ -38,6 +38,4 @@ public class ProjectManager {
         Projects.newProject(p);
         return p;
     }
-
-    // TODO: Implement filters and save filters between menu pages
 }

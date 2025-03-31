@@ -87,7 +87,8 @@ public abstract class Menu {
     }
 
     /**
-     * Prompts the user for an integer input.
+     * Prompts the user for an integer input. 
+     * If it's not an integer, returns -1.
      * 
      * @param prompt The message displayed to prompt the user.
      * @return The integer input from the user.
@@ -95,7 +96,7 @@ public abstract class Menu {
     public int getInt(String prompt) {
         System.out.print(prompt);
         String s = sc.nextLine();
-        return Integer.parseInt(s);
+        return (s.length() == 0) ? -1 : Integer.parseInt(s);
     }
 
     /**

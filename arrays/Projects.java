@@ -88,6 +88,4 @@ public class Projects {
     public static void setProjects(ArrayList<Project> p) {
         projects.setItems(p);
     }
-    
-    // TODO: Additional filters for flat type, location, etc.
 }

@@ -1,48 +1,46 @@
-package menus;
+package menus.project;
 
 import java.util.Arrays;
 
+import arrays.Projects;
+import items.Project;
 import items.users.User.UserType;
-import menus.project.*;
-import menus.users.*;
 import managers.AppUserManager;
+import menus.*;
+import menus.project.users.*;
 
-/**
- * Redirects to the usertype's menu.
- */
-public class HomeMenu {
-    private static class BaseClass extends Menu {
+public class ProjectViewMenu {
+    private static class BaseClass extends IdMenu {
         public BaseClass(String d, String i) {
             super(d,i);
         };
-        public void menu() {};
-        public void options() {
+        public void menu() {
+            // TODO prevent unauthed viewing 
             UserType ut = AppUserManager.getCurrentUser().getType();
+
+            Project p = Projects.getProject(getId());
+            println(p.toLongString());
+
             if (ut == UserType.APPLICANT) getOptions().get(0).display();
             if (ut == UserType.OFFICER) getOptions().get(1).display();
             if (ut == UserType.MANAGER) getOptions().get(2).display();
-        }
+        };
     }
 
     private static BaseClass baseClass = new BaseClass(
-        "Home Page", 
-        ""
+        "Project Detail", 
+        "Project Details:"
     );
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-            ApplicantMenu.get(),
-            OfficerMenu.get(),
-            ManagerMenu.get()
+            ApplicantProjectMenu.get(), 
+            ManagerProjectMenu.get(), 
+            OfficerProjectMenu.get()
         ));
-        // set here to reduce clutter
-        ApplicantMenu.setOptions();
-        OfficerMenu.setOptions();
-        ManagerMenu.setOptions();
-
-        ProjectListMenu.setOptions();
-        ProjectSelectMenu.setOptions();
-        ProjectViewMenu.setOptions();
+        ApplicantProjectMenu.setOptions();
+        ManagerProjectMenu.setOptions();
+        OfficerProjectMenu.setOptions();
     }
 
     public static Menu get() {

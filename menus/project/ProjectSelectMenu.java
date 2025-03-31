@@ -1,27 +1,27 @@
-package menus;
+package menus.project;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import arrays.Projects;
-import items.Project;
-import managers.ProjectFilterManager;
+import menus.HomeMenu;
+import menus.IdMenu;
+import menus.Menu;
 
-public class ProjectListMenu {
+public class ProjectSelectMenu {
     private static class BaseClass extends Menu {
         public BaseClass(String d, String i) {
             super(d,i);
         };
         public void menu() {
-            ArrayList<Project> list = ProjectFilterManager.filter(Projects.getAllProjects());
-            for (Project p : list) println(p.toString());
-            if (list.isEmpty()) println("No Projects Found.");
+            int i = getInt("ID: ");
+            if (i == -1) return; // redirect to home
+            IdMenu.setId(i); // set the ID of the project to display
+            ProjectViewMenu.get().display();
         };
     }
 
     private static BaseClass baseClass = new BaseClass(
-        "List Projects", 
-        "Projects:"
+        "Select a Project", 
+        "Select a Project by ID to View, or blank to go back. "
     );
 
     public static void setOptions() {
