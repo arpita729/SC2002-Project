@@ -27,7 +27,11 @@ public class ApplyMenu {
         public BaseClass(String d, String i) {super(d,i);};
         public void menu(){
             User currentUser = AppUserManager.getCurrentUser();
-            Applicant applicant = (Applicant) currentUser;
+            if (!(currentUser instanceof Applicant)) {  //typecast check
+                println("Error: Only applicants can apply for projects.");
+                return;
+            }
+            Applicant applicant = (Applicant) currentUser; // safe cast
             int i = getInt("ID of desired project: ");
             if (i == -1) return; // redirect to home
             IdMenu.setId(i); // set the ID of the project to display

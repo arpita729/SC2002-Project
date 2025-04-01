@@ -18,7 +18,11 @@ public class StatusMenu {
         public BaseClass(String d, String i) {super(d,i);};
         public void menu(){
             items.users.User currentUser = AppUserManager.getCurrentUser();
-            items.users.Applicant applicant = (items.users.Applicant) currentUser;
+            if (!(currentUser instanceof items.users.Applicant)) {  //typecast check
+                println("Error: Only applicants can apply for projects.");
+                return;
+            }
+            items.users.Applicant applicant = (items.users.Applicant) currentUser; // safe cast
             items.Application ap = applicant.getApplication();
             println("Application Status: " + ap.getStatus().name());
         };
