@@ -6,6 +6,7 @@ import menus.*;
 import menus.project.*;
 import menus.projectFilter.ProjectFilterMenu;
 import managers.AppUserManager;
+import menus.users.applicant.*;
 
 public class ApplicantMenu {
     private static class BaseClass extends Menu {
@@ -29,8 +30,12 @@ public class ApplicantMenu {
             ProjectListMenu.get(),
             ProjectFilterMenu.get(),
             ProjectSelectMenu.get(),
+            ApplyMenu.get(),
+            StatusMenu.get(),
             ExitMenu.get()
         ));
+        ApplyMenu.setOptions();
+        StatusMenu.setOptions();
     }
 
     public static Menu get() {
