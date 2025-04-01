@@ -24,7 +24,11 @@ public class StatusMenu {
             }
             items.users.Applicant applicant = (items.users.Applicant) currentUser; // safe cast
             items.Application ap = applicant.getApplication();
-            println("Application Status: " + ap.getStatus().name());
+            if(ap == null){
+                println("No application found. You have not applied for any project yet.");
+            }else {
+                println("Application Status: " + ap.getStatus().name());
+            }
         };
     }
 
