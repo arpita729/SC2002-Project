@@ -3,6 +3,7 @@ package menus.project.users;
 import java.util.Arrays;
 
 import menus.HomeMenu;
+import menus.users.applicant.*;
 import menus.Menu;
 
 public class ApplicantProjectMenu {
@@ -20,7 +21,10 @@ public class ApplicantProjectMenu {
 
     public static void setOptions() {
         // TODO add applicant's available options
-        baseClass.setOptions(Arrays.asList(HomeMenu.get()));
+        baseClass.setOptions(Arrays.asList(
+            HomeMenu.get(),
+            ApplyMenu.get()
+        ));
     }
 
     public static Menu get() {

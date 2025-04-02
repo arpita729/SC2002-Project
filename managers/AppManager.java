@@ -2,9 +2,7 @@ package managers;
 
 import menus.*;
 import menus.project.ProjectListMenu;
-import menus.project.ProjectViewMenu;
 import menus.projectFilter.ProjectFilterMenu;
-import menus.users.applicant.ApplyMenu;
 
 public class AppManager {
     public static void main(String[] args) {

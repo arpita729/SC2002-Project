@@ -17,6 +17,7 @@ public class ProjectViewMenu {
         };
         public void menu() {
             // TODO prevent unauthed viewing 
+            if (getId() == -1) return;
             Project p = Projects.getProject(getId());
 
             if (p.getDeleted()) throw new IllegalArgumentException("Deleted Entry!");
@@ -28,6 +29,7 @@ public class ProjectViewMenu {
             for (Officer o : p.getOfficers()) println(o.getName());
         };
         public Menu options() {
+            if (getId() == -1) return HomeMenu.get();
             UserType ut = AppUserManager.getCurrentUser().getType();
             return switch (ut) {
                 case UserType.APPLICANT -> getOptions().get(0);
@@ -46,7 +48,8 @@ public class ProjectViewMenu {
         baseClass.setOptions(Arrays.asList(
             ApplicantProjectMenu.get(), 
             ManagerProjectMenu.get(), 
-            OfficerProjectMenu.get()
+            OfficerProjectMenu.get(),
+            HomeMenu.get()
         ));
         ApplicantProjectMenu.setOptions();
         ManagerProjectMenu.setOptions();

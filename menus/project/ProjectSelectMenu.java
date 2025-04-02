@@ -2,7 +2,6 @@ package menus.project;
 
 import java.util.Arrays;
 
-import menus.HomeMenu;
 import menus.IdMenu;
 import menus.Menu;
 
@@ -15,7 +14,6 @@ public class ProjectSelectMenu {
             int i = getInt("ID: ");
             if (i == -1) return; // redirect to home
             IdMenu.setId(i); // set the ID of the project to display
-            ProjectViewMenu.get().display();
         };
     }
 
@@ -25,7 +23,7 @@ public class ProjectSelectMenu {
     );
 
     public static void setOptions() {
-        baseClass.setOptions(Arrays.asList(HomeMenu.get()));
+        baseClass.setOptions(Arrays.asList(ProjectViewMenu.get()));
     }
 
     public static Menu get() {

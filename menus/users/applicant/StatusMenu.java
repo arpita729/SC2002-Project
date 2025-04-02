@@ -1,17 +1,10 @@
 package menus.users.applicant;
 
-import arrays.Projects;
-import items.Application;
 import managers.AppUserManager;
-import managers.ApplicationManager;
-import menus.IdMenu;
-import menus.Menu;
-import menus.project.ProjectViewMenu;
-import menus.project.users.ApplicantProjectMenu;
+import menus.*;
 
 import java.util.Arrays;
 
-import static menus.IdMenu.getId;
 
 public class StatusMenu {
     private static class BaseClass extends Menu {
@@ -27,6 +20,7 @@ public class StatusMenu {
             if(ap == null){
                 println("No application found. You have not applied for any project yet.");
             }else {
+                println("Project: " + ap.getProject().toString());
                 println("Application Status: " + ap.getStatus().name());
             }
         };
@@ -39,7 +33,7 @@ public class StatusMenu {
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-                ApplicantProjectMenu.get()
+                HomeMenu.get()
         ));
     }
 

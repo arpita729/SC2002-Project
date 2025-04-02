@@ -15,7 +15,9 @@ public class HomeMenu {
         public BaseClass(String d, String i) {
             super(d,i);
         };
-        public void menu() {};
+        public void menu() {
+            IdMenu.setId(-1);
+        };
         public Menu options() {
             UserType ut = AppUserManager.getCurrentUser().getType();
             return switch (ut) {
