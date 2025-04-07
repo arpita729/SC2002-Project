@@ -43,7 +43,7 @@ public class ApplyMenu {
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-                StatusMenu.get()
+            StatusMenu.get()
         ));
     }
 

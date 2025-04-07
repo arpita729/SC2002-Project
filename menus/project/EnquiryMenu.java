@@ -13,7 +13,6 @@ public class EnquiryMenu {
             super(d,i);
         };
         public void menu() {
-            // TODO prevent unauthed viewing 
             Project p = null;
             if (getId() == -1) return;
             try {

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import menus.*;
 import menus.project.*;
 import menus.projectFilter.ProjectFilterMenu;
+import menus.users.manager.ProjectInchargeMenu;
 import managers.AppUserManager;
 
 public class ManagerMenu {
@@ -29,8 +30,10 @@ public class ManagerMenu {
             ProjectListMenu.get(),
             ProjectFilterMenu.get(),
             ProjectSelectMenu.get(),
+            ProjectInchargeMenu.get(),
             ExitMenu.get()
         ));
+        ProjectInchargeMenu.setOptions();
     }
 
     public static Menu get() {

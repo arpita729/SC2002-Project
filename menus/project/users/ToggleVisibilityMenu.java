@@ -1,45 +1,40 @@
-package menus.project;
+package menus.project.users;
 
 import java.util.Arrays;
 
-import arrays.Enquiries;
-import arrays.Projects;
+import arrays.*;
 import items.*;
-import managers.EnquiryManager;
 import menus.*;
+import menus.project.*;
 
-public class ReplyEnquiryMenu {
+public class ToggleVisibilityMenu {
     private static class BaseClass extends IdMenu {
         public BaseClass(String d, String i) {
             super(d,i);
         };
         public void menu() {
             Project p = null;
-            if (getId() == -1) return;
+            if (getId() == -1) ProjectSelectMenu.get().display();
             try {
                 p = Projects.getProject(getId());
             } catch (Exception e) {
                 setId(-1);
                 return;
             }
-            
-            if (p.getDeleted()) throw new IllegalArgumentException("Deleted Entry!");
-
-            int i = getInt("Select an enquiry by ID: ");
-            Enquiry e = Enquiries.getEnquiry(i);
-            String s = getString("Type your enquiry: ");
-            EnquiryManager.reply(e, s);
+            p.setVisibility(!p.isVisible());
+            println("Visibility set to " + (p.isVisible() ? "yes" : "no"));
         };
     }
 
     private static BaseClass baseClass = new BaseClass(
-        "Reply to Enquiry", 
-        "Reply to Enquiry: "
+        "List Applications", 
+        "Applications:"
     );
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-            ProjectViewMenu.get()
+            ProjectViewMenu.get(),
+            BookMenu.get()
         ));
     }
 

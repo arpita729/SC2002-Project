@@ -23,8 +23,11 @@ public class ManagerProjectMenu {
         // TODO add manager's available options
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
-            ReplyEnquiryMenu.get()
+            ReplyEnquiryMenu.get(),
+            ReceiptMenu.get(),
+            ToggleVisibilityMenu.get()
         ));
+        ToggleVisibilityMenu.setOptions();
     }
 
     public static Menu get() {

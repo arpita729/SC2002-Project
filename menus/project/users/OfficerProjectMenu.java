@@ -22,13 +22,19 @@ public class OfficerProjectMenu {
     );
 
     public static void setOptions() {
-        // TODO add officer's available options
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
             ApplyMenu.get(),
             EnquiryMenu.get(),
-            ReplyEnquiryMenu.get()
+            ReplyEnquiryMenu.get(),
+            OfficerApplicationMenu.get(),
+            ReceiptMenu.get()
         ));
+        EnquiryMenu.setOptions();
+        ReplyEnquiryMenu.setOptions();
+        OfficerApplicationMenu.setOptions();
+        BookMenu.setOptions();
+        ReceiptMenu.setOptions();
     }
 
     public static Menu get() {

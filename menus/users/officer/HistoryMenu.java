@@ -34,6 +34,7 @@ public class HistoryMenu {
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
+            ViewMenu.get(),
             WithdrawMenu.get()
         ));
     }

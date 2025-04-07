@@ -21,7 +21,6 @@ public class ApplicantProjectMenu {
     );
 
     public static void setOptions() {
-        // TODO add applicant's available options
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
             ApplyMenu.get(),

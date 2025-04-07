@@ -41,6 +41,7 @@ public class OfficerMenu {
         ApplyMenu.setOptions();
         HistoryMenu.setOptions();
         ApplicationSelectMenu.setOptions();
+        ViewMenu.setOptions();
     }
 
     public static Menu get() {

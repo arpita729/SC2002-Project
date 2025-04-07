@@ -5,7 +5,7 @@ import java.util.Arrays;
 import arrays.Projects;
 import items.Enquiry;
 import items.Project;
-import items.users.Officer;
+import items.users.*;
 import items.users.User.UserType;
 import managers.AppUserManager;
 import menus.*;
@@ -17,7 +17,6 @@ public class ProjectViewMenu {
             super(d,i);
         };
         public void menu() {
-            // TODO prevent unauthed viewing 
             Project p = null;
             if (getId() == -1) return;
             try {
@@ -29,6 +28,10 @@ public class ProjectViewMenu {
             
 
             if (p.getDeleted()) throw new IllegalArgumentException("Deleted Entry!");
+
+            if (!p.isVisible() && AppUserManager.getCurrentUser().getType() == UserType.APPLICANT) {
+                if (((Applicant)AppUserManager.getCurrentUser()).getProject() != p) throw new IllegalArgumentException("Not Allowed!");
+            }
 
             println(p.toLongString());
             println("STAFF DETAILS");
@@ -68,8 +71,6 @@ public class ProjectViewMenu {
         ApplicantProjectMenu.setOptions();
         ManagerProjectMenu.setOptions();
         OfficerProjectMenu.setOptions();
-        EnquiryMenu.setOptions();
-        ReplyEnquiryMenu.setOptions();
     }
 
     public static Menu get() {

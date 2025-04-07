@@ -2,6 +2,7 @@ package menus.users.applicant;
 
 import managers.AppUserManager;
 import menus.*;
+import menus.project.ProjectViewMenu;
 import items.users.*;
 import items.Application;
 
@@ -24,6 +25,7 @@ public class StatusMenu {
                 println("No application found. You have not applied for any project yet.");
             } else {
                 println(ap.toString());
+                IdMenu.setId(ap.getProject().getId());
             }
         };
         public Menu options() {
@@ -40,6 +42,7 @@ public class StatusMenu {
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
+            ProjectViewMenu.get(),
             WithdrawMenu.get()
         ));
     }

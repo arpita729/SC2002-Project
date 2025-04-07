@@ -5,7 +5,7 @@ import items.users.Applicant;
 /**
  * Represents an application for a housing project.
  */
-public class Application extends Item implements Stringifiable {
+public class Application extends Item implements Stringifiable, LongStringifiable {
     /**
      * Enumeration of possible application statuses.
      */
@@ -58,6 +58,21 @@ public class Application extends Item implements Stringifiable {
             project.getName() + ", currently " + 
             status.toString() + " and " +
             withdrawing.toString() + " withdrawing." ;
+    }
+    
+    /**
+     * Returns a long string representation of the application.
+     * 
+     * @return a string fully describing the application
+     */
+    public String toLongString() {
+        return "APPLICATION ID " + getId() + "\n" + 
+            "Name: " + applicant.getName() + "\n" +
+            "NRIC: " + applicant.getIc() + "\n" + 
+            "Age: " + applicant.getAge() + "\n" +
+            "Marital Status: " + applicant.getMaritalStatus().toString() + "\n" +
+            "Flat Type: " + flatType.toString() + "\n" +
+            "Project: " + project.toString() + "\n";
     }
 
     /**
