@@ -99,14 +99,16 @@ public class OfficerApplications {
      * @param a The applicant whose officer application is to be retrieved.
      * @return The officer application associated with the given applicant.
      */
-    public static OfficerApplication filter(Applicant a) {
+    public static ArrayList<OfficerApplication> filter(Applicant a) {
+        ArrayList<OfficerApplication> list = new ArrayList<>();
+
         for (OfficerApplication item : officerApplications.get()) {
             if (item.getDeleted()) continue;
             if (item.getApplicant() == a) {
-                return item;
+                list.add(item);
             }
         }
-        return null;
+        return list;
     }
 
     /**

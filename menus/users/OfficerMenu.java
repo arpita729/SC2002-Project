@@ -5,7 +5,7 @@ import java.util.Arrays;
 import menus.*;
 import menus.project.*;
 import menus.projectFilter.ProjectFilterMenu;
-import menus.users.applicant.*;
+import menus.users.officer.*;
 import managers.AppUserManager;
 
 public class OfficerMenu {
@@ -30,10 +30,17 @@ public class OfficerMenu {
             ProjectListMenu.get(),
             ProjectFilterMenu.get(),
             ProjectSelectMenu.get(),
+            menus.users.applicant.ApplyMenu.get(),
+            menus.users.applicant.StatusMenu.get(),
+            menus.users.applicant.HistoryMenu.get(),
             ApplyMenu.get(),
-            StatusMenu.get(),
+            HistoryMenu.get(),
+            WithdrawMenu.get(),
             ExitMenu.get()
         ));
+        ApplyMenu.setOptions();
+        HistoryMenu.setOptions();
+        ApplicationSelectMenu.setOptions();
     }
 
     public static Menu get() {

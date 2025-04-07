@@ -32,10 +32,13 @@ public class ApplicantMenu {
             ProjectSelectMenu.get(),
             ApplyMenu.get(),
             StatusMenu.get(),
+            HistoryMenu.get(),
             ExitMenu.get()
         ));
         ApplyMenu.setOptions();
         StatusMenu.setOptions();
+        HistoryMenu.setOptions();
+        WithdrawMenu.setOptions();
     }
 
     public static Menu get() {

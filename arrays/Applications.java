@@ -37,17 +37,19 @@ public class Applications {
      * Filters the application for a given applicant.
      * 
      * @param a The applicant whose application is to be retrieved.
-     * @return The application associated with the given applicant, or null if not found.
+     * @return The applications associated with the given applicant, or null if not found.
      */
-    public static Application filter(Applicant a) {
+    public static ArrayList<Application> filter(Applicant a) {
+        ArrayList<Application> list = new ArrayList<>();
+
         for (Application item : applications.get()) {
             if (item.getDeleted()) continue;
             if (item.getApplicant() == a) {
-                return item;
+                list.add(item);
             }
         }
         
-        return null; // If no application for the given applicant is found
+        return list; 
     }
 
     /**

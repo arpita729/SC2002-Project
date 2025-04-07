@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import menus.HomeMenu;
 import menus.Menu;
-import menus.users.applicant.ApplyMenu;
+import menus.project.ReplyEnquiryMenu;
 
 public class ManagerProjectMenu {
     private static class BaseClass extends Menu {
@@ -23,7 +23,7 @@ public class ManagerProjectMenu {
         // TODO add manager's available options
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
-            ApplyMenu.get()
+            ReplyEnquiryMenu.get()
         ));
     }
 

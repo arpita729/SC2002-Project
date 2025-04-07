@@ -1,16 +1,16 @@
 package menus.users.applicant;
 
-import managers.AppUserManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import menus.*;
+import managers.*;
+import arrays.Applications;
 import items.users.*;
 import items.Application;
 
-import java.util.Arrays;
-
-
-public class StatusMenu {
+public class HistoryMenu {
     private static class BaseClass extends Menu {
-        private Application ap;
         public BaseClass(String d, String i) {super(d,i);};
         public void menu(){
             User currentUser = AppUserManager.getCurrentUser();
@@ -19,28 +19,20 @@ public class StatusMenu {
                 return;
             }
             Applicant applicant = (Applicant) currentUser; // safe cast
-            ap = applicant.getApplication();
-            if(ap == null){
-                println("No application found. You have not applied for any project yet.");
-            } else {
-                println(ap.toString());
-            }
+            ArrayList<Application> list = Applications.filter(applicant);
+            for (Application a : list) println(a.toString());
+            if (list.isEmpty()) println("No Applications Found.");
         };
-        public Menu options() {
-            if (ap == null) return getOptions().get(0);
-            return super.options();
-        }
     }
 
     private static BaseClass baseClass = new BaseClass(
-            "Check Application Status",
+            "View Application History",
             ""
     );
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-            HomeMenu.get(),
-            WithdrawMenu.get()
+            HomeMenu.get()
         ));
     }
 

@@ -33,7 +33,11 @@ public class Enquiry extends Item implements Stringifiable {
      */
     public String toString() {
         // implementation here
-        return "";
+        return "ID " + getId() + ": " +
+            applicant.getName() + ": " +
+            enquiry + ((replier != null) ? "\t" +
+            replier.getName() + ": " + reply
+            : "");
     }
 
     /**

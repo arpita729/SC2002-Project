@@ -480,7 +480,7 @@ public class Test {
     public static void testCase22_Withdrawal() {
         try {
             AppUserManager.login("T7654321A", "password");
-            if (ap.getWithdrawing() != WithdrawStatus.NONE) throw new AssertionError("Expected none Wstatus.");
+            if (ap.getWithdrawing() != WithdrawStatus.NOT) throw new AssertionError("Expected none Wstatus.");
             ApplicationManager.withdraw();
             if (ap.getWithdrawing() != WithdrawStatus.PENDING) throw new AssertionError("Expected pending Wstatus.");
     

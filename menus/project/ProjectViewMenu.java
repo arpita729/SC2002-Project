@@ -3,6 +3,7 @@ package menus.project;
 import java.util.Arrays;
 
 import arrays.Projects;
+import items.Enquiry;
 import items.Project;
 import items.users.Officer;
 import items.users.User.UserType;
@@ -17,8 +18,15 @@ public class ProjectViewMenu {
         };
         public void menu() {
             // TODO prevent unauthed viewing 
+            Project p = null;
             if (getId() == -1) return;
-            Project p = Projects.getProject(getId());
+            try {
+                p = Projects.getProject(getId());
+            } catch (Exception e) {
+                setId(-1);
+                return;
+            }
+            
 
             if (p.getDeleted()) throw new IllegalArgumentException("Deleted Entry!");
 
@@ -27,14 +35,20 @@ public class ProjectViewMenu {
             println("Manager: " + p.getManager().getName());
             println("Officers:");
             for (Officer o : p.getOfficers()) println(o.getName());
-        };
+
+            println("\nENQUIRIES");
+            for (Enquiry e : p.getEnquiries()) println(e.toString());
+        }
         public Menu options() {
-            if (getId() == -1) return HomeMenu.get();
+            if (getId() == -1) {
+                println("hi");
+                return HomeMenu.get();
+            }
             UserType ut = AppUserManager.getCurrentUser().getType();
             return switch (ut) {
                 case UserType.APPLICANT -> getOptions().get(0);
-                case UserType.OFFICER -> getOptions().get(1);
-                case UserType.MANAGER -> getOptions().get(2);
+                case UserType.MANAGER -> getOptions().get(1);
+                case UserType.OFFICER -> getOptions().get(2);
             };
         }
     }
@@ -54,6 +68,8 @@ public class ProjectViewMenu {
         ApplicantProjectMenu.setOptions();
         ManagerProjectMenu.setOptions();
         OfficerProjectMenu.setOptions();
+        EnquiryMenu.setOptions();
+        ReplyEnquiryMenu.setOptions();
     }
 
     public static Menu get() {

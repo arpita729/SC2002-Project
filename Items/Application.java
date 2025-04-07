@@ -24,13 +24,13 @@ public class Application extends Item implements Stringifiable {
      * Enumeration of withdrawal statuses for an application.
      */
     public enum WithdrawStatus {
-        NONE, PENDING, UNSUCCESSFUL, SUCCESSFUL
+        NOT, PENDING, UNSUCCESSFUL, SUCCESSFUL
     }
 
     private Applicant applicant;
     private Project project;
     private Status status = Status.PENDING;
-    private WithdrawStatus withdrawing = WithdrawStatus.NONE;
+    private WithdrawStatus withdrawing = WithdrawStatus.NOT;
     private FlatType flatType;
 
     /**
@@ -53,7 +53,11 @@ public class Application extends Item implements Stringifiable {
      */
     public String toString() {
         // implementation here
-        return "";
+        return "ID " + getId() + ": " +
+            applicant.getName() + " applying for " +
+            project.getName() + ", currently " + 
+            status.toString() + " and " +
+            withdrawing.toString() + " withdrawing." ;
     }
 
     /**

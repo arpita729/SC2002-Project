@@ -5,6 +5,7 @@ import java.util.Arrays;
 import menus.HomeMenu;
 import menus.users.applicant.*;
 import menus.Menu;
+import menus.project.EnquiryMenu;
 
 public class ApplicantProjectMenu {
     private static class BaseClass extends Menu {
@@ -23,7 +24,8 @@ public class ApplicantProjectMenu {
         // TODO add applicant's available options
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
-            ApplyMenu.get()
+            ApplyMenu.get(),
+            EnquiryMenu.get()
         ));
     }
 

@@ -7,7 +7,7 @@ import managers.AppUserManager;
 public class LoginMenu { 
     private static class BaseClass extends Menu {
         public BaseClass(String d, String i) {
-            super(d,i);
+            super(d,i,true);
         };
         public void menu() throws IllegalArgumentException {
             String ic = getString("NRIC: ");

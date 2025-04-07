@@ -9,6 +9,7 @@ import java.util.Scanner;
  * and navigation options to other menus.
  */
 public abstract class Menu {
+    private boolean retry = false;
     private String description;
     private String info;
     private List<Menu> navigationOptions = null;
@@ -25,6 +26,18 @@ public abstract class Menu {
         info = i;
     }
 
+    /**
+     * Constructs a Menu object with the specified description and information.
+     * 
+     * @param d The description of the menu.
+     * @param i Additional information about the menu.
+     * @param retry Whether the menu retries on error.
+     */
+    public Menu(String d, String i, boolean r) {
+        description = d;
+        info = i;
+        retry = r;
+    }
     /**
      * Displays the additional information about the menu.
      */
@@ -76,14 +89,15 @@ public abstract class Menu {
     public Menu display() {
         println(""); // Create some empty space
         displayInfo();
-        while (true) {
+        do {
             try {
                 menu();
                 break;
             } catch (Exception e) {
                 println("Error: " + e.getMessage());
-            }    
-        }
+            }     
+        } while (retry);
+
         return options();
     }
 
