@@ -6,6 +6,9 @@ import menus.HomeMenu;
 import menus.Menu;
 import menus.project.EnquiryMenu;
 import menus.project.ReplyEnquiryMenu;
+import menus.project.users.officer.BookMenu;
+import menus.project.users.officer.ApplicationListMenu;
+import menus.project.users.officer.ReceiptMenu;
 import menus.users.applicant.ApplyMenu;
 
 public class OfficerProjectMenu {
@@ -27,12 +30,12 @@ public class OfficerProjectMenu {
             ApplyMenu.get(),
             EnquiryMenu.get(),
             ReplyEnquiryMenu.get(),
-            OfficerApplicationMenu.get(),
+            ApplicationListMenu.get(),
             ReceiptMenu.get()
         ));
         EnquiryMenu.setOptions();
         ReplyEnquiryMenu.setOptions();
-        OfficerApplicationMenu.setOptions();
+        ApplicationListMenu.setOptions();
         BookMenu.setOptions();
         ReceiptMenu.setOptions();
     }

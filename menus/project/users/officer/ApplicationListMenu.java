@@ -1,4 +1,4 @@
-package menus.project.users;
+package menus.project.users.officer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,7 @@ import items.*;
 import menus.*;
 import menus.project.*;
 
-public class OfficerApplicationMenu {
+public class ApplicationListMenu {
     private static class BaseClass extends IdMenu {
         public BaseClass(String d, String i) {
             super(d,i);

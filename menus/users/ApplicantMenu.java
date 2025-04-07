@@ -24,7 +24,6 @@ public class ApplicantMenu {
     );
 
     public static void setOptions() {
-        // TODO add more options here (apply, application status, etc.)
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
             ProjectListMenu.get(),

@@ -1,4 +1,4 @@
-package menus.project.users;
+package menus.project.users.manager;
 
 import java.util.Arrays;
 
@@ -27,14 +27,13 @@ public class ToggleVisibilityMenu {
     }
 
     private static BaseClass baseClass = new BaseClass(
-        "List Applications", 
-        "Applications:"
+        "Toggle Visibility", 
+        ""
     );
 
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
-            ProjectViewMenu.get(),
-            BookMenu.get()
+            ProjectViewMenu.get()
         ));
     }
 

@@ -24,7 +24,6 @@ public class OfficerMenu {
     );
 
     public static void setOptions() {
-        // TODO add more options here (applicant options, projects in charge, etc.)
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
             ProjectListMenu.get(),

@@ -24,7 +24,7 @@ public class ManagerMenu {
     );
 
     public static void setOptions() {
-        // TODO add more options (create new, etc.)
+        // TODO add more options (create, update, delete, etc.)
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
             ProjectListMenu.get(),
