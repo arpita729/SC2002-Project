@@ -11,9 +11,9 @@ public class ODFilterMenu  {
             super(d,i);
         };
         public void menu() {
-            println("Select date A: ");
+            println("Select date A (Blank to clear): ");
             ProjectFilterManager.setStartOD(GetDate.getDate());
-            println("Select date B:");
+            println("Select date B (Blank to clear): ");
             ProjectFilterManager.setEndOD(GetDate.getDate());
         };
     }

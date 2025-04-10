@@ -42,6 +42,29 @@ public class Project extends Item implements Stringifiable, LongStringifiable {
         officerSlots = oSlots;
         manager = m;
     }
+
+    /**
+     * Edits the Project with the specified details.
+     * 
+     * @param name the name of the project
+     * @param neigh the neighborhood where the project is located
+     * @param room2 the number of 2-room flats available
+     * @param room3 the number of 3-room flats available
+     * @param od the opening date of the project
+     * @param cd the closing date of the project
+     * @param oSlots the number of officer slots available
+     * @param m the manager overseeing the project
+     */
+    public void edit(String name, String neigh, int room2, int room3, LocalDate od, LocalDate cd, int oSlots, Manager m) {
+        this.name = name;
+        neighborhood = neigh;
+        num2Room = room2;
+        num3Room = room3;
+        openingDate = od;
+        closingDate = cd;
+        officerSlots = oSlots;
+        manager = m;
+    }
     
     /**
      * @return the name of the project

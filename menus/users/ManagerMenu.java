@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import menus.*;
 import menus.project.*;
+import menus.project.users.manager.CreateMenu;
 import menus.projectFilter.ProjectFilterMenu;
 import menus.users.manager.ProjectInchargeMenu;
 import managers.AppUserManager;
@@ -24,9 +25,9 @@ public class ManagerMenu {
     );
 
     public static void setOptions() {
-        // TODO add more options (create, update, delete, etc.)
         baseClass.setOptions(Arrays.asList(
             LogoutMenu.get(),
+            CreateMenu.get(),
             ProjectListMenu.get(),
             ProjectFilterMenu.get(),
             ProjectSelectMenu.get(),

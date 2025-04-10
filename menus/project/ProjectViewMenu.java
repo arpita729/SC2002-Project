@@ -44,7 +44,7 @@ public class ProjectViewMenu {
         }
         public Menu options() {
             if (getId() == -1) {
-                println("hi");
+                println("No project, returning to main menu.");
                 return HomeMenu.get();
             }
             UserType ut = AppUserManager.getCurrentUser().getType();

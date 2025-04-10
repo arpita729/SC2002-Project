@@ -5,11 +5,7 @@ import java.util.Arrays;
 import menus.HomeMenu;
 import menus.Menu;
 import menus.project.ReplyEnquiryMenu;
-import menus.project.users.manager.ApplicationMenu;
-import menus.project.users.manager.EditApplicationMenu;
-import menus.project.users.manager.EditOApplicationMenu;
-import menus.project.users.manager.OfficerApplicationMenu;
-import menus.project.users.manager.ToggleVisibilityMenu;
+import menus.project.users.manager.*;
 import menus.project.users.officer.ReceiptMenu;
 
 public class ManagerProjectMenu {
@@ -29,17 +25,22 @@ public class ManagerProjectMenu {
         // TODO add filter applicants, etc.
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
-            ReplyEnquiryMenu.get(),
+            EditMenu.get(),
+            DeleteMenu.get(),
             ReceiptMenu.get(),
             ToggleVisibilityMenu.get(),
             ApplicationMenu.get(),
-            OfficerApplicationMenu.get()
+            OfficerApplicationMenu.get(),
+            ReplyEnquiryMenu.get()
         ));
         ToggleVisibilityMenu.setOptions();
         ApplicationMenu.setOptions();
         OfficerApplicationMenu.setOptions();
         EditApplicationMenu.setOptions();
         EditOApplicationMenu.setOptions();
+        CreateMenu.setOptions();
+        DeleteMenu.setOptions();
+        EditMenu.setOptions();
     }
 
     public static Menu get() {
