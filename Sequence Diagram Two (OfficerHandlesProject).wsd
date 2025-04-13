@@ -30,6 +30,10 @@ alt Invalid Details
     OfficerApplicationManager --> ApplyMenu : throw IllegalArgumentException
 end alt
 
+alt Invalid Details
+    OfficerApplicationManager -> ApplyMenu : throw IllegalArgumentException
+end alt
+
 == Officer Application Creation ==
 OfficerApplicationManager -> OfficerApplication : new OfficerApplication(Officer, Project)
 OfficerApplication --> OfficerApplicationManager : OfficerApplication
@@ -39,4 +43,6 @@ OfficerApplications --> OfficerApplicationManager : add OfficerApplication
 == Final Outcome ==
 OfficerApplicationManager --> ApplyMenu : OfficerApplication
 ApplyMenu --> Officer : Show success
+@enduml
+OfficerApplicationManager -> Officer : return OfficerApplication
 @enduml
