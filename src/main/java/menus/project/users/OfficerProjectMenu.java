@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import menus.HomeMenu;
 import menus.Menu;
+import menus.enquiry.DeleteEnquiryMenu;
+import menus.enquiry.EditEnquiryMenu;
 import menus.project.EnquiryMenu;
 import menus.project.ReplyEnquiryMenu;
 import menus.project.users.officer.BookMenu;
@@ -51,6 +53,8 @@ public class OfficerProjectMenu {
             HomeMenu.get(),
             ApplyMenu.get(),
             EnquiryMenu.get(),
+            EditEnquiryMenu.get(),
+            DeleteEnquiryMenu.get(),
             ReplyEnquiryMenu.get(),
             ApplicationListMenu.get(),
             ReceiptMenu.get()

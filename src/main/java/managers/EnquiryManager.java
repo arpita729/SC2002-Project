@@ -49,6 +49,19 @@ public class EnquiryManager {
         // Proceed with replying
         e.reply(AppUserManager.getCurrentUser(), reply);
     }
+    
+    /**
+     * Deletes an enquiry if the current user is the applicant who created it.
+     * 
+     * @param e the enquiry to be deleted
+     * @throws IllegalArgumentException if the current user is not the applicant of the enquiry
+     */
+    public static void delete(Enquiry e) throws IllegalArgumentException {
+        User user = AppUserManager.getCurrentUser();
+        if (user != e.getApplicant()) throw new IllegalArgumentException("not your enquiry!");
+
+        Enquiries.deleteEnquiry(e);
+    }
 
     /**
      * Allows the applicant to edit their enquiry text.

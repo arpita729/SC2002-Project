@@ -1,7 +1,5 @@
 package menus.project;
 
-import static menus.IdMenu.getId;
-
 import java.util.Arrays;
 
 import menus.HomeMenu;
@@ -15,9 +13,9 @@ import menus.Menu;
 public class ProjectSelectMenu {
 
     /**
-     * A private static inner class extending Menu to handle project selection.
+     * A private static inner class extending IdMenu to handle project selection.
      */
-    private static class BaseClass extends Menu {
+    private static class BaseClass extends IdMenu {
         /**
          * Constructs a BaseClass instance with a description and instructions.
          * 
@@ -35,7 +33,7 @@ public class ProjectSelectMenu {
         public void menu() {
             int i = getInt("ID: ");
             if (i == -1) return; // redirect to home
-            IdMenu.setId(i); // set the ID of the project to display
+            setId(i); // set the ID of the project to display
         }
 
         /**

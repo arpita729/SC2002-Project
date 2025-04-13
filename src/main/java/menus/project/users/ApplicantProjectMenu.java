@@ -5,6 +5,8 @@ import java.util.Arrays;
 import menus.HomeMenu;
 import menus.users.applicant.*;
 import menus.Menu;
+import menus.enquiry.DeleteEnquiryMenu;
+import menus.enquiry.EditEnquiryMenu;
 import menus.project.EnquiryMenu;
 
 /**
@@ -46,7 +48,9 @@ public class ApplicantProjectMenu {
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
             ApplyMenu.get(),
-            EnquiryMenu.get()
+            EnquiryMenu.get(),
+            EditEnquiryMenu.get(),
+            DeleteEnquiryMenu.get()
         ));
     }
 

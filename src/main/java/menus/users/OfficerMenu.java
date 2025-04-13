@@ -3,6 +3,7 @@ package menus.users;
 import java.util.Arrays;
 
 import menus.*;
+import menus.enquiry.EnquiryListMenu;
 import menus.project.*;
 import menus.projectFilter.ProjectFilterMenu;
 import menus.users.officer.*;
@@ -58,6 +59,7 @@ public class OfficerMenu {
             ApplyMenu.get(),
             HistoryMenu.get(),
             WithdrawMenu.get(),
+            EnquiryListMenu.get(),
             PasswordChangeMenu.get(),
             ExitMenu.get()
         ));
