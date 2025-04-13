@@ -1,0 +1,53 @@
+@startuml
+actor Officer as O
+participant ApplyMenu
+participant IdMenu
+participant Projects
+participant AppUserManager
+participant OfficerObj as Officer
+participant Validator
+participant ApplicationManager
+participant Application
+participant Applications
+
+== Officer Initiates Application ==
+O -> ApplyMenu : apply()
+
+== Officer Selects Project ==
+ApplyMenu -> IdMenu : getId()
+IdMenu --> ApplyMenu : projectId
+
+== Get Project from ID ==
+ApplyMenu -> Projects : getProject(projectId)
+Projects --> ApplyMenu : Project
+
+== Get Current User (Officer) ==
+ApplyMenu -> AppUserManager : getCurrentUser()
+AppUserManager --> ApplyMenu : Officer
+
+== Choose FlatType ==
+note right of ApplyMenu
+FlatType chosen by officer (e.g., TWO_ROOM or THREE_ROOM)
+end note
+
+== Validate Officer's Eligibility ==
+ApplyMenu -> Validator : validateApplication(Officer, flatType)
+Validator --> ApplyMenu : void (or throws exception)
+
+== Create Application ==
+ApplyMenu -> ApplicationManager : apply(Officer, Project, flatType)
+
+ApplicationManager -> Application : constructor(Officer, Project, flatType)
+Application --> ApplicationManager : Application
+
+== Store Application ==
+ApplicationManager -> Applications : newApplication(Application)
+Applications --> ApplicationManager : void
+
+== Link Application to Officer ==
+ApplicationManager -> Officer : setApplication(Application)
+Officer --> ApplicationManager : void
+
+ApplicationManager --> ApplyMenu : Application
+ApplyMenu --> O : Show success or confirmation
+@enduml
