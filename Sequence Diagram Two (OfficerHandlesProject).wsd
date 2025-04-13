@@ -9,29 +9,34 @@ participant "Projects" as Projects
 participant "OfficerApplicationManager" as OfficerApplicationManager
 participant "AppUserManager" as AppUserManager
 participant "Validator" as Validator
-participant "OfficerApplications" as OfficerApplications
 participant "OfficerApplication" as OfficerApplication
+participant "OfficerApplications" as OfficerApplications
 
 == Officer Selecting Project ==
 Officer -> ApplyMenu : select project
 ApplyMenu -> IdMenu : getId()
-IdMenu -> ApplyMenu : return project ID
+IdMenu --> ApplyMenu : project ID
 ApplyMenu -> Projects : getProject(id)
-Projects -> ApplyMenu : return Project
+Projects --> ApplyMenu : Project
 
 == Officer Applying for Project ==
 ApplyMenu -> OfficerApplicationManager : apply(Project)
 OfficerApplicationManager -> AppUserManager : getCurrentUser()
-AppUserManager -> OfficerApplicationManager : return Officer
+AppUserManager --> OfficerApplicationManager : Officer
 OfficerApplicationManager -> Validator : validateNewProject(project)
-Validator -> OfficerApplicationManager : validation result (valid/invalid)
+Validator --> OfficerApplicationManager : void (or throws exception)
+
+alt Invalid Details
+    OfficerApplicationManager --> ApplyMenu : throw IllegalArgumentException
+end alt
 
 == Officer Application Creation ==
-OfficerApplicationManager -> OfficerApplication : create OfficerApplication
-OfficerApplication -> OfficerApplicationManager : return OfficerApplication
+OfficerApplicationManager -> OfficerApplication : new OfficerApplication(Officer, Project)
+OfficerApplication --> OfficerApplicationManager : OfficerApplication
 OfficerApplicationManager -> OfficerApplications : newOfficerApplication(OfficerApplication)
-OfficerApplications -> OfficerApplicationManager : add OfficerApplication
+OfficerApplications --> OfficerApplicationManager : add OfficerApplication
 
 == Final Outcome ==
-OfficerApplicationManager -> Officer : return OfficerApplication
+OfficerApplicationManager --> ApplyMenu : OfficerApplication
+ApplyMenu --> Officer : Show success
 @enduml

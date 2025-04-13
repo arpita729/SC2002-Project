@@ -7,10 +7,9 @@ actor Officer as O #00FFFF
 participant ApplyMenu 
 participant IdMenu 
 participant Projects 
-participant AppUserManager 
-participant OfficerObj as Officer 
-participant Validator 
 participant ApplicationManager 
+participant AppUserManager 
+participant Validator 
 participant Application 
 participant Applications 
 
@@ -25,27 +24,27 @@ IdMenu --> ApplyMenu : projectId
 ApplyMenu -> Projects : getProject(projectId)
 Projects --> ApplyMenu : Project
 
-== Get Current User (Officer) ==
-ApplyMenu -> AppUserManager : getCurrentUser()
-AppUserManager --> ApplyMenu : Officer
-
 == Choose FlatType ==
+ApplyMenu -> O : Select a Flat Type
 note right of ApplyMenu
 FlatType chosen by officer (e.g., TWO_ROOM or THREE_ROOM)
 end note
+O --> ApplyMenu : Selection made
 
-== Validate Officer's Eligibility ==
-ApplyMenu -> Validator : validateApplication(Officer, flatType)
-Validator --> ApplyMenu : void (or throws exception)
+== Applying as an Applicant ==
+
+ApplyMenu -> ApplicationManager : apply(Officer, Project, flatType)
+ApplicationManager -> AppUserManager : getCurrentUser()
+AppUserManager --> ApplicationManager : Officer
+ApplicationManager -> Validator : validateApplication(Officer, flatType)
+Validator --> ApplicationManager : void (or throws exception)
 
 alt Invalid Details
-    ApplicationManager -> ApplyMenu : throw IllegalArgumentException
+    ApplicationManager --> ApplyMenu : throw IllegalArgumentException
 end alt
 
 == Create Application ==
-ApplyMenu -> ApplicationManager : apply(Officer, Project, flatType)
-
-ApplicationManager -> Application : constructor(Officer, Project, flatType)
+ApplicationManager -> Application : new Application(Officer, Project, flatType)
 Application --> ApplicationManager : Application
 
 == Store Application ==
@@ -57,5 +56,5 @@ ApplicationManager -> Officer : setApplication(Application)
 Officer --> ApplicationManager : void
 
 ApplicationManager --> ApplyMenu : Application
-ApplyMenu --> O : Show success or confirmation
+ApplyMenu --> O : Show success
 @enduml
