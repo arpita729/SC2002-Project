@@ -10,10 +10,31 @@ import menus.project.ProjectSelectMenu;
 
 import java.util.Arrays;
 
+/**
+ * The ApplyMenu class provides a menu interface for applicants to apply for a project.
+ * It allows users to select a project and specify the desired number of rooms.
+ */
 public class ApplyMenu {
+
+    /**
+     * A private static inner class extending Menu to handle project applications.
+     */
     private static class BaseClass extends Menu {
-        public BaseClass(String d, String i) {super(d,i);};
-        public void menu(){
+        /**
+         * Constructs a BaseClass instance with a description and instructions.
+         * 
+         * @param d The description of the menu.
+         * @param i The instructions for the menu.
+         */
+        public BaseClass(String d, String i) {
+            super(d, i);
+        }
+
+        /**
+         * Displays the menu and processes the application for a project.
+         * Prompts the user to select a project and specify the desired number of rooms.
+         */
+        public void menu() {
             int id = IdMenu.getId();
             if (id == -1) {
                 ProjectSelectMenu.get().display();
@@ -32,8 +53,7 @@ public class ApplyMenu {
                     println("Invalid number of rooms selected");
                     break;
             }
-
-        };
+        }
     }
 
     private static BaseClass baseClass = new BaseClass(
@@ -41,12 +61,20 @@ public class ApplyMenu {
             "Applying for project"
     );
 
+    /**
+     * Sets the options for the apply menu, including navigation to the status menu.
+     */
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
             StatusMenu.get()
         ));
     }
 
+    /**
+     * Retrieves the apply menu instance.
+     * 
+     * @return The apply menu instance.
+     */
     public static Menu get() {
         return baseClass;
     }

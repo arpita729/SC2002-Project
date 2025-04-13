@@ -9,16 +9,37 @@ import menus.projectFilter.ProjectFilterMenu;
 import managers.AppUserManager;
 
 /**
- * Redirects to the usertype's menu.
+ * The HomeMenu class redirects users to their respective menus based on their user type.
+ * It serves as the entry point after login and provides navigation to user-specific functionalities.
  */
 public class HomeMenu {
+
+    /**
+     * A private static inner class extending Menu to define the home page functionality.
+     */
     private static class BaseClass extends Menu {
+        /**
+         * Constructs a BaseClass instance with a description and instructions.
+         * 
+         * @param d The description of the menu.
+         * @param i The instructions for the menu.
+         */
         public BaseClass(String d, String i) {
-            super(d,i);
-        };
+            super(d, i);
+        }
+
+        /**
+         * Resets the ID to -1 when the home menu is displayed.
+         */
         public void menu() {
             IdMenu.setId(-1);
-        };
+        }
+
+        /**
+         * Determines the next menu option based on the current user's type.
+         * 
+         * @return The next menu option for the user.
+         */
         public Menu options() {
             UserType ut = AppUserManager.getCurrentUser().getType();
             return switch (ut) {
@@ -34,6 +55,10 @@ public class HomeMenu {
         ""
     );
 
+    /**
+     * Sets the options for the home menu, including navigation to user-specific menus
+     * and other global functionalities such as login, logout, and password change.
+     */
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
             ApplicantMenu.get(),
@@ -57,6 +82,11 @@ public class HomeMenu {
         PasswordChangeMenu.setOptions();
     }
 
+    /**
+     * Retrieves the home menu instance.
+     * 
+     * @return The home menu instance.
+     */
     public static Menu get() {
         return baseClass;
     }

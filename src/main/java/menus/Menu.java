@@ -6,7 +6,8 @@ import java.util.Scanner;
 /**
  * The abstract Menu class provides a template for different menu types
  * in the system. Each menu has a description, additional information,
- * and navigation options to other menus.
+ * and navigation options to other menus. It also provides utility methods
+ * for user input and error handling.
  */
 public abstract class Menu {
     private boolean retry = false;
@@ -27,11 +28,11 @@ public abstract class Menu {
     }
 
     /**
-     * Constructs a Menu object with the specified description and information.
+     * Constructs a Menu object with the specified description, information, and retry behavior.
      * 
      * @param d The description of the menu.
      * @param i Additional information about the menu.
-     * @param retry Whether the menu retries on error.
+     * @param r Whether the menu retries on error.
      */
     public Menu(String d, String i, boolean r) {
         description = d;
@@ -53,6 +54,9 @@ public abstract class Menu {
 
     /**
      * Displays navigation options and redirects to the selected menu.
+     * If no valid option is selected, the default option is used.
+     * 
+     * @return The selected menu.
      */
     public Menu options() {
         int n = navigationOptions.size();
@@ -84,7 +88,7 @@ public abstract class Menu {
     /**
      * Displays the menu, handles exceptions, and presents options to navigate.
      * 
-     * @return next menu to display
+     * @return The next menu to display.
      */
     public Menu display() {
         println(""); // Create some empty space
@@ -103,10 +107,10 @@ public abstract class Menu {
 
     /**
      * Prompts the user for an integer input. 
-     * If it's not an integer, returns -1.
+     * If the input is empty or invalid, returns -1.
      * 
      * @param prompt The message displayed to prompt the user.
-     * @return The integer input from the user.
+     * @return The integer input from the user, or -1 if invalid.
      */
     public int getInt(String prompt) {
         System.out.print(prompt);
@@ -153,9 +157,9 @@ public abstract class Menu {
     }
     
     /**
-     * Gets the navigationOptions of the menu.
+     * Gets the navigation options of the menu.
      * 
-     * @return navigationOptions
+     * @return The list of navigation options.
      */
     public List<Menu> getOptions() {
         return navigationOptions;
@@ -163,8 +167,7 @@ public abstract class Menu {
 
     /**
      * Sets the navigation options for the menu.
-     * Called by the child object to define nagivation options.
-     * Exists to prevent circular import nonsense.
+     * Called by the child object to define navigation options.
      * 
      * @param o The list of menu options.
      */

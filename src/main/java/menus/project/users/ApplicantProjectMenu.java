@@ -7,12 +7,31 @@ import menus.users.applicant.*;
 import menus.Menu;
 import menus.project.EnquiryMenu;
 
+/**
+ * The ApplicantProjectMenu class provides a menu interface for applicants to interact
+ * with project-related options such as applying for a project or making enquiries.
+ */
 public class ApplicantProjectMenu {
+
+    /**
+     * A private static inner class extending Menu to define the applicant project menu.
+     */
     private static class BaseClass extends Menu {
+        /**
+         * Constructs a BaseClass instance with a description and instructions.
+         * 
+         * @param d The description of the menu.
+         * @param i The instructions for the menu.
+         */
         public BaseClass(String d, String i) {
-            super(d,i);
-        };
-        public void menu() {};
+            super(d, i);
+        }
+
+        /**
+         * Displays the menu. This method is currently empty and can be overridden
+         * for specific functionality.
+         */
+        public void menu() {}
     }
 
     private static BaseClass baseClass = new BaseClass(
@@ -20,6 +39,9 @@ public class ApplicantProjectMenu {
         ""
     );
 
+    /**
+     * Sets the options for the applicant project menu.
+     */
     public static void setOptions() {
         baseClass.setOptions(Arrays.asList(
             HomeMenu.get(),
@@ -28,6 +50,11 @@ public class ApplicantProjectMenu {
         ));
     }
 
+    /**
+     * Retrieves the applicant project menu instance.
+     * 
+     * @return The applicant project menu instance.
+     */
     public static Menu get() {
         return baseClass;
     }

@@ -41,6 +41,7 @@ menus\projectFilter\CDFilterMenu.class
 menus\applicantFilter\CDFilterMenu$BaseClass.class
 menus\users\officer\WithdrawMenu.class
 items\users\Officer.class
+menus\PasswordChangeMenu.class
 managers\ApplicationManager.class
 menus\HomeMenu$1.class
 menus\users\ManagerMenu.class
@@ -59,8 +60,10 @@ managers\EnquiryManager.class
 menus\LoginMenu$BaseClass.class
 menus\applicantFilter\MaritalFilterMenu.class
 menus\users\officer\HistoryMenu.class
+data\ExcelReader$AddUser.class
 menus\HomeMenu.class
 managers\ProjectManager.class
+data\ExcelReader.class
 menus\projectFilter\NameFilterMenu.class
 menus\projectFilter\NameFilterMenu$BaseClass.class
 menus\users\officer\WithdrawMenu$BaseClass.class
@@ -120,6 +123,7 @@ menus\applicantFilter\NeighFilterMenu.class
 items\users\Applicant.class
 menus\LogoutMenu$BaseClass.class
 menus\project\users\manager\OfficerApplicationMenu.class
+menus\PasswordChangeMenu$BaseClass.class
 menus\users\manager\ProjectInchargeMenu$BaseClass.class
 menus\users\applicant\HistoryMenu.class
 menus\projectFilter\ODFilterMenu.class

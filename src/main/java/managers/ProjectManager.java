@@ -52,7 +52,6 @@ public class ProjectManager {
      * @param od        the opening date of the project
      * @param cd        the closing date of the project
      * @param oSlots    the number of officer slots available for the project
-     * @return          the created Project object
      * @throws IllegalArgumentException if any of the validation criteria are not met (e.g., opening date, closing date, etc.)
      */
     public static void edit(Project p, String name, String neigh, int room2, int room3, LocalDate od, LocalDate cd, int oSlots) throws IllegalArgumentException {

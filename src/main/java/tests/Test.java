@@ -10,6 +10,11 @@ import items.users.User.MaritalStatus;
 import items.Application.*;
 import managers.*;
 
+/**
+ * The Test class contains a series of test cases to validate the functionality
+ * of the HDB Management System. It tests user login, project creation, application
+ * processes, and other system features.
+ */
 public class Test {
     static Project p;
     static Project p2;
@@ -32,6 +37,11 @@ public class Test {
     static Applicant f;
     static Applicant g;
 
+    /**
+     * The main method initializes test data and executes the test cases.
+     * 
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         // TODO read in from CSV file
         try {
@@ -91,6 +101,9 @@ public class Test {
         
     }
 
+    /**
+     * Test Case 1: Validates that a user can log in with correct credentials.
+     */
     public static void testCase1_ValidUserLogin() {
         try {
             ApplicationManager.apply(p, null);
@@ -105,6 +118,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 2: Validates that login fails for invalid NRIC formats.
+     */
     public static void testCase2_InvalidIC() {
         try {
             AppUserManager.login("A1234567B","password");
@@ -120,6 +136,9 @@ public class Test {
         } catch (Exception e) {};
     }
 
+    /**
+     * Test Case 3: Validates that login fails for incorrect passwords.
+     */
     public static void testCase3_IncorrectPassword() {
         try {
             AppUserManager.login("S1234567M", "paswd");
@@ -129,6 +148,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 4: Validates the password change functionality.
+     */
     public static void testCase4_PasswordChangeFunctionality() {
         try {
             AppUserManager.login("S1234567M", "password");
@@ -143,6 +165,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 10: Validates that officers can apply for projects and handles duplicate applications.
+     */
     public static void testCase10_OfficerApply() {
         try {
             AppUserManager.login("S7654321O", "password");
@@ -163,6 +188,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 17: Validates the creation of BTO projects with valid data.
+     */
     public static void testCase17_CreateBTOProject() {
         try {
             AppUserManager.login("S1234567M", "password");
@@ -182,6 +210,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 18: Validates that project creation fails for invalid application periods.
+     */
     public static void testCase18_WrongApplicationPeriod() {
         try {
             AppUserManager.login("S1234567M", "password");
@@ -204,6 +235,9 @@ public class Test {
         }
     }
         
+    /**
+     * Test Case 6: Validates the application process for applicants with different eligibility criteria.
+     */
     public static void testCase6_ApplicantApply() {
         try {
             AppUserManager.login("T7654321A", "password");
@@ -262,6 +296,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 8: Validates that applicants cannot apply for multiple projects simultaneously.
+     */
     public static void testCase8_MultipleProjects() {
         try {
             AppUserManager.login("T7654321A", "password");
@@ -288,6 +325,9 @@ public class Test {
         }
     }
     
+    /**
+     * Test Case 9: Validates the creation and management of enquiries.
+     */
     public static void testCase9_EnquiryManagement() {
         try {
             AppUserManager.login("T7654321A","password");
@@ -313,6 +353,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 24: Validates that officers cannot perform actions they are not authorized for.
+     */
     public static void testCase24_NotYetOfficer() {
         try {
             AppUserManager.login("S7654321O", "password");
@@ -352,6 +395,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 21 and 22: Validates the approval process for applications and handles overbooking scenarios.
+     */
     public static void testCase21_22_ApproveApplication() {
         try {
             AppUserManager.login("S1234567M", "password");
@@ -381,6 +427,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 10 (Dates): Validates that officers cannot apply for projects with overlapping dates.
+     */
     public static void testCase10_OfficerApplyDates() {
         try {
             AppUserManager.login("S7654321O", "password");
@@ -407,6 +456,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 14: Validates the reply and edit functionality for enquiries.
+     */
     public static void testCase14_EnquiryReply() {
         try {
             AppUserManager.login("S1234567M", "password");
@@ -434,6 +486,9 @@ public class Test {
         }
     }
     
+    /**
+     * Test Case 15: Validates the booking process for applications.
+     */
     public static void testCase15_Booking() {
         try {
             AppUserManager.login("S7654321O", "password");
@@ -477,6 +532,9 @@ public class Test {
         }
     }
 
+    /**
+     * Test Case 22: Validates the withdrawal process for applications.
+     */
     public static void testCase22_Withdrawal() {
         try {
             AppUserManager.login("T7654321A", "password");

@@ -7,14 +7,28 @@ import menus.GetDate;
 import menus.Menu;
 import managers.ProjectManager;
 
+/**
+ * The ProjectDetails class provides an abstract menu for handling project details.
+ * It allows users to create or edit project details.
+ */
 public abstract class ProjectDetails extends Menu {
+
+    /**
+     * Constructs a ProjectDetails instance with a description and instructions.
+     * 
+     * @param d The description of the menu.
+     * @param i The instructions for the menu.
+     */
     public ProjectDetails(String d, String i) {
         super(d, i);
     }
 
     /**
-     * Prompts user to enter project details, then updates.
-     * @param p null to create, if not edits the project provided
+     * Prompts the user to enter project details and updates the project.
+     * If the provided project is null, a new project is created.
+     * 
+     * @param p The project to edit, or null to create a new project.
+     * @return The created or updated project.
      */
     public Project getProjectDetails(Project p) {
         String name = getString("Enter name: ");
