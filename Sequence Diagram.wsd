@@ -1,0 +1,110 @@
+@startuml
+
+actor Applicant #2DFF1F
+actor HDBOfficer #00FFFF
+actor HDBManager #FF00FF
+participant System #FFFF00
+
+
+== Login Process ==
+Applicant -> System: Login (NRIC, password)
+System -> Applicant: Validate credentials
+HDBOfficer -> System: Login (NRIC, password)
+System -> HDBOfficer: Validate credentials
+HDBManager -> System: Login (NRIC, password)
+System -> HDBManager: Validate credentials
+
+== Applicant Views Project List ==
+Applicant -> System: View Project List (Filtered by marital status and visibility)
+System -> Applicant: Display filtered list of projects
+note right of System: Applicant views projects available to their group (Single or Married)
+
+== Applicant Applies for a Project ==
+Applicant -> System: Apply for Project (Project ID)
+System -> System: Validate application based on eligibility (Age, Marital Status)
+note right of System: Singles 35+ can apply for 2-Room, Married 21+ can apply for any project type
+System -> HDBManager: Check flat availability (remaining units)
+HDBManager -> System: Confirm availability
+System -> Applicant: Confirm application status (Pending)
+
+== Applicant Application Status Update ==
+System -> HDBManager: Check if applicant's project is approved based on available flats
+HDBManager -> System: Approve/Reject Application (based on availability)
+System -> Applicant: Notify application outcome (Pending/Successful/Unsuccessful)
+note right of System: If approved, applicant can proceed to book flat
+
+== HDB Officer Registers for a Project ==
+HDBOfficer -> System: Register to be HDB Officer for Project (Project ID)
+System -> HDBManager: Validate eligibility (No prior application for the same project)
+HDBManager -> System: Approve/Reject Registration (Availability of Officer slot)
+System -> HDBOfficer: Confirm registration status (Approved/Rejected)
+
+== HDB Officer Views Project Details ==
+HDBOfficer -> System: View Project Details (for handling)
+System -> HDBOfficer: Display project details (including flat types and availability)
+note right of System: HDB Officer sees project details regardless of visibility settings
+
+== Applicant Requests for Withdrawal ==
+Applicant -> System: Request Withdrawal (Project ID)
+System -> HDBManager: Check withdrawal eligibility (before or after booking)
+HDBManager -> System: Approve/Reject Withdrawal Request
+System -> Applicant: Confirm withdrawal status (Approved/Rejected)
+
+== HDB Officer Books a Flat for Applicant ==
+HDBOfficer -> System: Retrieve applicant's BTO application (NRIC)
+System -> HDBOfficer: Display applicant's application status
+HDBOfficer -> System: Select flat type (2-Room or 3-Room)
+System -> HDBOfficer: Validate flat availability (remaining units)
+HDBOfficer -> System: Update applicant’s project status (Booked)
+System -> Applicant: Confirm flat booking (Booked)
+
+== Applicant Submits Enquiry ==
+Applicant -> System: Submit Enquiry (Project ID, Enquiry Text)
+System -> HDBOfficer: Forward enquiry to HDB Officer (Project ID)
+HDBOfficer -> System: Respond to enquiry
+System -> Applicant: Display response to enquiry
+
+== HDB Manager Creates, Edits, and Deletes Projects ==
+HDBManager -> System: Create/Edit/Delete BTO Project
+System -> HDBManager: Display options (Project details, flat types, units available)
+HDBManager -> System: Save/Update/Delete Project (Details including Name, Location, etc.)
+
+== HDB Manager Manages Project Visibility ==
+HDBManager -> System: Toggle Project Visibility (On/Off)
+System -> HDBManager: Update project visibility (On/Off)
+note right of System: Affects project visibility for applicants
+
+== HDB Manager Approves or Rejects HDB Officer Registration ==
+HDBManager -> System: Approve/Reject HDB Officer Registration (Project ID)
+System -> HDBManager: Update project’s officer registration status
+System -> HDBOfficer: Notify registration outcome (Approved/Rejected)
+
+== HDB Manager Approves or Rejects Applicant's Application ==
+HDBManager -> System: Approve/Reject Applicant’s BTO Application (Based on availability)
+System -> HDBManager: Update applicant status (Pending/Successful/Unsuccessful)
+System -> Applicant: Notify application outcome (Pending/Successful/Unsuccessful)
+
+== HDB Manager Approves or Rejects Applicant's Request to Withdraw ==
+HDBManager -> System: Approve/Reject Applicant's Request to Withdraw Application
+System -> HDBManager: Update applicant's withdrawal status
+System -> Applicant: Notify withdrawal request outcome (Approved/Rejected)
+
+== HDB Manager Generates Reports ==
+HDBManager -> System: Generate Report (Project, Applicant details, Flat type chosen, etc.)
+System -> HDBManager: Filter applicants by marital status, flat type, etc.
+System -> HDBManager: Display filtered report
+
+== HDB Manager Views All Projects ==
+HDBManager -> System: View All Projects (Created by any HDB Manager)
+System -> HDBManager: Display list of all projects (Including non-visible)
+note right of System: HDB Manager can see all projects regardless of visibility
+
+== Applicant Updates Profile ==
+Applicant -> System: Update Profile (Age, Marital Status)
+System -> Applicant: Confirm Profile Update (Successful/Failed)
+
+== HDB Officer Generates Receipt ==
+HDBOfficer -> System: Generate Receipt (Applicant’s flat booking details)
+System -> HDBOfficer: Display Receipt (Applicant’s Name, NRIC, age, marital status, flat type booked)
+
+@enduml
