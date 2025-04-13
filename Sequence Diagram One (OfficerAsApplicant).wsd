@@ -26,7 +26,7 @@ Projects --> ApplyMenu : Project
 
 == Choose FlatType ==
 ApplyMenu -> O : Select a Flat Type
-note right of ApplyMenu
+note right of O
 FlatType chosen by officer (e.g., TWO_ROOM or THREE_ROOM)
 end note
 O --> ApplyMenu : Selection made
