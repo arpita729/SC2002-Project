@@ -79,8 +79,8 @@ public class ProjectFilterManager {
             ((hasFlatType == FlatType.TWO_ROOM) ? "Two Room" : "Three Room") + "\n";
         if (name != null) s += "Name: " + name + "\n";
         if (neigh != null) s += "Neighbourhood: " + neigh + "\n";
-        if (startOD != null || endOD != null) s += "Opening Date: " + dateString(startOD, endOD);
-        if (startCD != null || endCD != null) s += "Closing Date: " + dateString(startCD, endCD);
+        if (startOD != null || endOD != null) s += "Opening Date: " + dateString(startOD, endOD) + "\n";
+        if (startCD != null || endCD != null) s += "Closing Date: " + dateString(startCD, endCD) + "\n";
         if (s.length() == 0) s += "None. \n";
         return s;
     }

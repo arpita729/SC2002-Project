@@ -310,12 +310,18 @@ abstract class Menu {
 }
 
 
-class ApplicantMenu extends Menu
-class ManagerMenu extends Menu
-class OfficerMenu extends Menu
-class LoginMenu extends Menu {
-    +menu()
-    'after login, we call one of the 3 menus based on the  enum 
+abstract IdMenu extends Menu {
+    - int id
+    - int getId()
+    - int setId (int i)
+}
+
+
+class LoginMenu {
+    - Menu baseClass
+    + Menu get()
+    + void setOptions()
+
 }
 
 ' Item relations
@@ -394,10 +400,6 @@ AppUserManager ..> Validator
 ' Menu relations
 Menu "1"-- "*" Menu : "navigationOptions"
 LoginMenu ..> AppUserManager
-LoginMenu ..> ApplicantMenu
-LoginMenu ..> OfficerMenu
-LoginMenu ..> ManagerMenu
-
 
 
 @enduml

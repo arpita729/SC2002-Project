@@ -3,9 +3,11 @@ package menus.users;
 import java.util.Arrays;
 
 import menus.*;
+import menus.applicantFilter.ApplicantFilterMenu;
 import menus.project.*;
 import menus.project.users.manager.CreateMenu;
 import menus.projectFilter.ProjectFilterMenu;
+import menus.users.manager.ApplicantListMenu;
 import menus.users.manager.ProjectInchargeMenu;
 import managers.AppUserManager;
 
@@ -32,9 +34,13 @@ public class ManagerMenu {
             ProjectFilterMenu.get(),
             ProjectSelectMenu.get(),
             ProjectInchargeMenu.get(),
+            ApplicantListMenu.get(),
+            ApplicantFilterMenu.get(),
             ExitMenu.get()
         ));
         ProjectInchargeMenu.setOptions();
+        ApplicantListMenu.setOptions();
+        ApplicantFilterMenu.setOptions();
     }
 
     public static Menu get() {

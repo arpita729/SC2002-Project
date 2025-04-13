@@ -35,6 +35,7 @@ public class AppUserManager {
     public static void logout() {
         currentUser = null;
         ProjectFilterManager.reset(); // reset the current filters.
+        ApplicantFilterManager.reset();
     }
 
     /**

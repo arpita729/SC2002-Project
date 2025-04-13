@@ -72,7 +72,10 @@ public class Application extends Item implements Stringifiable, LongStringifiabl
             "Age: " + applicant.getAge() + "\n" +
             "Marital Status: " + applicant.getMaritalStatus().toString() + "\n" +
             "Flat Type: " + flatType.toString() + "\n" +
-            "Project: " + project.toString() + "\n";
+            "Project: " + project.toString() + "\n" +
+            "Status: " + status.toString() + "\n" +
+            "Withdrawing: " + withdrawing.toString() + "\n";
+
     }
 
     /**
