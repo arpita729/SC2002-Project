@@ -26,6 +26,10 @@ AppUserManager -> OfficerApplicationManager : return Officer
 OfficerApplicationManager -> Validator : validateNewProject(project)
 Validator -> OfficerApplicationManager : validation result (valid/invalid)
 
+alt Invalid Details
+    OfficerApplicationManager -> ApplyMenu : throw IllegalArgumentException
+end alt
+
 == Officer Application Creation ==
 OfficerApplicationManager -> OfficerApplication : create OfficerApplication
 OfficerApplication -> OfficerApplicationManager : return OfficerApplication
@@ -33,5 +37,7 @@ OfficerApplicationManager -> OfficerApplications : newOfficerApplication(Officer
 OfficerApplications -> OfficerApplicationManager : add OfficerApplication
 
 == Final Outcome ==
+OfficerApplicationManager -> Officer : return OfficerApplication
+@enduml
 OfficerApplicationManager -> Officer : return OfficerApplication
 @enduml
