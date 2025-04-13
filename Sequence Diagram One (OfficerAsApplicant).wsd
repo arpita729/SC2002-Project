@@ -1,14 +1,18 @@
 @startuml
-actor Officer as O
-participant ApplyMenu
-participant IdMenu
-participant Projects
-participant AppUserManager
-participant OfficerObj as Officer
-participant Validator
-participant ApplicationManager
-participant Application
-participant Applications
+skinparam titleFontSize 20
+title Officer Applying As An Applicant
+
+actor Officer as O #00FFFF
+
+participant ApplyMenu 
+participant IdMenu 
+participant Projects 
+participant AppUserManager 
+participant OfficerObj as Officer 
+participant Validator 
+participant ApplicationManager 
+participant Application 
+participant Applications 
 
 == Officer Initiates Application ==
 O -> ApplyMenu : apply()
@@ -33,6 +37,10 @@ end note
 == Validate Officer's Eligibility ==
 ApplyMenu -> Validator : validateApplication(Officer, flatType)
 Validator --> ApplyMenu : void (or throws exception)
+
+alt Invalid Details
+    ApplicationManager -> ApplyMenu : throw IllegalArgumentException
+end alt
 
 == Create Application ==
 ApplyMenu -> ApplicationManager : apply(Officer, Project, flatType)
