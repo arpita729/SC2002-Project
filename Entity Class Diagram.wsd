@@ -13,7 +13,10 @@ class Item {
 interface Stringifiable {
     + toString(): String
 }
-class Project extends Item implements Stringifiable {
+interface LongStringifiable {
+    + toLongString(): String
+}
+class Project extends Item implements Stringifiable, LongStringifiable {
     - name: String
     - neighborhood: String
     - num2Room: int
@@ -49,7 +52,7 @@ class Project extends Item implements Stringifiable {
     + toString(): String
 }
 
-class Application extends Item implements Stringifiable {
+class Application extends Item implements Stringifiable, LongStringifiable {
     - applicant: Applicant
     - project: Project
     - status: Status = PENDING
@@ -321,8 +324,9 @@ class LoginMenu {
     - Menu baseClass
     + Menu get()
     + void setOptions()
-
 }
+
+LoginMenu -u-> "1" Menu
 
 ' Item relations
 Application "1" --> "1" Applicant
