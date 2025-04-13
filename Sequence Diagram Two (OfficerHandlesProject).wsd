@@ -1,0 +1,37 @@
+@startuml
+skinparam titleFontSize 20
+title Officer Registering to Handle A Project
+
+actor Officer #00FFFF
+participant "ApplyMenu" as ApplyMenu
+participant "IdMenu" as IdMenu
+participant "Projects" as Projects
+participant "OfficerApplicationManager" as OfficerApplicationManager
+participant "AppUserManager" as AppUserManager
+participant "Validator" as Validator
+participant "OfficerApplications" as OfficerApplications
+participant "OfficerApplication" as OfficerApplication
+
+== Officer Selecting Project ==
+Officer -> ApplyMenu : select project
+ApplyMenu -> IdMenu : getId()
+IdMenu -> ApplyMenu : return project ID
+ApplyMenu -> Projects : getProject(id)
+Projects -> ApplyMenu : return Project
+
+== Officer Applying for Project ==
+ApplyMenu -> OfficerApplicationManager : apply(Project)
+OfficerApplicationManager -> AppUserManager : getCurrentUser()
+AppUserManager -> OfficerApplicationManager : return Officer
+OfficerApplicationManager -> Validator : validateNewProject(project)
+Validator -> OfficerApplicationManager : validation result (valid/invalid)
+
+== Officer Application Creation ==
+OfficerApplicationManager -> OfficerApplication : create OfficerApplication
+OfficerApplication -> OfficerApplicationManager : return OfficerApplication
+OfficerApplicationManager -> OfficerApplications : newOfficerApplication(OfficerApplication)
+OfficerApplications -> OfficerApplicationManager : add OfficerApplication
+
+== Final Outcome ==
+OfficerApplicationManager -> Officer : return OfficerApplication
+@enduml
