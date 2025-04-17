@@ -5,6 +5,7 @@ items.users
 managers
 menus
 menus.applicantFilter
+menus.enquiry
 menus.project
 menus.project.users
 menus.project.users.manager

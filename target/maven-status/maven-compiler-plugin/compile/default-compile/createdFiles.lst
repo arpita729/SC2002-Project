@@ -69,6 +69,7 @@ menus\projectFilter\NameFilterMenu$BaseClass.class
 menus\users\officer\WithdrawMenu$BaseClass.class
 items\LongStringifiable.class
 items\users\User.class
+menus\enquiry\EnquiryListMenu.class
 menus\users\applicant\WithdrawMenu.class
 menus\projectFilter\NeighFilterMenu.class
 menus\projectFilter\NeighFilterMenu$BaseClass.class
@@ -80,6 +81,7 @@ menus\applicantFilter\ApplicantFilterMenu.class
 menus\users\applicant\StatusMenu.class
 menus\project\users\manager\EditOApplicationMenu$BaseClass.class
 items\users\Manager.class
+menus\enquiry\EnquiryListMenu$BaseClass.class
 menus\project\users\manager\ApplicationMenu$BaseClass.class
 arrays\Applications.class
 managers\AppUserManager.class
@@ -87,6 +89,8 @@ menus\users\ManagerMenu$BaseClass.class
 items\Enquiry.class
 tests\Test.class
 menus\applicantFilter\NeighFilterMenu$BaseClass.class
+menus\enquiry\EditEnquiryMenu$BaseClass.class
+menus\enquiry\EnquirySelectMenu$BaseClass.class
 menus\users\officer\ApplyMenu$BaseClass.class
 menus\LogoutMenu.class
 menus\project\ProjectViewMenu$1.class
@@ -106,8 +110,10 @@ menus\project\users\ManagerProjectMenu$BaseClass.class
 menus\ExitMenu$BaseClass.class
 menus\IdMenu.class
 items\Stringifiable.class
+menus\enquiry\EnquirySelectMenu.class
 items\Application$WithdrawStatus.class
 menus\project\users\manager\CreateMenu$BaseClass.class
+menus\enquiry\DeleteEnquiryMenu.class
 menus\project\users\officer\ReceiptMenu.class
 menus\project\users\officer\ApplicationListMenu$BaseClass.class
 menus\users\officer\ApplicationSelectMenu$BaseClass.class
@@ -119,6 +125,7 @@ managers\AppManager.class
 menus\users\manager\ApplicantListMenu.class
 items\Application.class
 menus\project\ProjectSelectMenu$BaseClass.class
+menus\enquiry\DeleteEnquiryMenu$BaseClass.class
 menus\applicantFilter\NeighFilterMenu.class
 items\users\Applicant.class
 menus\LogoutMenu$BaseClass.class
@@ -129,6 +136,7 @@ menus\users\applicant\HistoryMenu.class
 menus\projectFilter\ODFilterMenu.class
 menus\users\OfficerMenu.class
 items\Item.class
+menus\enquiry\EditEnquiryMenu.class
 menus\project\ProjectSelectMenu.class
 menus\HomeMenu$BaseClass.class
 menus\project\users\manager\EditApplicationMenu.class

@@ -3,6 +3,7 @@ package menus;
 import java.util.Arrays;
 
 import items.users.User.UserType;
+import menus.enquiry.EnquiryListMenu;
 import menus.project.*;
 import menus.users.*;
 import menus.projectFilter.ProjectFilterMenu;
@@ -78,6 +79,8 @@ public class HomeMenu {
         ProjectListMenu.setOptions();
         ProjectSelectMenu.setOptions();
         ProjectViewMenu.setOptions();
+
+        EnquiryListMenu.setOptions();
 
         PasswordChangeMenu.setOptions();
     }

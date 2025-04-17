@@ -38,6 +38,7 @@ public class ApplyMenu {
             int id = IdMenu.getId();
             if (id == -1) {
                 ProjectSelectMenu.get().display();
+                id = IdMenu.getId();
             }
             items.Project p = Projects.getProject(id);
             println("Applying for: " + p.toString());

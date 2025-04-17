@@ -3,6 +3,7 @@ package menus.users;
 import java.util.Arrays;
 
 import menus.*;
+import menus.enquiry.EnquiryListMenu;
 import menus.project.*;
 import menus.projectFilter.ProjectFilterMenu;
 import managers.AppUserManager;
@@ -55,6 +56,7 @@ public class ApplicantMenu {
             ApplyMenu.get(),
             StatusMenu.get(),
             HistoryMenu.get(),
+            EnquiryListMenu.get(),
             PasswordChangeMenu.get(),
             ExitMenu.get()
         ));
