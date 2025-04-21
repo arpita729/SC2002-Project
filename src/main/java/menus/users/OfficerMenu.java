@@ -58,7 +58,7 @@ public class OfficerMenu {
             menus.users.applicant.HistoryMenu.get(),
             ApplyMenu.get(),
             HistoryMenu.get(),
-            WithdrawMenu.get(),
+            menus.users.applicant.WithdrawMenu.get(),
             EnquiryListMenu.get(),
             PasswordChangeMenu.get(),
             ExitMenu.get()
@@ -67,6 +67,7 @@ public class OfficerMenu {
         HistoryMenu.setOptions();
         ApplicationSelectMenu.setOptions();
         ViewMenu.setOptions();
+        WithdrawMenu.setOptions();
     }
 
     /**
