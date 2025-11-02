@@ -1,0 +1,419 @@
+@startuml EntityClassDiagram
+skinparam class {
+    BackgroundColor White
+    ArrowColor #444444
+    BorderColor #666666
+    FontName Arial
+}
+
+'===================== LEGEND =====================
+legend top right
+**Legend**
+Color Codes:
+GREY - Core Entities
+BLUE - User System
+YELLOW - Managers
+GREEN - Menu System
+ORANGE - Data Storage
+
+Line Types:
+<|-- Inheritance
+--> Association
+..> Dependency
+
+O Principles:
+(P) - Polymorphism
+(E) - Encapsulation
+(I) - Interface Implementation
+(S) - Static/Singleton
+endlegend
+
+'===================== CORE ENTITIES =====================
+package "Core Entities" #DDDDDD {
+    class Item {
+        - id: int
+        - deleted: bool = false
+        + getId(): int
+        + setId(id: int): void
+        + getDeleted(): bool
+        + delete(): void
+    }
+
+    note top of Item
+    (E) Encapsulation: Private state
+    managed through methods
+    end note
+
+    interface Stringifiable {
+        + toString(): String
+    }
+    note bottom of Stringifiable
+    (P) Polymorphism: Multiple classes
+    implement custom toString() behavior
+    end note
+
+    class Project extends Item implements Stringifiable {
+        - name: String
+        - neighborhood: String
+        - num2Room: int
+        - num3Room: int
+        - openingDate: LocalDate
+        - closingDate: LocalDate
+        - officerSlots: int
+        - visibility: bool = true
+        - manager: Manager
+
+        + getName(): String
+        + setName(name: String): void
+        + getNeighborhood(): String
+        + setNeighborhood(neighborhood: String): void
+        + getNum2Room(): int
+        + setNum2Room(num2Room: int): void
+        + getNum3Room(): int
+        + setNum3Room(num3Room: int): void
+        + getOpeningDate(): LocalDate
+        + setOpeningDate(openingDate: LocalDate): void
+        + getClosingDate(): LocalDate
+        + setClosingDate(closingDate: LocalDate): void
+        + getOfficerSlots(): int
+        + setOfficerSlots(officerSlots: int): void
+        + isVisible(): bool
+        + setVisibility(visibility: bool): void
+        + getApplications(): ArrayList<Application>
+        + getOfficerApplications(): ArrayList<OfficerApplication>
+        + getEnquiries(): ArrayList<Enquiry>
+        + getApplicants(): ArrayList<Applicant>
+        + getOfficers(): ArrayList<Officer>
+        + getManager(): Manager
+        + toString(): String
+    }
+    note right of Project
+    (I) Implements Stringifiable
+    (E) Field encapsulation
+    end note
+
+    class Application extends Item implements Stringifiable {
+        - applicant: Applicant
+        - project: Project
+        - status: Status = PENDING
+        - withdrawing: WithdrawStatus = NONE
+        - flatType: FlatType
+
+        + Application(a: Applicant, p: Project, f: FlatType)
+        + getApplicant(): Applicant
+        + getProject(): Project
+        + getStatus(): Status
+        + setStatus(status: Status): void
+        + getFlatType(): FlatType
+        + getWithdrawing(): WithdrawStatus
+        + setWithdrawing(w: WithdrawStatus): void
+        + toString(): String
+    }
+
+    class Enquiry extends Item implements Stringifiable {
+        - enquiry: String
+        - reply: String
+        - applicant: Applicant
+        - replier: User
+        - project: Project
+
+        + Enquiry(a: Applicant, p: Project, e: String)
+        + getEnquiry(): String
+        + setEnquiry(enquiry: String): void
+        + getReply(): String
+        + setReply(reply: String): void
+        + getApplicant(): Applicant
+        + getReplier(): User
+        + getProject(): Project
+        + reply(replier: User, reply: String) throws IllegalArgumentException
+        + toString(): String
+    }
+}
+
+'===================== USER HIERARCHY =====================
+package "User System" #CCCCFF {
+    class User extends Item implements Stringifiable {
+        - ic: String
+        - type: UserType
+        - password: String = "password"
+        - age: int
+        - maritalStatus: MaritalStatus
+
+        + User(ic: String, type: UserType, password: String, age: int, maritalStatus: MaritalStatus)
+        + toString(): String
+        + getIc(): String
+        + getType(): UserType
+        + getPassword(): String
+        + getAge(): int
+        + getMaritalStatus(): MaritalStatus
+        + setPassword(password: String): void
+    }
+    note top of User
+    (E) Full encapsulation of
+    user credentials and state
+    end note
+
+    class Applicant extends User {
+        - application: Application
+
+        + Applicant(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+        + Applicant(ic: String, u: UserType, password: String, age: int, maritalStatus: MaritalStatus)
+        + getProject(): Project
+        + getApplication(): Application
+        + getEnquiries(): ArrayList<Enquiry>
+        + setApplication(application: Application): void
+    }
+
+    class Officer extends Applicant {
+        + Officer(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+        + getProjectsInCharge(): ArrayList<Project>
+        + inCharge(p: Project): boolean
+        + hasApplication(p: Project): boolean
+        + getReplies(): ArrayList<Enquiry>
+    }
+
+    class Manager extends User {
+        + Manager(ic: String, password: String, age: int, maritalStatus: MaritalStatus)
+        + getProjectsInCharge(): ArrayList<Project>
+        + inCharge(p: Project): boolean
+        + getReplies(): ArrayList<Enquiry>
+    }
+
+    enum UserType {
+        APPLICANT, OFFICER, MANAGER
+    }
+
+    enum MaritalStatus {
+        SINGLE, MARRIED
+    }
+
+    User <|-- Applicant
+    Applicant <|-- Officer
+    User <|-- Manager
+    note bottom of Manager
+    (I) Inheritance hierarchy
+    demonstrates code reuse
+    end note
+}
+
+'===================== MANAGERS =====================
+package "Manager Classes" #FFEECC {
+    class ApplicationManager <<static>> {
+        + apply(p: Project, f: FlatType): Application
+        + withdraw(): void
+        + checkUnits(p: Project, f: FlatType, minus: boolean): void
+        + book(ap: Application): void
+        + approve(ap: Application, approval: boolean): void
+        + approveWithdraw(ap: Application, approval: boolean): void
+    }
+    note right of ApplicationManager
+    (S) Static manager class
+    demonstrates Singleton pattern
+    end note
+
+    class ProjectManager <<static>> {
+        + create(name: String, neigh: String, room2: int, room3: int, od: LocalDate, cd: LocalDate, oSlots: int): Project
+    }
+
+    class EnquiryManager <<static>> {
+        + create(p: Project, enquiry: String): Enquiry
+	+ reply(e: Enquiry, reply: String): void
+        + edit(e: Enquiry, enquiry: String): void
+        + editReply(e: Enquiry, reply: String): void
+    }
+
+    class AppUserManager <<static>> {
+        - currentUser: User
+        + login(ic: String, password: String): void
+	+ logout(): void
+        + changePassword(password: String, newPassword: String): void
+        + getCurrentUser(): User
+    }
+
+    class OfficerApplicationManager <<static>> {
+        + apply(p: Project): OfficerApplication
+	+ withdraw(ap: OfficerApplication): void
+        + approve(ap: OfficerApplication, approval: boolean): void
+        + approveWithdraw(ap: OfficerApplication, approval: boolean): void
+    }
+
+    class Validator {
+	- regex: String
+        - pattern: Pattern
+        + validateNRIC(String ic): boolean
+	+ validateDates(LocalDate start, LocalDate end): boolean
+        + validateProjectOverlap(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2): boolean
+        + validateNewProject(LocalDate start, LocalDate end, ArrayList<Project> pa): void
+        + validateApplication(Applicant a, FlatType f) throws IllegalArgumentException
+    }
+}
+
+'===================== MENU SYSTEM =====================
+package "Menu System" #CCFFCC {
+    class Menu <<boundary>> {
+        - navigationOptions: List<Menu>
+        + display(): Menu
+    }
+
+    package "Main Menus" {
+        class LoginMenu
+        class HomeMenu
+        class OfficerMenu
+        class ManagerMenu
+        class ApplicantMenu
+    }
+
+    package "Project Menus" {
+        class ProjectListMenu
+        class ProjectViewMenu
+        class ProjectSelectMenu
+    }
+
+    package "Filter Menus" {
+        class NameFilterMenu
+        class FlatTypeFilterMenu
+        class ProjectFilterMenu
+    }
+
+    Menu <|-- LoginMenu
+    Menu <|-- HomeMenu
+    Menu <|-- OfficerMenu
+    Menu <|-- ManagerMenu
+    Menu <|-- ApplicantMenu
+    Menu <|-- ProjectListMenu
+}
+
+'===================== RELATIONSHIPS =====================
+left to right direction
+
+' Core relationships
+Applicant "1" --> "0..1" Application
+Application "1" --> "1" Project
+Project "1" --> "*" Application
+Project "1" --> "1" Manager
+Manager "1" --> "*" Project
+ProjectManager --> Project : creates
+ApplicationManager ..> Application : manages
+
+' User relationships
+User <|-- Applicant
+Applicant <|-- Officer
+User <|-- Manager
+
+' Menu connections
+ProjectListMenu ..> ProjectFilterManager : uses
+LoginMenu ..> AppUserManager
+Menu "1" -- "*" Menu : navigationOptions
+
+' Manager dependencies
+AppManager ..> AppUserManager
+AppManager ..> ProjectManager
+ProjectManager ..> Validator
+
+' Hide implementation details
+hide empty members
+hide circle
+hide stereotype
+
+'===================== ENUMERATIONS =====================
+package "Enums" #EEEEEE {
+    enum Status {
+        PENDING, SUCCESSFUL, UNSUCCESSFUL, BOOKED, WITHDRAWN
+    }
+    note right
+    (P) Enables polymorphic
+    status handling
+    end note
+
+    enum FlatType {
+        TWO_ROOM, THREE_ROOM
+    }
+
+    enum WithdrawStatus {
+        NONE, PENDING, UNSUCCESSFUL, SUCCESSFUL
+    }
+}
+
+'===================== DATA STRUCTURES =====================
+package "Data Storage" #F79C40 {
+    class ItemArray {
+        - list: ArrayList<T>
+        - size: int
+        + getItem(id: int): T
+        + newItem(item: T): void
+        + deleteItem(item: T): void
+        + get(): ArrayList<T>
+        + getSize(): int
+        + setItems(a: ArrayList<T>): void
+    }
+
+    class Users <<static>> {
+        - users: ItemArray<User>
+        + filterIc(ic: String): User
+        + filterApplicants(p: Project): ArrayList<Applicant>
+        + getUser(id: int): User
+        + newUser(user: User): void
+        + deleteUser(user: User): void
+        + getAllUsers(): ArrayList<User>
+        + getSize(): int
+        + setUsers(u: ArrayList<User>): void
+    }
+
+    class Projects <<static>> {
+        - projects: ItemArray<Project>
+        + filter(m: Manager): ArrayList<Project>
+        + getProject(id: int): Project
+        + newProject(project: Project): void
+        + deleteProject(project: Project): void
+        + getAllProjects(): ArrayList<Project>
+        + getSize(): int
+        + setProjects(p: ArrayList<Project>): void
+    }
+
+        class Applications <<static>> {
+        - applications: ItemArray<Application>
+        + filter(p: Project): ArrayList<Application>
+        + filter(a: Applicant): Application
+        + getApplication(id: int): Application
+        + newApplication(application: Application): void
+        + deleteApplication(application: Application): void
+        + getAllApplications(): ArrayList<Application>
+        + getSize(): int
+        + setApplications(a: ArrayList<Application>): void
+    }
+
+
+    class OfficerApplications <<static>> {
+        - officerApplications: ItemArray<OfficerApplication>
+        + getProjects(o: Officer): ArrayList<Project>
+        + getAllProjects(o: Officer): ArrayList<Project>
+        + getOfficers(p: Project): ArrayList<Officer>
+        + filter(p: Project): ArrayList<OfficerApplication>
+        + filter(a: Applicant): OfficerApplication
+        + getOfficerApplication(id: int): OfficerApplication
+        + newOfficerApplication(officerApplication: OfficerApplication): void
+        + deleteOfficerApplication(officerApplication: OfficerApplication): void
+        + getAllOfficerApplications(): ArrayList<OfficerApplication>
+        + getSize(): int
+    }
+
+        class Enquiries <<static>>{
+        - enquiries: ItemArray<Enquiries>
+        + filter(p: Project): ArrayList<Enquiry>
+        + filter(a: Applicant): ArrayList<Enquiry>
+        + filter(m: Manager): ArrayList<Enquiry>
+        + filter(o: Officer): ArrayList<Enquiry>
+        + getEnquiry(id: int): Enquiry
+        + newEnquiry(e: Enquiry): void
+        + deleteEnquiry(e: Enquiry): void
+        + getAllEnquiries(): ArrayList<Enquiry>
+        + getSize(): int
+    }
+
+    Users --o ItemArray
+    Projects --o ItemArray
+    Applications --o ItemArray
+    OfficerApplications --o ItemArray
+    Enquiries --o ItemArray
+}
+@enduml

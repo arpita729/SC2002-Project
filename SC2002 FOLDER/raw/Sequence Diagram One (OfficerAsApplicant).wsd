@@ -1,0 +1,60 @@
+@startuml
+skinparam titleFontSize 20
+title Officer Applying As An Applicant
+
+actor Officer as O #00FFFF
+
+participant ApplyMenu 
+participant IdMenu 
+participant Projects 
+participant ApplicationManager 
+participant AppUserManager 
+participant Validator 
+participant Application 
+participant Applications 
+
+== Officer Initiates Application ==
+O -> ApplyMenu : apply()
+
+== Officer Selects Project ==
+ApplyMenu -> IdMenu : getId()
+IdMenu --> ApplyMenu : projectId
+
+== Get Project from ID ==
+ApplyMenu -> Projects : getProject(projectId)
+Projects --> ApplyMenu : Project
+
+== Choose FlatType ==
+ApplyMenu -> O : Select a Flat Type
+note right of O
+FlatType chosen by officer (e.g., TWO_ROOM or THREE_ROOM)
+end note
+O --> ApplyMenu : Selection made
+
+== Applying as an Applicant ==
+
+ApplyMenu -> ApplicationManager : apply(Officer, Project, flatType)
+ApplicationManager -> AppUserManager : getCurrentUser()
+AppUserManager --> ApplicationManager : Officer
+ApplicationManager -> Validator : validateApplication(Officer, flatType)
+Validator --> ApplicationManager : void (or throws exception)
+
+alt Invalid Details
+    ApplicationManager --> ApplyMenu : throw IllegalArgumentException
+end alt
+
+== Create Application ==
+ApplicationManager -> Application : new Application(Officer, Project, flatType)
+Application --> ApplicationManager : Application
+
+== Store Application ==
+ApplicationManager -> Applications : newApplication(Application)
+Applications --> ApplicationManager : void
+
+== Link Application to Officer ==
+ApplicationManager -> Officer : setApplication(Application)
+Officer --> ApplicationManager : void
+
+ApplicationManager --> ApplyMenu : Application
+ApplyMenu --> O : Show success
+@enduml
